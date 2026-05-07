@@ -279,7 +279,7 @@
           window.setTimeout(() => {
             previousMediaItems.forEach((item) => item.remove());
             media.className = "work-category-hero__asset";
-          }, 760);
+          }, 840);
         } else {
           heroMedia.replaceChildren(media);
           media.className = "work-category-hero__asset";
