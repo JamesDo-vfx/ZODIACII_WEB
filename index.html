@@ -10,324 +10,90 @@
     <title>Zodiac II Media | VFX / CGI Studio</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body data-page="home">
     <div class="grain" aria-hidden="true"></div>
-
-    <div class="intro-loader" data-loader>
-      <p>Zodiac II Media</p>
-    </div>
+    <div class="intro-loader" data-loader><p>Zodiac II Media</p></div>
 
     <header class="site-header" data-header>
-      <a class="brand-mark" href="#top" aria-label="Zodiac II Media home">
-        <span>Zodiac II</span>
-        <span>Media</span>
-      </a>
-
+      <a class="brand-mark" href="index.html" aria-label="Zodiac II Media home">Zodiac II Media</a>
       <div class="nav-timeline" aria-hidden="true">
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
-        <span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
       </div>
-
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#work">▸ Work ↓</a>
-        <a href="#about">▫ About</a>
-        <a href="#contact">∘ Contact</a>
+        <button type="button" data-work-trigger>Work</button>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </header>
 
-    <main id="top">
-      <section class="hero section-dark" aria-label="Zodiac II Media hero">
+    <main id="page" class="page-shell">
+      <section class="hero" aria-label="Zodiac II Media hero">
         <div class="hero-media" aria-hidden="true">
-          <!-- Replace with final hero footage: assets/videos/hero.mp4 -->
-          <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero-poster.jpg">
+          <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero.jpg">
             <source src="assets/videos/hero.mp4" type="video/mp4">
-            <source src="content/showcase/AddLightToLight_video1.webm" type="video/webm">
+            <source src="assets/videos/SHOWREELS_CINEMATIC_v01.mp4" type="video/mp4">
           </video>
         </div>
-
-        <div class="hero-content">
-          <p class="eyebrow reveal">Ho Chi Minh City / Vietnam</p>
-          <h1 class="hero-title reveal">
-            <span>Visual Effects</span>
-            <span>CGI</span>
-            <span>Commercial</span>
-            <span>Music Video</span>
-          </h1>
-          <p class="hero-copy reveal">
-            We craft cinematic VFX and CGI for music videos, commercials, and branded films -
-            combining technical precision with visual storytelling.
-          </p>
-        </div>
-
-        <div class="hero-meta reveal" aria-label="Studio metadata">
-          <span>VFX Supervision</span>
-          <span>Compositing</span>
-          <span>FX Simulation</span>
-        </div>
       </section>
 
-      <section class="behind section-pad" id="behind">
-        <div class="section-kicker reveal">Behind The Work</div>
+      <section class="section-pad behind" aria-labelledby="behind-title">
+        <p class="section-kicker reveal">Behind The Work</p>
         <div class="behind-grid">
-          <p class="large-statement reveal">
-            Zodiac II Media is a Vietnam-based VFX and CGI studio creating cinematic visuals
-            for music videos, commercials, and brand films. From invisible cleanup to full CG
+          <h2 id="behind-title" class="large-statement reveal">
+            Zodiac II Media is a Vietnam-based VFX and CGI studio creating cinematic visuals for
+            music videos, commercials, and brand films. From invisible cleanup to full CG
             environments, simulations, compositing, and final polish, we design images that feel
             impossible yet believable.
-          </p>
-          <aside class="meta-stack reveal" aria-label="Studio facts">
-            <span>Based in Ho Chi Minh City</span>
-            <span>VFX / CGI / Compositing / FX Simulation</span>
-            <span>Vietnam</span>
-          </aside>
+          </h2>
         </div>
       </section>
 
-      <section class="work section-pad" id="work">
-        <div class="section-heading reveal">
-          <h2>Selected Work</h2>
-          <span>[12]</span>
-        </div>
-
-        <div class="project-grid">
-          <!-- Replace each image/video path, title, category, and metadata with final project assets. -->
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Du Cho Tan The project">
-              <figure>
-                <img src="assets/images/project-01.jpg" alt="Cinematic VFX frame placeholder for Du Cho Tan The" loading="lazy">
-                <figcaption>
-                  <span>Before / After</span>
-                  <strong>Dù Cho Tận Thế</strong>
-                  <em>Music Video / Client - Artist / Scope - Compositing, Cleanup</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View VIB Privilege project">
-              <figure>
-                <img src="assets/images/project-02.jpg" alt="Premium commercial CGI frame placeholder for VIB Privilege" loading="lazy">
-                <figcaption>
-                  <span>Commercial</span>
-                  <strong>VIB Privilege</strong>
-                  <em>Client - VIB / Scope - CGI, Finishing</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View CGI Glass Staircase project">
-              <figure>
-                <img src="assets/images/project-03.jpg" alt="CGI glass staircase project thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>CGI</span>
-                  <strong>CGI Glass Staircase</strong>
-                  <em>Scope - Look Development, Lighting, Rendering</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View The Opus project">
-              <figure>
-                <img src="assets/images/project-04.jpg" alt="Dark cinematic brand film thumbnail placeholder for The Opus" loading="lazy">
-                <figcaption>
-                  <span>Brand Film</span>
-                  <strong>The Opus</strong>
-                  <em>Client - Property / Scope - Environment, Compositing</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Music Video VFX Reel project">
-              <figure>
-                <img src="assets/images/project-05.jpg" alt="Music video VFX reel montage thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>VFX Breakdown</span>
-                  <strong>Music Video VFX Reel</strong>
-                  <em>Artists - Various / Scope - Cleanup, FX, Compositing</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Commercial CGI Reel project">
-              <figure>
-                <img src="assets/images/project-06.jpg" alt="Commercial CGI reel thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>Commercial</span>
-                  <strong>Commercial CGI Reel</strong>
-                  <em>Clients - Various / Scope - CGI Production</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Environment Matte Painting project">
-              <figure>
-                <img src="assets/images/project-07.jpg" alt="Environment matte painting thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>Environment</span>
-                  <strong>Environment / Matte Painting</strong>
-                  <em>Scope - Set Extension, Sky Replacement, Atmosphere</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View FX Simulation project">
-              <figure>
-                <img src="assets/images/project-08.jpg" alt="FX simulation thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>FX Simulation</span>
-                  <strong>FX Simulation</strong>
-                  <em>Scope - Particles, Smoke, Destruction, Fluids</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Beauty Cleanup project">
-              <figure>
-                <img src="assets/images/project-09.jpg" alt="Beauty cleanup VFX thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>Beauty Work</span>
-                  <strong>Beauty Cleanup</strong>
-                  <em>Scope - Skin, Wardrobe, Product, Invisible Fixes</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Invisible VFX project">
-              <figure>
-                <img src="assets/images/project-10.jpg" alt="Invisible VFX thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>Invisible VFX</span>
-                  <strong>Invisible VFX</strong>
-                  <em>Scope - Cleanup, Stabilization, Retiming, Final Polish</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Brand Film project">
-              <figure>
-                <img src="assets/images/project-11.jpg" alt="Brand film VFX thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>Brand Film</span>
-                  <strong>Brand Film</strong>
-                  <em>Client - Confidential / Scope - CGI, Grade Support</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-
-          <article class="project-card reveal">
-            <a href="#" aria-label="View Showreel 2025 project">
-              <figure>
-                <img src="assets/images/project-12.jpg" alt="Showreel 2025 cinematic thumbnail placeholder" loading="lazy">
-                <figcaption>
-                  <span>Showreel</span>
-                  <strong>Showreel 2025</strong>
-                  <em>Zodiac II Media / Scope - Selected VFX and CGI Work</em>
-                </figcaption>
-              </figure>
-            </a>
-          </article>
-        </div>
+      <section class="section-pad featured-reels" id="featured-reels" aria-labelledby="featured-title">
+        <div class="reel-grid" data-reel-grid></div>
       </section>
 
-      <section class="capabilities section-pad" aria-labelledby="capabilities-title">
+      <section class="section-pad capabilities" aria-labelledby="capabilities-title">
         <div class="section-heading reveal">
-          <h2 id="capabilities-title">Capabilities</h2>
+          <p class="section-kicker">Capabilities</p>
+          <h2 id="capabilities-title">Image Systems</h2>
         </div>
-
         <div class="capability-list">
-          <button class="capability-row reveal" type="button">
-            <span>VFX Supervision</span>
-            <small>Planning shots from set through final delivery.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>CGI Production</span>
-            <small>Assets, lighting, rendering, and final integration.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>Compositing</span>
-            <small>Invisible joins, believable atmospheres, precise polish.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>FX Simulation</span>
-            <small>Particles, smoke, fluids, and procedural motion.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>Environment / Set Extension</span>
-            <small>Worlds expanded without breaking the lens language.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>Cleanup / Beauty Work</span>
-            <small>Refined corrections designed to disappear.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>Motion Design</span>
-            <small>Graphic movement with filmic restraint.</small>
-          </button>
-          <button class="capability-row reveal" type="button">
-            <span>Look Development</span>
-            <small>Material, lighting, and mood systems for CG imagery.</small>
-          </button>
+          <button class="capability-row reveal" type="button"><span>VFX Supervision</span><small>Planning shots from set through final delivery.</small></button>
+          <button class="capability-row reveal" type="button"><span>CGI Production</span><small>Assets, lighting, rendering, and final integration.</small></button>
+          <button class="capability-row reveal" type="button"><span>Compositing</span><small>Invisible joins, believable atmospheres, precise polish.</small></button>
+          <button class="capability-row reveal" type="button"><span>FX Simulation</span><small>Smoke, particles, destruction, fluids, and procedural motion.</small></button>
+          <button class="capability-row reveal" type="button"><span>Environment / Set Extension</span><small>Worlds expanded without breaking the lens language.</small></button>
+          <button class="capability-row reveal" type="button"><span>Cleanup / Beauty Work</span><small>Refined corrections designed to disappear.</small></button>
+          <button class="capability-row reveal" type="button"><span>Motion Design</span><small>Graphic movement with filmic restraint.</small></button>
+          <button class="capability-row reveal" type="button"><span>Look Development</span><small>Material, lighting, and mood systems for CG imagery.</small></button>
         </div>
       </section>
 
-      <section class="about section-pad" id="about">
-        <div class="about-copy reveal">
-          <p>
-            Zodiac II Media is a Ho Chi Minh City based VFX studio working across music
-            videos, commercials, brand films, and cinematic visual campaigns.
+      <section class="section-pad about-preview" aria-labelledby="about-title">
+        <p class="section-kicker reveal">About</p>
+        <div class="about-copy">
+          <p class="reveal" id="about-title">
+            We are a Ho Chi Minh City based visual effects studio working across music videos,
+            commercials, brand films, and cinematic visual campaigns.
           </p>
-          <p>
-            Our focus is high-impact visuals, technical precision, and cinematic taste -
-            building images that support the film instead of announcing the process.
+          <p class="reveal">
+            Our focus is high-impact visuals, technical precision, and cinematic taste - from set
+            supervision to final composite.
           </p>
-        </div>
-
-        <div class="stats-row reveal" aria-label="Studio stats">
-          <span>2025 Showreel</span>
-          <span>Ho Chi Minh City</span>
-          <span>VFX / CGI Studio</span>
-          <span>Music Video / Commercial / Film</span>
         </div>
       </section>
 
-      <section class="contact section-pad" id="contact">
-        <p class="section-kicker reveal">Get In Touch</p>
+      <section class="section-pad contact-strip" aria-labelledby="contact-title">
+        <p class="section-kicker reveal" id="contact-title">Contact</p>
         <a class="contact-email reveal" href="mailto:hello@zodiacii.com">hello@zodiacii.com</a>
-        <div class="contact-details reveal">
-          <a href="tel:+84000000000">+84 xxx xxx xxx</a>
-          <nav aria-label="Social links">
-            <a href="#">YouTube</a>
-            <a href="#">Vimeo</a>
-            <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a>
-          </nav>
-        </div>
+        <nav class="social-links reveal" aria-label="Social links">
+          <a href="#">YouTube</a>
+          <a href="#">Vimeo</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </nav>
       </section>
     </main>
 
@@ -338,6 +104,8 @@
       <span data-local-time>Local Time --:--</span>
     </footer>
 
+    <script src="data/projects.js" defer></script>
+    <script src="data/reels.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

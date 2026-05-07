@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Watch cinematic reels by Zodiac II Media.">
+    <title>Reel | Zodiac II Media</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-page="reel">
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header" data-header>
+      <a class="brand-mark" href="index.html" aria-label="Zodiac II Media home">Zodiac II Media</a>
+      <div class="nav-timeline" aria-hidden="true">
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+      </div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <button type="button" data-work-trigger>Work</button>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main id="page" class="page-shell">
+      <article class="reel-page" data-reel-page>
+        <a class="reel-back reveal" href="index.html#featured-reels">Back</a>
+        <section class="reel-hero" aria-labelledby="reel-title">
+          <p class="reel-hero__label reveal" data-reel-label>Reel</p>
+          <h1 class="reel-hero__title reveal" id="reel-title" data-reel-title>Music Video Reel</h1>
+          <p class="reel-hero__description reveal" data-reel-description></p>
+        </section>
+
+        <section class="reel-player-wrap reveal" aria-label="Reel video player">
+          <video class="reel-player" controls playsinline preload="metadata" data-reel-video></video>
+        </section>
+
+        <section class="other-reels reveal" aria-labelledby="other-reels-title">
+          <p class="section-kicker" id="other-reels-title">Other Reels</p>
+          <nav class="other-reels__links" data-other-reels aria-label="Other reel pages"></nav>
+        </section>
+      </article>
+
+      <section class="section-pad contact-strip" aria-labelledby="reel-contact-title">
+        <p class="section-kicker reveal" id="reel-contact-title">Contact</p>
+        <a class="contact-email reveal" href="mailto:hello@zodiacii.com">hello@zodiacii.com</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Zodiac II Media</span>
+      <span>Ho Chi Minh City, Vietnam</span>
+      <span>&copy; 2026</span>
+      <span data-local-time>Local Time --:--</span>
+    </footer>
+
+    <script src="data/projects.js" defer></script>
+    <script src="data/reels.js" defer></script>
+    <script src="script.js" defer></script>
+  </body>
+</html>
