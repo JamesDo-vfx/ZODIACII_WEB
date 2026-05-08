@@ -8,6 +8,9 @@
       content="Zodiac II Media is a Ho Chi Minh City VFX and CGI studio crafting cinematic visuals for music videos, commercials, and brand films."
     >
     <title>Zodiac II Media | VFX / CGI Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   </head>
   <body data-page="home">
@@ -54,20 +57,36 @@
         <div class="reel-grid" data-reel-grid></div>
       </section>
 
-      <section class="section-pad capabilities" aria-labelledby="capabilities-title">
-        <div class="section-heading reveal">
-          <p class="section-kicker">Capabilities</p>
-          <h2 id="capabilities-title">Image Systems</h2>
+      <section class="capabilities-kinetic section-pad" aria-labelledby="capabilities-title">
+        <div class="capabilities-kinetic__head reveal">
+          <p class="capabilities-kinetic__label">Capabilities</p>
+          <h2 id="capabilities-title" class="capabilities-kinetic__title">Image Systems</h2>
         </div>
-        <div class="capability-list">
-          <button class="capability-row reveal" type="button"><span>VFX Supervision</span><small>Planning shots from set through final delivery.</small></button>
-          <button class="capability-row reveal" type="button"><span>CGI Production</span><small>Assets, lighting, rendering, and final integration.</small></button>
-          <button class="capability-row reveal" type="button"><span>Compositing</span><small>Invisible joins, believable atmospheres, precise polish.</small></button>
-          <button class="capability-row reveal" type="button"><span>FX Simulation</span><small>Smoke, particles, destruction, fluids, and procedural motion.</small></button>
-          <button class="capability-row reveal" type="button"><span>Environment / Set Extension</span><small>Worlds expanded without breaking the lens language.</small></button>
-          <button class="capability-row reveal" type="button"><span>Cleanup / Beauty Work</span><small>Refined corrections designed to disappear.</small></button>
-          <button class="capability-row reveal" type="button"><span>Motion Design</span><small>Graphic movement with filmic restraint.</small></button>
-          <button class="capability-row reveal" type="button"><span>Look Development</span><small>Material, lighting, and mood systems for CG imagery.</small></button>
+
+        <div class="capabilities-kinetic__stage reveal" data-capabilities-stage>
+          <button class="capabilities-kinetic__arrow capabilities-kinetic__arrow--prev" type="button" aria-label="Previous capability">‹</button>
+
+          <div class="capabilities-kinetic__viewport" data-capabilities-viewport>
+            <div class="capabilities-kinetic__track" data-capabilities-track>
+              <button class="capabilities-kinetic__item" type="button">VFX Supervision</button>
+              <button class="capabilities-kinetic__item" type="button">CGI Production</button>
+              <button class="capabilities-kinetic__item" type="button">Compositing</button>
+              <button class="capabilities-kinetic__item" type="button">FX Simulation</button>
+              <button class="capabilities-kinetic__item" type="button">Environment / Set Extension</button>
+              <button class="capabilities-kinetic__item" type="button">Cleanup / Beauty Work</button>
+              <button class="capabilities-kinetic__item" type="button">Motion Design</button>
+              <button class="capabilities-kinetic__item" type="button">Look Development</button>
+            </div>
+          </div>
+
+          <button class="capabilities-kinetic__arrow capabilities-kinetic__arrow--next" type="button" aria-label="Next capability">›</button>
+        </div>
+
+        <div class="capabilities-kinetic__meta reveal">
+          <p class="capabilities-kinetic__index" data-capabilities-index>01</p>
+          <p class="capabilities-kinetic__description" data-capabilities-description>
+            On-set oversight, creative alignment, and technical supervision to ensure the final image is achievable, consistent, and production-ready.
+          </p>
         </div>
       </section>
 
@@ -105,7 +124,6 @@
     </footer>
 
     <script src="data/projects.js" defer></script>
-    <script src="data/reels.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

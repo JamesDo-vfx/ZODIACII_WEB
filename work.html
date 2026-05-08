@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Selected work by Zodiac II Media.">
     <title>All Work | Zodiac II Media</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
   </head>
   <body data-page="work">
@@ -24,16 +27,16 @@
     </header>
 
     <main id="page" class="page-shell">
-      <section class="work-category-hero" aria-labelledby="work-category-title">
+      <section class="work-category-hero" aria-labelledby="work-hero-project-title">
         <div class="work-category-hero__media" data-category-media aria-hidden="true"></div>
         <button class="work-category-hero__arrow work-category-hero__arrow--prev" type="button" aria-label="Previous project">‹</button>
         <button class="work-category-hero__arrow work-category-hero__arrow--next" type="button" aria-label="Next project">›</button>
         <div class="work-category-hero__copy reveal">
-          <p class="work-category-hero__label" data-category-hero-category>All Work</p>
-          <h1 id="work-category-title" data-category-title>All Work</h1>
-          <p class="work-category-hero__project" data-category-hero-title>Selected Work</p>
+          <p class="work-category-hero__kicker" data-hero-category-label>Commercial</p>
+          <h1 id="work-hero-project-title" class="work-category-hero__title" data-hero-project-title>Bvlgari</h1>
+          <p class="work-category-hero__client" data-hero-project-client>Serpenti Infinito</p>
+          <div class="work-category-hero__progress" data-category-progress aria-label="Hero projects"></div>
         </div>
-        <div class="work-category-hero__progress" data-category-progress aria-label="Hero projects"></div>
       </section>
 
       <section class="work-category-intro content-over-hero">
@@ -41,10 +44,6 @@
       </section>
 
       <section class="work-index" aria-labelledby="work-grid-title">
-        <div class="work-index__top reveal">
-          <h2 id="work-grid-title">Selected Work<sup data-project-count>[0]</sup></h2>
-          <a href="contact.html">° Contact</a>
-        </div>
         <div class="project-grid project-grid--editorial" data-project-grid data-mode="category"></div>
       </section>
 

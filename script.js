@@ -6,16 +6,11 @@
   const progressSegments = Array.from(document.querySelectorAll("[data-progress-segment]"));
   const localTime = document.querySelector("[data-local-time]");
   const projects = Array.isArray(window.projects) ? window.projects : [];
-  const reels = Array.isArray(window.reels) ? window.reels : [];
 
   const categories = {
     all: {
       title: "All Work",
-      subtitle: "Selected VFX, CGI, music video, film, and commercial work by Zodiac II Media."
-    },
-    film: {
-      title: "Film",
-      subtitle: "Selected cinematic VFX, brand film, and environment work by Zodiac II Media."
+      subtitle: "Selected VFX, CGI, music video, film, billboard, and commercial work by Zodiac II Media."
     },
     commercial: {
       title: "Commercial",
@@ -24,8 +19,75 @@
     "music-video": {
       title: "Music Video",
       subtitle: "Selected music video VFX, cleanup, compositing, and cinematic image work."
+    },
+    film: {
+      title: "Film",
+      subtitle: "Selected cinematic VFX, film, brand film, and environment work by Zodiac II Media."
+    },
+    billboard: {
+      title: "Billboard",
+      subtitle: "Selected billboard, outdoor, LED, and large-format visual work by Zodiac II Media."
     }
   };
+
+  const categoryConfig = {
+    commercial: {
+      title: "Commercial Reel",
+      label: "Commercial",
+      category: "commercial",
+      description: "Commercial CGI, compositing, and visual effects work for brands, campaigns, and premium advertising.",
+      url: "reel.html?category=commercial",
+      layout: "standard"
+    },
+    "music-video": {
+      title: "Music Video Reel",
+      label: "Music Video",
+      category: "music-video",
+      description: "Cinematic VFX and visual effects work crafted for music videos, artists, and high-impact visual storytelling.",
+      url: "reel.html?category=music-video",
+      layout: "large"
+    },
+    film: {
+      title: "Film Reel",
+      label: "Film",
+      category: "film",
+      description: "Cinematic film, brand film, environment, invisible VFX, and long-form visual effects work.",
+      url: "reel.html?category=film",
+      layout: "wide"
+    },
+    billboard: {
+      title: "Billboard Reel",
+      label: "Billboard",
+      category: "billboard",
+      description: "High-impact billboard, LED, outdoor, OOH, and large-format visual work built for public scale.",
+      url: "reel.html?category=billboard",
+      layout: "standard"
+    }
+  };
+
+  const getProjectsByCategory = (category) =>
+    projects.filter((project) => project.category === category);
+
+  const getCategoryPosterProject = (category) => {
+    const categoryProjects = getProjectsByCategory(category);
+    return categoryProjects.find((project) => project.featured) || categoryProjects[0] || projects[0];
+  };
+
+  const categoryReels = Object.values(categoryConfig).map((config) => {
+    const heroProject = getCategoryPosterProject(config.category);
+
+    return {
+      ...config,
+      poster: heroProject?.image || "assets/images/hero.jpg",
+      previewVideo: heroProject?.video || "assets/videos/SHOWREELS_CINEMATIC_v01.webm",
+      fullVideo: heroProject?.video || "assets/videos/SHOWREELS_CINEMATIC_v01.webm",
+      projectCount: getProjectsByCategory(config.category).length
+    };
+  });
+
+  const featuredReels = ["music-video", "commercial", "film", "billboard"]
+    .map((category) => categoryReels.find((reel) => reel.category === category))
+    .filter(Boolean);
 
   const createOverlay = () => {
     const overlay = document.createElement("div");
@@ -36,17 +98,53 @@
       <button class="work-overlay__back" type="button" data-work-close>Back</button>
       <nav class="work-overlay__links" aria-label="Work category navigation">
         <a style="--i:0" href="work.html?category=all">All Work</a>
-        <a style="--i:1" href="work.html?category=film">Film</a>
-        <a style="--i:2" href="work.html?category=commercial">Commercial</a>
-        <a style="--i:3" href="work.html?category=music-video">Music Video</a>
+        <a style="--i:1" href="work.html?category=commercial">Commercial</a>
+        <a style="--i:2" href="work.html?category=music-video">Music Video</a>
+        <a style="--i:3" href="work.html?category=film">Film</a>
+        <a style="--i:4" href="work.html?category=billboard">Billboard</a>
       </nav>
     `;
     document.body.append(overlay);
     return overlay;
   };
 
+  const createReelModal = () => {
+    const modal = document.createElement("div");
+    modal.className = "reel-modal";
+    modal.dataset.reelModal = "";
+    modal.setAttribute("aria-hidden", "true");
+    modal.innerHTML = `
+      <div class="reel-modal__backdrop" data-reel-modal-close></div>
+      <div class="reel-modal__panel" role="dialog" aria-modal="true" aria-label="Reel video player">
+        <div class="reel-modal__video-wrap">
+          <video
+            class="reel-modal__video"
+            data-reel-modal-video
+            muted
+            loop
+            playsinline
+            preload="metadata"
+          ></video>
+        </div>
+        <div class="reel-modal__meta">
+          <div class="reel-modal__actions">
+            <button class="reel-modal__sound" type="button" data-reel-modal-sound>Sound Off</button>
+            <a class="reel-modal__work" href="work.html?category=music-video" data-reel-modal-work>View Work</a>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.append(modal);
+    return modal;
+  };
+
   const workOverlay = createOverlay();
   const closeButton = workOverlay.querySelector("[data-work-close]");
+  const reelModal = createReelModal();
+  const modalVideo = reelModal.querySelector("[data-reel-modal-video]");
+  const modalSound = reelModal.querySelector("[data-reel-modal-sound]");
+  const modalWork = reelModal.querySelector("[data-reel-modal-work]");
+  const modalCloseButtons = reelModal.querySelectorAll("[data-reel-modal-close]");
 
   const openWorkOverlay = () => {
     body.classList.add("is-work-overlay-open");
@@ -61,6 +159,41 @@
     workOverlay.setAttribute("aria-hidden", "true");
   };
 
+  const openReelModal = (reel) => {
+    if (!reelModal || !modalVideo || !reel) return;
+    const videoSrc = reel.fullVideo || reel.previewVideo;
+
+    body.classList.add("is-reel-modal-open");
+    reelModal.classList.add("is-open");
+    reelModal.setAttribute("aria-hidden", "false");
+
+    modalWork.href = `work.html?category=${reel.category}`;
+
+    modalVideo.poster = reel.poster || "";
+    modalVideo.innerHTML = `<source src="${videoSrc}" type="${getVideoType(videoSrc)}">`;
+    modalVideo.muted = true;
+    modalSound.textContent = "Sound Off";
+
+    modalVideo.load();
+    modalVideo.play().catch(() => {});
+    modalSound.focus({ preventScroll: true });
+  };
+
+  const closeReelModal = () => {
+    if (!reelModal || !modalVideo) return;
+
+    modalVideo.pause();
+    modalVideo.currentTime = 0;
+    modalVideo.removeAttribute("src");
+    modalVideo.removeAttribute("poster");
+    modalVideo.innerHTML = "";
+    modalVideo.load();
+
+    reelModal.classList.remove("is-open");
+    reelModal.setAttribute("aria-hidden", "true");
+    body.classList.remove("is-reel-modal-open");
+  };
+
   document.querySelectorAll("[data-work-trigger]").forEach((trigger) => {
     trigger.addEventListener("click", openWorkOverlay);
   });
@@ -68,6 +201,18 @@
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && workOverlay.classList.contains("is-open")) {
       closeWorkOverlay();
+    }
+  });
+  modalSound.addEventListener("click", () => {
+    modalVideo.muted = !modalVideo.muted;
+    modalSound.textContent = modalVideo.muted ? "Sound Off" : "Sound On";
+  });
+  modalCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeReelModal);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && reelModal.classList.contains("is-open")) {
+      closeReelModal();
     }
   });
 
@@ -119,7 +264,12 @@
             <source src="${project.video}" type="${project.video.endsWith(".webm") ? "video/webm" : "video/mp4"}">
           </video>
           <figcaption class="project-info">
-            <h3>${project.title}</h3>
+            <h3 class="project-title" aria-label="${project.title}">
+              <span class="project-title__track">
+                <span class="project-title__line">${project.title}</span>
+                <span class="project-title__line" aria-hidden="true">${project.title}</span>
+              </span>
+            </h3>
             <span class="project-category">${getProjectCategoryTitle(project)}</span>
           </figcaption>
         </figure>
@@ -144,9 +294,9 @@
   const reelTemplate = (reel, index) => {
     const link = document.createElement("a");
     link.className = `reel-card reel-card--${reel.layout} reveal`;
-    link.href = reel.url;
+    link.href = `work.html?category=${reel.category}`;
     link.setAttribute("aria-label", `Watch ${reel.title}`);
-    link.dataset.reelType = reel.type;
+    link.dataset.reelType = reel.category;
     link.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
     link.innerHTML = `
       <span class="reel-card__media">
@@ -188,11 +338,22 @@
     card.addEventListener("focusout", () => stopPreview(card, video));
   };
 
+  const setupReelModalTrigger = (card) => {
+    card.addEventListener("click", (event) => {
+      const category = card.dataset.reelType || card.dataset.category;
+      const reel = categoryReels.find((item) => item.category === category);
+      if (!reel) return;
+      event.preventDefault();
+      openReelModal(reel);
+    });
+  };
+
   const renderReelGrid = () => {
     document.querySelectorAll("[data-reel-grid]").forEach((grid) => {
-      const cards = reels.map(reelTemplate);
+      const cards = featuredReels.map(reelTemplate);
       grid.replaceChildren(...cards);
       cards.forEach(setupReelPreview);
+      cards.forEach(setupReelModalTrigger);
     });
   };
 
@@ -222,17 +383,17 @@
   };
 
   const renderWorkPage = () => {
-    const pageTitle = document.querySelector("[data-category-title]");
-    if (!pageTitle) return;
+    const heroMedia = document.querySelector("[data-category-media]");
+    if (!heroMedia) return;
     const category = getCategory();
     const categoryData = categories[category];
     const filteredProjects = category === "all" ? projects : projects.filter((project) => project.category === category);
     const heroProjects = filteredProjects.length ? filteredProjects : projects;
     const firstProject = filteredProjects[0] || projects[0];
     let activeHeroIndex = Math.max(heroProjects.indexOf(firstProject), 0);
-    const heroCategory = document.querySelector("[data-category-hero-category]");
-    const heroTitle = document.querySelector("[data-category-hero-title]");
-    const heroMedia = document.querySelector("[data-category-media]");
+    const heroCategoryLabel = document.querySelector("[data-hero-category-label]");
+    const heroProjectTitle = document.querySelector("[data-hero-project-title]");
+    const heroProjectClient = document.querySelector("[data-hero-project-client]");
     const heroCopy = document.querySelector(".work-category-hero__copy");
     const heroProgress = document.querySelector("[data-category-progress]");
     const prevButton = document.querySelector(".work-category-hero__arrow--prev");
@@ -265,8 +426,13 @@
 
     const renderHeroProject = (project, direction = "next") => {
       if (!project) return;
-      if (heroCategory) heroCategory.textContent = categoryData.title;
-      if (heroTitle) heroTitle.textContent = project.title;
+      if (heroCategoryLabel) heroCategoryLabel.textContent = categoryData.title;
+      if (heroProjectTitle) heroProjectTitle.textContent = project.title;
+      if (heroProjectClient) {
+        const clientText = project.client || project.categoryLabel || "";
+        heroProjectClient.textContent = clientText;
+        heroProjectClient.hidden = !clientText;
+      }
       if (heroMedia) {
         const previousMediaItems = Array.from(heroMedia.children);
         const media = createHeroMediaElement(project);
@@ -294,7 +460,6 @@
       updateHeroProgress();
     };
 
-    pageTitle.textContent = categoryData.title;
     document.querySelector("[data-category-subtitle]").textContent = categoryData.subtitle;
     document.title = `${categoryData.title} | Zodiac II Media`;
     renderHeroProject(firstProject, "next");
@@ -325,7 +490,6 @@
     if (heroProjects.length <= 1) {
       prevButton?.setAttribute("disabled", "");
       nextButton?.setAttribute("disabled", "");
-      heroProgress?.setAttribute("hidden", "");
     } else {
       heroProgress?.removeAttribute("hidden");
       prevButton?.addEventListener("click", () => setHeroByOffset(-1));
@@ -335,13 +499,19 @@
 
   const renderReelPage = () => {
     const page = document.querySelector("[data-reel-page]");
-    if (!page || !reels.length) return;
-    const type = new URLSearchParams(window.location.search).get("type");
-    const reel = reels.find((item) => item.type === type) || reels[0];
+    if (!page) return;
+    const requestedCategory = new URLSearchParams(window.location.search).get("category") || "music-video";
+    const category = Object.prototype.hasOwnProperty.call(categoryConfig, requestedCategory)
+      ? requestedCategory
+      : "music-video";
+    const reel = categoryReels.find((item) => item.category === category) || categoryReels[0];
+    const categoryProjects = getProjectsByCategory(category);
+    const mainProject = categoryProjects.find((project) => project.featured) || categoryProjects[0];
     const title = page.querySelector("[data-reel-title]");
     const label = page.querySelector("[data-reel-label]");
     const description = page.querySelector("[data-reel-description]");
     const video = page.querySelector("[data-reel-video]");
+    const playerWrap = page.querySelector(".reel-player-wrap");
     const otherReels = page.querySelector("[data-other-reels]");
 
     title.textContent = reel.title;
@@ -349,11 +519,18 @@
     description.textContent = reel.description;
     document.title = `${reel.title} | Zodiac II Media`;
 
-    video.poster = reel.poster;
-    video.innerHTML = `<source src="${reel.fullVideo}" type="${getVideoType(reel.fullVideo)}">`;
+    if (mainProject) {
+      video.poster = mainProject.image;
+      video.innerHTML = `<source src="${mainProject.video}" type="${getVideoType(mainProject.video)}">`;
+    } else if (playerWrap) {
+      const empty = document.createElement("p");
+      empty.className = "reel-empty";
+      empty.textContent = "More work coming soon.";
+      playerWrap.replaceChildren(empty);
+    }
 
-    const links = reels
-      .filter((item) => item.type !== reel.type)
+    const links = categoryReels
+      .filter((item) => item.category !== reel.category)
       .map((item) => {
         const link = document.createElement("a");
         link.href = item.url;
@@ -363,10 +540,240 @@
     otherReels.replaceChildren(...links);
   };
 
+  const initCapabilitiesKinetic = () => {
+    const capabilityData = [
+      {
+        title: "VFX Supervision",
+        description: "On-set oversight, creative alignment, and technical supervision to ensure the final image is achievable, consistent, and production-ready."
+      },
+      {
+        title: "CGI Production",
+        description: "End-to-end CGI production across concept, modeling, animation, lighting, rendering, and final integration."
+      },
+      {
+        title: "Compositing",
+        description: "Layered image construction, matte integration, finishing, and seamless final-frame compositing."
+      },
+      {
+        title: "FX Simulation",
+        description: "Dynamic simulations for smoke, fire, dust, destruction, particles, liquids, and atmospheric detail."
+      },
+      {
+        title: "Environment / Set Extension",
+        description: "Digital environments and set extensions that expand physical production into believable cinematic worlds."
+      },
+      {
+        title: "Cleanup / Beauty Work",
+        description: "Invisible cleanup, retouching, wire removal, beauty enhancement, and frame-level image correction."
+      },
+      {
+        title: "Motion Design",
+        description: "Design-led motion systems for title work, brand animation, interfaces, and visual communication."
+      },
+      {
+        title: "Look Development",
+        description: "Material, lighting, shading, and render look development built for premium image quality and consistency."
+      }
+    ];
+
+    const section = document.querySelector(".capabilities-kinetic");
+    const track = section?.querySelector("[data-capabilities-track]");
+    const viewport = section?.querySelector("[data-capabilities-viewport]");
+    const indexEl = section?.querySelector("[data-capabilities-index]");
+    const descEl = section?.querySelector("[data-capabilities-description]");
+    const prevBtn = section?.querySelector(".capabilities-kinetic__arrow--prev");
+    const nextBtn = section?.querySelector(".capabilities-kinetic__arrow--next");
+    const sourceItems = Array.from(track?.querySelectorAll(".capabilities-kinetic__item") || []);
+
+    if (!section || !track || !viewport || sourceItems.length !== capabilityData.length) return;
+
+    const mod = (n, m) => ((n % m) + m) % m;
+    const itemCount = capabilityData.length;
+    let activeIndex = 0;
+    let cursorIndex = itemCount;
+    let currentTranslate = 0;
+    let isAnimating = false;
+    let touchStartY = null;
+    let autoAdvanceTimer = null;
+
+    const cloneItem = (item, index) => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      clone.tabIndex = -1;
+      clone.dataset.capabilityIndex = String(index);
+      return clone;
+    };
+
+    const beforeItems = document.createDocumentFragment();
+    const afterItems = document.createDocumentFragment();
+
+    sourceItems.forEach((item, index) => {
+      item.dataset.capabilityIndex = String(index);
+      item.setAttribute("aria-pressed", "false");
+      beforeItems.append(cloneItem(item, index));
+      afterItems.append(cloneItem(item, index));
+    });
+
+    track.prepend(beforeItems);
+    track.append(afterItems);
+
+    const visualItems = Array.from(track.querySelectorAll(".capabilities-kinetic__item"));
+
+    const setTrackTranslate = (nextTranslate, instant = false) => {
+      if (instant) track.classList.add("is-resetting");
+      track.style.transform = `translateY(${nextTranslate}px)`;
+      currentTranslate = nextTranslate;
+
+      if (instant) {
+        window.requestAnimationFrame(() => {
+          track.classList.remove("is-resetting");
+        });
+      }
+    };
+
+    const centerCursor = (instant = false) => {
+      const activeItem = visualItems[cursorIndex];
+      if (!activeItem) return;
+
+      const viewportRect = viewport.getBoundingClientRect();
+      const itemRect = activeItem.getBoundingClientRect();
+      const offset = (itemRect.top + itemRect.height / 2) - (viewportRect.top + viewportRect.height / 2);
+
+      setTrackTranslate(currentTranslate - offset, instant);
+    };
+
+    const updateCapabilityView = (instant = false) => {
+      activeIndex = mod(cursorIndex, itemCount);
+
+      visualItems.forEach((item, index) => {
+        const distance = index - cursorIndex;
+        item.classList.remove("is-active", "is-near", "is-far");
+
+        if (distance === 0) {
+          item.classList.add("is-active");
+        } else if (Math.abs(distance) === 1) {
+          item.classList.add("is-near");
+        } else {
+          item.classList.add("is-far");
+        }
+      });
+
+      sourceItems.forEach((item, index) => {
+        item.setAttribute("aria-pressed", String(index === activeIndex));
+      });
+
+      const activeData = capabilityData[activeIndex];
+      if (indexEl) indexEl.textContent = String(activeIndex + 1).padStart(2, "0");
+      if (descEl) descEl.textContent = activeData.description;
+
+      centerCursor(instant);
+    };
+
+    const resetCursorIfNeeded = () => {
+      if (cursorIndex >= itemCount && cursorIndex < itemCount * 2) return;
+      cursorIndex = itemCount + activeIndex;
+      updateCapabilityView(true);
+    };
+
+    const scheduleAutoAdvance = () => {
+      window.clearTimeout(autoAdvanceTimer);
+      autoAdvanceTimer = window.setTimeout(() => {
+        nextCapability();
+      }, 1000);
+    };
+
+    const goToCursor = (nextCursor) => {
+      if (isAnimating) return;
+      window.clearTimeout(autoAdvanceTimer);
+      isAnimating = true;
+      cursorIndex = nextCursor;
+      updateCapabilityView();
+
+      window.setTimeout(() => {
+        resetCursorIfNeeded();
+        isAnimating = false;
+        scheduleAutoAdvance();
+      }, prefersReducedMotion ? 40 : 760);
+    };
+
+    const goToCapability = (targetIndex) => {
+      const normalizedTarget = mod(targetIndex, itemCount);
+      let delta = normalizedTarget - activeIndex;
+
+      if (delta > itemCount / 2) delta -= itemCount;
+      if (delta < -itemCount / 2) delta += itemCount;
+      if (delta === 0) return;
+
+      goToCursor(cursorIndex + delta);
+    };
+
+    const nextCapability = () => goToCursor(cursorIndex + 1);
+    const prevCapability = () => goToCursor(cursorIndex - 1);
+
+    prevBtn?.addEventListener("click", prevCapability);
+    nextBtn?.addEventListener("click", nextCapability);
+
+    visualItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        goToCapability(Number(item.dataset.capabilityIndex || 0));
+      });
+    });
+
+    section.addEventListener(
+      "wheel",
+      (event) => {
+        if (isAnimating || Math.abs(event.deltaY) < 6) return;
+        if (event.deltaY > 0) nextCapability();
+        else prevCapability();
+      },
+      { passive: true }
+    );
+
+    section.addEventListener("touchstart", (event) => {
+      touchStartY = event.touches[0]?.clientY ?? null;
+    }, { passive: true });
+
+    section.addEventListener("touchend", (event) => {
+      if (touchStartY === null || isAnimating) return;
+      const touchEndY = event.changedTouches[0]?.clientY ?? touchStartY;
+      const deltaY = touchStartY - touchEndY;
+      touchStartY = null;
+      if (Math.abs(deltaY) < 34) return;
+      if (deltaY > 0) nextCapability();
+      else prevCapability();
+    }, { passive: true });
+
+    document.addEventListener("keydown", (event) => {
+      const rect = section.getBoundingClientRect();
+      const sectionInView = rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2;
+      if (!sectionInView) return;
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        nextCapability();
+      }
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        prevCapability();
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      window.requestAnimationFrame(() => updateCapabilityView(true));
+    });
+
+    window.requestAnimationFrame(() => {
+      updateCapabilityView(true);
+      scheduleAutoAdvance();
+    });
+  };
+
   renderWorkPage();
   renderProjectGrid();
   renderReelGrid();
   renderReelPage();
+  initCapabilitiesKinetic();
 
   const revealItems = Array.from(document.querySelectorAll(".reveal"));
   revealItems.forEach((item, index) => {

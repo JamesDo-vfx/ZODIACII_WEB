@@ -11,7 +11,7 @@ Tất cả các trang như:
 - `work.html?category=film`
 - `work.html?category=commercial`
 - `work.html?category=music-video`
-- `reel.html?type=...`
+- `reel.html?category=...`
 - `about.html`
 - `contact.html`
 
@@ -128,7 +128,6 @@ Tất cả page phải nằm trong cấu trúc chung:
   </footer>
 
   <script src="data/projects.js" defer></script>
-  <script src="data/reels.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 ```
@@ -192,9 +191,10 @@ Khi bấm `Work`, hiện fullscreen overlay:
 
 ```text
 All Work
-Film
 Commercial
 Music Video
+Film
+Billboard
 ```
 
 ### Bắt buộc
@@ -202,7 +202,7 @@ Music Video
 - Full viewport.
 - Background page phía sau blur.
 - Overlay có dark translucent wash.
-- 4 dòng chữ rất lớn.
+- 5 dòng chữ rất lớn.
 - Có nút `Back` nhỏ góc phải.
 - ESC đóng overlay.
 - Không phải dropdown.
@@ -212,9 +212,10 @@ Music Video
 
 ```text
 All Work      -> work.html?category=all
-Film          -> work.html?category=film
 Commercial    -> work.html?category=commercial
 Music Video   -> work.html?category=music-video
+Film          -> work.html?category=film
+Billboard     -> work.html?category=billboard
 ```
 
 ### Visual
@@ -477,8 +478,8 @@ Featured Reels là một trong các module chính của design system.
 
 ```text
 [ Music Video Reel - large ] [ Commercial Reel ]
-[ Music Video Reel - large ] [ CGI Reel        ]
-[ VFX Breakdown Reel       ] [ Beauty Cleanup ]
+[ Music Video Reel - large ] [ Film Reel       ]
+[ Billboard Reel - wide across bottom           ]
 ```
 
 Hiện tại dùng grid areas:
@@ -489,8 +490,8 @@ Hiện tại dùng grid areas:
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas:
     "music music commercial commercial"
-    "music music cgi cgi"
-    "breakdown breakdown beauty beauty";
+    "music music film film"
+    "billboard billboard billboard billboard";
 }
 ```
 
@@ -499,7 +500,7 @@ Hiện tại dùng grid areas:
 - Poster mặc định.
 - Hover thì preview video chạy.
 - Title có vertical slide one-time style.
-- Click mở `reel.html?type=...`.
+- Click mở `reel.html?category=...`.
 
 ### Card text
 
@@ -734,7 +735,7 @@ Giữ micro typography.
 ```text
 Ho Chi Minh City, Vietnam
 VFX / CGI Studio
-Music Video / Commercial / Film
+Commercial / Music Video / Film / Billboard
 2025 Showreel
 ```
 
@@ -922,20 +923,9 @@ Cho:
 - `work.html?category=...`
 - selected project grid
 - work category hero
-
-### Reels
-
-Dùng:
-
-```js
-window.reels
-```
-
-Cho:
-
-- Featured Reels ở homepage
-- `reel.html?type=...`
-- Other Reels
+- Featured Reels ở homepage, generated from project categories
+- `reel.html?category=...`
+- Other category reel links
 
 ### Không được
 
@@ -951,24 +941,15 @@ Dùng thống nhất:
 
 ```text
 all
-film
 commercial
 music-video
+film
+billboard
 ```
 
 `all` là virtual category, không dùng làm project category thật.
 
-### Reel slugs
-
-Dùng thống nhất:
-
-```text
-music-video
-commercial
-cgi
-vfx-breakdown
-beauty-cleanup
-```
+Featured Reels are category-based and generated from `projects.js`. There is no separate `reels.js` data file.
 
 ---
 
