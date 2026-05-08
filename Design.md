@@ -868,7 +868,7 @@ Contact strip có thể tái sử dụng ở nhiều page.
 ```html
 <section class="section-pad contact-strip">
   <p class="section-kicker reveal">Contact</p>
-  <a class="contact-email reveal" href="mailto:hello@zodiacii.com">hello@zodiacii.com</a>
+  <a class="contact-email reveal" href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
   <nav class="social-links reveal">
     ...
   </nav>

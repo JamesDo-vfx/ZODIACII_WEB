@@ -7,7 +7,6 @@
   const localTime = document.querySelector("[data-local-time]");
   const projects = Array.isArray(window.projects) ? window.projects : [];
 
-<<<<<<< HEAD
   const initSmoothScroll = () => {
     if (prefersReducedMotion || typeof Lenis === "undefined") {
       return null;
@@ -36,22 +35,28 @@
 
   const lenis = initSmoothScroll();
 
+  const shouldPauseSmoothScroll = () =>
+    body.classList.contains("is-loading") ||
+    body.classList.contains("is-work-overlay-open") ||
+    body.classList.contains("is-reel-modal-open") ||
+    body.classList.contains("is-page-transitioning");
+
   const stopSmoothScroll = () => {
     window.zodiacLenis?.stop();
   };
 
   const startSmoothScroll = () => {
-    const hasScrollLock =
-      body.classList.contains("is-loading") ||
-      body.classList.contains("is-work-overlay-open") ||
-      body.classList.contains("is-reel-modal-open") ||
-      body.classList.contains("is-page-transitioning");
-
-    if (!hasScrollLock) {
+    if (!shouldPauseSmoothScroll()) {
       window.zodiacLenis?.start();
     }
   };
 
+  const syncSmoothScrollState = () => {
+    if (!lenis) return;
+    if (shouldPauseSmoothScroll()) stopSmoothScroll();
+    else startSmoothScroll();
+  };
+
   const categories = {
     all: {
       title: "All Work",
@@ -75,31 +80,6 @@
     }
   };
 
-=======
-  const categories = {
-    all: {
-      title: "All Work",
-      subtitle: "Selected VFX, CGI, music video, film, billboard, and commercial work by Zodiac II Media."
-    },
-    commercial: {
-      title: "Commercial",
-      subtitle: "Selected commercial, CGI, and VFX work by Zodiac II Media."
-    },
-    "music-video": {
-      title: "Music Video",
-      subtitle: "Selected music video VFX, cleanup, compositing, and cinematic image work."
-    },
-    film: {
-      title: "Film",
-      subtitle: "Selected cinematic VFX, film, brand film, and environment work by Zodiac II Media."
-    },
-    billboard: {
-      title: "Billboard",
-      subtitle: "Selected billboard, outdoor, LED, and large-format visual work by Zodiac II Media."
-    }
-  };
-
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
   const categoryConfig = {
     commercial: {
       title: "Commercial Reel",
@@ -162,10 +142,7 @@
   const createOverlay = () => {
     const overlay = document.createElement("div");
     overlay.className = "work-overlay";
-<<<<<<< HEAD
     overlay.setAttribute("data-lenis-prevent", "");
-=======
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
     overlay.setAttribute("aria-hidden", "true");
     overlay.innerHTML = `
       <p class="work-overlay__label">Work Index</p>
@@ -186,10 +163,7 @@
     const modal = document.createElement("div");
     modal.className = "reel-modal";
     modal.dataset.reelModal = "";
-<<<<<<< HEAD
     modal.setAttribute("data-lenis-prevent", "");
-=======
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
     modal.setAttribute("aria-hidden", "true");
     modal.innerHTML = `
       <div class="reel-modal__backdrop" data-reel-modal-close></div>
@@ -216,6 +190,152 @@
     return modal;
   };
 
+  const createPageTransition = () => {
+    let transition = document.querySelector("[data-page-transition]");
+
+    if (!transition) {
+      transition = document.createElement("div");
+      transition.className = "page-transition";
+      transition.setAttribute("data-page-transition", "");
+      transition.setAttribute("aria-hidden", "true");
+      transition.innerHTML = '<div class="page-transition__panel"></div>';
+      document.body.append(transition);
+    }
+
+    return transition;
+  };
+
+  const getTransitionPending = () => {
+    try {
+      return sessionStorage.getItem("zodiac_page_transition_pending") === "true";
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const setTransitionPending = () => {
+    try {
+      sessionStorage.setItem("zodiac_page_transition_pending", "true");
+    } catch (error) {
+      // Storage can be unavailable in private or restricted browser contexts.
+    }
+  };
+
+  const clearTransitionPending = () => {
+    try {
+      sessionStorage.removeItem("zodiac_page_transition_pending");
+    } catch (error) {
+      // Storage can be unavailable in private or restricted browser contexts.
+    }
+  };
+
+  const isInternalNavigableLink = (link) => {
+    if (!link || !link.href) return false;
+    if (link.target && link.target !== "_self") return false;
+    if (link.hasAttribute("download")) return false;
+    if (link.dataset.workTrigger !== undefined) return false;
+
+    const rawHref = link.getAttribute("href") || "";
+    const normalizedHref = rawHref.trim().toLowerCase();
+    if (!normalizedHref) return false;
+    if (normalizedHref.startsWith("#")) return false;
+    if (normalizedHref.startsWith("mailto:")) return false;
+    if (normalizedHref.startsWith("tel:")) return false;
+
+    let url;
+    try {
+      url = new URL(link.href, window.location.href);
+    } catch (error) {
+      return false;
+    }
+
+    if (url.origin !== window.location.origin) return false;
+    if (url.hash) return false;
+
+    const pageName = url.pathname.split("/").pop() || "index.html";
+    const navigablePages = new Set(["index.html", "about.html", "contact.html", "work.html", "reel.html"]);
+    if (!navigablePages.has(pageName)) return false;
+
+    const currentUrl = new URL(window.location.href);
+    const isSamePage =
+      url.pathname === currentUrl.pathname &&
+      url.search === currentUrl.search &&
+      url.hash === currentUrl.hash;
+
+    return !isSamePage;
+  };
+
+  const initPageTransitions = () => {
+    const transition = createPageTransition();
+    const panel = transition.querySelector(".page-transition__panel");
+
+    if (!transition || !panel) return;
+
+    let isTransitioning = false;
+
+    const resetTransition = () => {
+      isTransitioning = false;
+      transition.classList.remove("is-active", "is-entering", "is-leaving");
+      panel.style.transform = "translateX(100%)";
+      body.classList.remove("is-page-transitioning");
+      startSmoothScroll();
+    };
+
+    if (prefersReducedMotion) {
+      clearTransitionPending();
+      resetTransition();
+      return;
+    }
+
+    const revealNewPage = () => {
+      if (!getTransitionPending()) {
+        resetTransition();
+        return;
+      }
+
+      clearTransitionPending();
+      body.classList.add("is-page-transitioning");
+      stopSmoothScroll();
+      transition.classList.add("is-active", "is-leaving");
+      transition.classList.remove("is-entering");
+      panel.style.transform = "translateX(0%)";
+
+      window.setTimeout(resetTransition, 820);
+    };
+
+    revealNewPage();
+
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) revealNewPage();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      if (isTransitioning) return;
+
+      const link = event.target instanceof Element ? event.target.closest("a") : null;
+      if (!isInternalNavigableLink(link)) return;
+
+      event.preventDefault();
+      isTransitioning = true;
+
+      const targetHref = link.href;
+      body.classList.add("is-page-transitioning");
+      stopSmoothScroll();
+      transition.classList.add("is-active", "is-entering");
+      transition.classList.remove("is-leaving");
+      panel.style.transform = "";
+
+      window.setTimeout(() => {
+        setTransitionPending();
+        window.location.href = targetHref;
+      }, 680);
+    });
+  };
+
   const workOverlay = createOverlay();
   const closeButton = workOverlay.querySelector("[data-work-close]");
   const reelModal = createReelModal();
@@ -224,12 +344,11 @@
   const modalWork = reelModal.querySelector("[data-reel-modal-work]");
   const modalCloseButtons = reelModal.querySelectorAll("[data-reel-modal-close]");
 
+  initPageTransitions();
+
   const openWorkOverlay = () => {
     body.classList.add("is-work-overlay-open");
-<<<<<<< HEAD
     stopSmoothScroll();
-=======
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
     workOverlay.classList.add("is-open");
     workOverlay.setAttribute("aria-hidden", "false");
     closeButton.focus();
@@ -239,10 +358,7 @@
     body.classList.remove("is-work-overlay-open");
     workOverlay.classList.remove("is-open");
     workOverlay.setAttribute("aria-hidden", "true");
-<<<<<<< HEAD
     startSmoothScroll();
-=======
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
   };
 
   const openReelModal = (reel) => {
@@ -250,10 +366,7 @@
     const videoSrc = reel.fullVideo || reel.previewVideo;
 
     body.classList.add("is-reel-modal-open");
-<<<<<<< HEAD
     stopSmoothScroll();
-=======
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
     reelModal.classList.add("is-open");
     reelModal.setAttribute("aria-hidden", "false");
 
@@ -282,10 +395,7 @@
     reelModal.classList.remove("is-open");
     reelModal.setAttribute("aria-hidden", "true");
     body.classList.remove("is-reel-modal-open");
-<<<<<<< HEAD
     startSmoothScroll();
-=======
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
   };
 
   document.querySelectorAll("[data-work-trigger]").forEach((trigger) => {
@@ -310,19 +420,19 @@
     }
   });
 
+  if (lenis && "MutationObserver" in window) {
+    const bodyStateObserver = new MutationObserver(syncSmoothScrollState);
+    bodyStateObserver.observe(body, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  window.addEventListener("pagehide", stopSmoothScroll);
+  window.addEventListener("beforeunload", stopSmoothScroll);
+
   if (loader) {
     body.classList.add("is-loading");
-<<<<<<< HEAD
-    stopSmoothScroll();
     const hideLoader = () => {
       loader.classList.add("is-hidden");
       body.classList.remove("is-loading");
-      startSmoothScroll();
-=======
-    const hideLoader = () => {
-      loader.classList.add("is-hidden");
-      body.classList.remove("is-loading");
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
       window.setTimeout(() => loader.remove(), 800);
     };
     if (prefersReducedMotion) {
@@ -923,17 +1033,22 @@
       ticking = false;
     });
   };
-<<<<<<< HEAD
-
-  lenis?.on("scroll", requestScrollUpdate);
+  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+  window.addEventListener("resize", requestScrollUpdate);
+  updateScrollState();
 
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (event) => {
       const targetId = link.getAttribute("href");
-      if (!targetId || targetId === "#") return;
+      if (!targetId || targetId === "#" || !window.zodiacLenis) return;
 
-      const target = document.querySelector(targetId);
-      if (!target || !window.zodiacLenis) return;
+      let target = null;
+      try {
+        target = document.querySelector(targetId);
+      } catch {
+        return;
+      }
+      if (!target) return;
 
       event.preventDefault();
       window.zodiacLenis.scrollTo(target, {
@@ -942,146 +1057,6 @@
       });
     });
   });
-
-  const createPageTransition = () => {
-    let transition = document.querySelector("[data-page-transition]");
-
-    if (!transition) {
-      transition = document.createElement("div");
-      transition.className = "page-transition";
-      transition.setAttribute("data-page-transition", "");
-      transition.setAttribute("aria-hidden", "true");
-      transition.innerHTML = '<div class="page-transition__panel"></div>';
-      document.body.append(transition);
-    }
-
-    return transition;
-  };
-
-  const isInternalNavigableLink = (link) => {
-    if (!link || !link.href) return false;
-    if (link.target && link.target !== "_self") return false;
-    if (link.hasAttribute("download")) return false;
-    if (link.dataset.workTrigger !== undefined) return false;
-
-    const rawHref = link.getAttribute("href") || "";
-    if (!rawHref || rawHref.startsWith("#")) return false;
-
-    const url = new URL(link.href, window.location.href);
-    if (!["http:", "https:", "file:"].includes(url.protocol)) return false;
-    if (url.origin !== window.location.origin) return false;
-    if (url.hash) return false;
-
-    const currentUrl = new URL(window.location.href);
-    if (url.pathname === currentUrl.pathname && url.search === currentUrl.search) return false;
-
-    const pageName = url.pathname.split("/").filter(Boolean).pop() || "index.html";
-    const allowedPages = ["index.html", "about.html", "contact.html", "work.html", "reel.html"];
-
-    return allowedPages.includes(pageName.toLowerCase());
-  };
-
-  const getTransitionPending = () => {
-    try {
-      return sessionStorage.getItem("zodiac_page_transition_pending") === "true";
-    } catch {
-      return false;
-    }
-  };
-
-  const setTransitionPending = () => {
-    try {
-      sessionStorage.setItem("zodiac_page_transition_pending", "true");
-    } catch {
-      // Navigation should continue even when storage is unavailable.
-    }
-  };
-
-  const clearTransitionPending = () => {
-    try {
-      sessionStorage.removeItem("zodiac_page_transition_pending");
-    } catch {
-      // Nothing to clear when storage is unavailable.
-    }
-  };
-
-  const waitForTransitionAnimation = (panel, fallbackMs) =>
-    new Promise((resolve) => {
-      let settled = false;
-      const finish = () => {
-        if (settled) return;
-        settled = true;
-        panel.removeEventListener("animationend", finish);
-        window.clearTimeout(timer);
-        resolve();
-      };
-      const timer = window.setTimeout(finish, fallbackMs);
-      panel.addEventListener("animationend", finish, { once: true });
-    });
-
-  const initPageTransitions = () => {
-    const transition = createPageTransition();
-    const panel = transition.querySelector(".page-transition__panel");
-    if (!transition || !panel) return;
-    if (prefersReducedMotion) {
-      clearTransitionPending();
-      return;
-    }
-
-    const revealNewPage = () => {
-      if (!getTransitionPending()) return;
-
-      clearTransitionPending();
-      body.classList.add("is-page-transitioning");
-      stopSmoothScroll();
-      transition.classList.add("is-active", "is-leaving");
-      transition.classList.remove("is-entering");
-      panel.style.transform = "translateX(0%)";
-
-      window.setTimeout(() => {
-        transition.classList.remove("is-active", "is-leaving");
-        panel.style.transform = "translateX(100%)";
-        body.classList.remove("is-page-transitioning");
-        startSmoothScroll();
-      }, 820);
-    };
-
-    let isNavigating = false;
-    revealNewPage();
-
-    document.addEventListener("click", async (event) => {
-      if (event.defaultPrevented || isNavigating) return;
-      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      if (!(event.target instanceof Element)) return;
-
-      const link = event.target.closest("a");
-      if (!isInternalNavigableLink(link)) return;
-
-      event.preventDefault();
-      isNavigating = true;
-
-      const targetHref = link.href;
-      body.classList.add("is-page-transitioning");
-      stopSmoothScroll();
-      transition.classList.add("is-active", "is-entering");
-      transition.classList.remove("is-leaving");
-      panel.style.transform = "";
-
-      await waitForTransitionAnimation(panel, 760);
-      setTransitionPending();
-      window.location.href = targetHref;
-    });
-  };
-
-  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-  window.addEventListener("resize", requestScrollUpdate);
-  updateScrollState();
-  initPageTransitions();
-=======
-  window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-  window.addEventListener("resize", requestScrollUpdate);
-  updateScrollState();
->>>>>>> 25d961da52d581a9300ce17d2621664a532376f7
 
   const updateLocalTime = () => {
     if (!localTime) return;
