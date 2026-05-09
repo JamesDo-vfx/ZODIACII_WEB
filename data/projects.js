@@ -7,10 +7,15 @@ const projects = [
     categoryLabel: "Music Video",
     client: "ERIK",
     scope: "VFX, CGI, Compositing",
-    image: "assets/videos/project/AddLightToLight_video1.jpg",
-    video: "assets/videos/project/AddLightToLight_video1.webm",
+    thumbnail: "/assets/videos/project/AddLightToLight_video1.jpg",
+    image: "/assets/videos/project/AddLightToLight_video1.jpg",
+    video: "/assets/videos/project/AddLightToLight_video1.webm",
+    gallery: [
+      "/assets/videos/project/AddLightToLight_video1.jpg"
+    ],
     year: "2025",
-    featured: true
+    featured: true,
+    order: 1
   },
   {
     title: "VIB Privilege",
@@ -19,10 +24,15 @@ const projects = [
     categoryLabel: "Commercial",
     client: "VIB",
     scope: "CGI, Glass Staircase, Compositing",
-    image: "assets/videos/project/CayDenThan_HoNgocHa_Full_00929.jpg",
-    video: "assets/videos/project/Vietjet_Full.webm",
+    thumbnail: "/assets/videos/project/CayDenThan_HoNgocHa_Full_00929.jpg",
+    image: "/assets/videos/project/CayDenThan_HoNgocHa_Full_00929.jpg",
+    video: "/assets/videos/project/Vietjet_Full.webm",
+    gallery: [
+      "/assets/videos/project/CayDenThan_HoNgocHa_Full_00929.jpg"
+    ],
     year: "2025",
-    featured: true
+    featured: true,
+    order: 2
   },
   {
     title: "The Opus",
@@ -31,10 +41,15 @@ const projects = [
     categoryLabel: "Film",
     client: "The Opus",
     scope: "Cinematic CGI, Environment, Compositing",
-    image: "assets/videos/project/EggGuy_VideoFull.jpg",
-    video: "assets/videos/project/EggGuy_VideoFull.webm",
+    thumbnail: "/assets/videos/project/EggGuy_VideoFull.jpg",
+    image: "/assets/videos/project/EggGuy_VideoFull.jpg",
+    video: "/assets/videos/project/EggGuy_VideoFull.webm",
+    gallery: [
+      "/assets/videos/project/EggGuy_VideoFull.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 3
   },
   {
     title: "Samsung 2025",
@@ -43,10 +58,15 @@ const projects = [
     categoryLabel: "Commercial",
     client: "Samsung",
     scope: "Compositing, Cleanup, Finishing",
-    image: "assets/videos/project/BE_video1.jpg",
-    video: "assets/videos/project/Samsung2025_video3.webm",
+    thumbnail: "/assets/videos/project/BE_video1.jpg",
+    image: "/assets/videos/project/BE_video1.jpg",
+    video: "/assets/videos/project/Samsung2025_video3.webm",
+    gallery: [
+      "/assets/videos/project/BE_video1.jpg"
+    ],
     year: "2025",
-    featured: true
+    featured: true,
+    order: 4
   },
   {
     title: "Canh Chim Phuong Hoang",
@@ -55,10 +75,15 @@ const projects = [
     categoryLabel: "Film",
     client: "Confidential",
     scope: "Environment, Compositing, FX",
-    image: "assets/videos/project/CanhCHimPhuongHoang_BreakDown_Full.jpg",
-    video: "assets/videos/project/CanhCHimPhuongHoang_BreakDown_Full.webm",
+    thumbnail: "/assets/videos/project/CanhCHimPhuongHoang_BreakDown_Full.jpg",
+    image: "/assets/videos/project/CanhCHimPhuongHoang_BreakDown_Full.jpg",
+    video: "/assets/videos/project/CanhCHimPhuongHoang_BreakDown_Full.webm",
+    gallery: [
+      "/assets/videos/project/CanhCHimPhuongHoang_BreakDown_Full.jpg"
+    ],
     year: "2025",
-    featured: true
+    featured: true,
+    order: 5
   },
   {
     title: "Made In Viet Nam",
@@ -67,10 +92,15 @@ const projects = [
     categoryLabel: "Music Video",
     client: "Various Artists",
     scope: "Cleanup, VFX, Final Composite",
-    image: "assets/videos/project/KhongRaGi_video2.jpg",
-    video: "assets/videos/project/MadeInVietNam_Full.webm",
+    thumbnail: "/assets/videos/project/KhongRaGi_video2.jpg",
+    image: "/assets/videos/project/KhongRaGi_video2.jpg",
+    video: "/assets/videos/project/MadeInVietNam_Full.webm",
+    gallery: [
+      "/assets/videos/project/KhongRaGi_video2.jpg"
+    ],
     year: "2025",
-    featured: true
+    featured: true,
+    order: 6
   },
   {
     title: "KIXX",
@@ -79,10 +109,15 @@ const projects = [
     categoryLabel: "Commercial",
     client: "KIXX",
     scope: "CGI Production, Motion Design",
-    image: "assets/videos/project/ThaiChieuTai_video2.jpg",
-    video: "assets/videos/project/KIXX_video1.webm",
+    thumbnail: "/assets/videos/project/ThaiChieuTai_video2.jpg",
+    image: "/assets/videos/project/ThaiChieuTai_video2.jpg",
+    video: "/assets/videos/project/KIXX_video1.webm",
+    gallery: [
+      "/assets/videos/project/ThaiChieuTai_video2.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 7
   },
   {
     title: "Over",
@@ -91,10 +126,15 @@ const projects = [
     categoryLabel: "Music Video",
     client: "Khoi Vu",
     scope: "VFX, Compositing, Look Development",
-    image: "assets/videos/project/Over_KhoiVu_Full.jpg",
-    video: "assets/videos/project/Over_KhoiVu_Full.webm",
+    thumbnail: "/assets/videos/project/Over_KhoiVu_Full.jpg",
+    image: "/assets/videos/project/Over_KhoiVu_Full.jpg",
+    video: "/assets/videos/project/Over_KhoiVu_Full.webm",
+    gallery: [
+      "/assets/videos/project/Over_KhoiVu_Full.jpg"
+    ],
     year: "2025",
-    featured: true
+    featured: true,
+    order: 8
   },
   {
     title: "Hoa Xuan Ca",
@@ -103,10 +143,15 @@ const projects = [
     categoryLabel: "Music Video",
     client: "Confidential",
     scope: "Cleanup, Beauty, Compositing",
-    image: "assets/videos/project/HoaXuanCa_video4.jpg",
-    video: "assets/videos/project/HoaXuanCa_video4.webm",
+    thumbnail: "/assets/videos/project/HoaXuanCa_video4.jpg",
+    image: "/assets/videos/project/HoaXuanCa_video4.jpg",
+    video: "/assets/videos/project/HoaXuanCa_video4.webm",
+    gallery: [
+      "/assets/videos/project/HoaXuanCa_video4.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 9
   },
   {
     title: "Be Trap",
@@ -115,10 +160,15 @@ const projects = [
     categoryLabel: "Music Video",
     client: "Confidential",
     scope: "Compositing, Cleanup, Finishing",
-    image: "assets/videos/project/BeTrap_video4.jpg",
-    video: "assets/videos/project/BeTrap_video4.webm",
+    thumbnail: "/assets/videos/project/BeTrap_video4.jpg",
+    image: "/assets/videos/project/BeTrap_video4.jpg",
+    video: "/assets/videos/project/BeTrap_video4.webm",
+    gallery: [
+      "/assets/videos/project/BeTrap_video4.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 10
   },
   {
     title: "BE",
@@ -127,10 +177,15 @@ const projects = [
     categoryLabel: "Commercial",
     client: "BE",
     scope: "CGI, Compositing, Motion",
-    image: "assets/videos/project/BE_video1.jpg",
-    video: "assets/videos/project/BE_video1.webm",
+    thumbnail: "/assets/videos/project/BE_video1.jpg",
+    image: "/assets/videos/project/BE_video1.jpg",
+    video: "/assets/videos/project/BE_video1.webm",
+    gallery: [
+      "/assets/videos/project/BE_video1.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 11
   },
   {
     title: "Thai Chieu Tai",
@@ -139,10 +194,15 @@ const projects = [
     categoryLabel: "Film",
     client: "Confidential",
     scope: "Cleanup, Environment, Compositing",
-    image: "assets/videos/project/ThaiChieuTai_video2.jpg",
-    video: "assets/videos/project/ThaiChieuTai_video2.webm",
+    thumbnail: "/assets/videos/project/ThaiChieuTai_video2.jpg",
+    image: "/assets/videos/project/ThaiChieuTai_video2.jpg",
+    video: "/assets/videos/project/ThaiChieuTai_video2.webm",
+    gallery: [
+      "/assets/videos/project/ThaiChieuTai_video2.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 12
   },
   {
     title: "Large Format Study",
@@ -151,11 +211,22 @@ const projects = [
     categoryLabel: "Billboard",
     client: "Zodiac II Media",
     scope: "OOH, LED, Large-Format Visuals",
-    image: "assets/videos/project/EggGuy_VideoFull.jpg",
-    video: "assets/videos/project/EggGuy_VideoFull.webm",
+    thumbnail: "/assets/videos/project/EggGuy_VideoFull.jpg",
+    image: "/assets/videos/project/EggGuy_VideoFull.jpg",
+    video: "/assets/videos/project/EggGuy_VideoFull.webm",
+    gallery: [
+      "/assets/videos/project/EggGuy_VideoFull.jpg"
+    ],
     year: "2025",
-    featured: false
+    featured: false,
+    order: 13
   }
 ];
 
-window.projects = projects;
+const getProjectOrder = (project) =>
+  Number.isFinite(project.order) ? project.order : Number.POSITIVE_INFINITY;
+
+window.projects = projects
+  .map((project, index) => ({ project, index }))
+  .sort((a, b) => getProjectOrder(a.project) - getProjectOrder(b.project) || a.index - b.index)
+  .map(({ project }) => project);

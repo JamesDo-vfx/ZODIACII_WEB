@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Selected work by Zodiac II Media.">
+    <title>All Work | Zodiac II Media</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body data-page="work">
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header" data-header>
+      <a class="brand-mark" href="/" aria-label="Zodiac II Media home">Zodiac II Media</a>
+      <div class="nav-timeline" aria-hidden="true">
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+      </div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <button type="button" data-work-trigger>Work</button>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </header>
+
+    <main id="page" class="page-shell">
+      <section class="work-category-hero" aria-labelledby="work-hero-project-title">
+        <div class="work-category-hero__media" data-category-media aria-hidden="true"></div>
+        <button class="work-category-hero__arrow work-category-hero__arrow--prev" type="button" aria-label="Previous project">‹</button>
+        <button class="work-category-hero__arrow work-category-hero__arrow--next" type="button" aria-label="Next project">›</button>
+        <div class="work-category-hero__copy reveal">
+          <p class="work-category-hero__kicker" data-hero-category-label>Commercial</p>
+          <h1 id="work-hero-project-title" class="work-category-hero__title" data-hero-project-title>Bvlgari</h1>
+          <p class="work-category-hero__client" data-hero-project-client>Serpenti Infinito</p>
+          <div class="work-category-hero__progress" data-category-progress aria-label="Hero projects"></div>
+        </div>
+      </section>
+
+      <section class="work-category-intro content-over-hero">
+        <p class="reveal" data-category-subtitle></p>
+      </section>
+
+      <section class="work-index" aria-labelledby="work-grid-title">
+        <div class="project-grid project-grid--editorial" data-project-grid data-mode="category"></div>
+      </section>
+
+      <section class="section-pad contact-strip" aria-labelledby="work-contact-title">
+        <p class="section-kicker reveal" id="work-contact-title">Contact</p>
+        <a class="contact-email reveal" href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Zodiac II Media</span>
+      <span>Ho Chi Minh City, Vietnam</span>
+      <span>© 2026</span>
+      <span data-local-time>Local Time --:--</span>
+    </footer>
+    <script src="/data/projects.js" defer></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="/script.js" defer></script>
+  </body>
+</html>
