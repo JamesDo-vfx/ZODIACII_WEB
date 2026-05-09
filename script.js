@@ -6,6 +6,9 @@
   const progressSegments = Array.from(document.querySelectorAll("[data-progress-segment]"));
   const localTime = document.querySelector("[data-local-time]");
   const projects = Array.isArray(window.projects) ? window.projects : [];
+  const teamImageBasePath = "/assets/images/people";
+  const teamImageExtensions = ["jpg", "png", "webp"];
+  const teamMembers = Array.isArray(window.teamMembers) ? window.teamMembers : [];
 
   const initSmoothScroll = () => {
     if (prefersReducedMotion || typeof Lenis === "undefined") {
@@ -86,7 +89,7 @@
       label: "Commercial",
       category: "commercial",
       description: "Commercial CGI, compositing, and visual effects work for brands, campaigns, and premium advertising.",
-      url: "reel.html?category=commercial",
+      url: "/reel/commercial/",
       layout: "standard"
     },
     "music-video": {
@@ -94,7 +97,7 @@
       label: "Music Video",
       category: "music-video",
       description: "Cinematic VFX and visual effects work crafted for music videos, artists, and high-impact visual storytelling.",
-      url: "reel.html?category=music-video",
+      url: "/reel/music-video/",
       layout: "large"
     },
     film: {
@@ -102,7 +105,7 @@
       label: "Film",
       category: "film",
       description: "Cinematic film, brand film, environment, invisible VFX, and long-form visual effects work.",
-      url: "reel.html?category=film",
+      url: "/reel/film/",
       layout: "wide"
     },
     billboard: {
@@ -110,13 +113,16 @@
       label: "Billboard",
       category: "billboard",
       description: "High-impact billboard, LED, outdoor, OOH, and large-format visual work built for public scale.",
-      url: "reel.html?category=billboard",
+      url: "/reel/billboard/",
       layout: "standard"
     }
   };
 
   const getProjectsByCategory = (category) =>
     projects.filter((project) => project.category === category);
+
+  const getProjectThumbnail = (project) =>
+    project?.thumbnail || project?.image || "";
 
   const getCategoryPosterProject = (category) => {
     const categoryProjects = getProjectsByCategory(category);
@@ -128,9 +134,9 @@
 
     return {
       ...config,
-      poster: heroProject?.image || "assets/images/hero.jpg",
-      previewVideo: heroProject?.video || "assets/videos/SHOWREELS_CINEMATIC_v01.webm",
-      fullVideo: heroProject?.video || "assets/videos/SHOWREELS_CINEMATIC_v01.webm",
+      poster: getProjectThumbnail(heroProject) || "/assets/images/hero.jpg",
+      previewVideo: heroProject?.video || "/assets/videos/SHOWREELS_CINEMATIC_v01.webm",
+      fullVideo: heroProject?.video || "/assets/videos/SHOWREELS_CINEMATIC_v01.webm",
       projectCount: getProjectsByCategory(config.category).length
     };
   });
@@ -138,6 +144,273 @@
   const featuredReels = ["music-video", "commercial", "film", "billboard"]
     .map((category) => categoryReels.find((reel) => reel.category === category))
     .filter(Boolean);
+
+  const slugifyName = (name) =>
+    name
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const getTeamImagePath = (name, extension = teamImageExtensions[0]) =>
+    `${teamImageBasePath}/${slugifyName(name)}.${extension}`;
+
+  const getTeamProfileUrl = (member) =>
+    member.profileUrl || `/profile/${slugifyName(member.name)}/`;
+
+  const normalizeCleanPath = (path) => (path.endsWith("/") ? path : `${path}/`);
+
+  const getPathSegments = () =>
+    window.location.pathname
+      .split("/")
+      .map((segment) => segment.trim())
+      .filter(Boolean);
+
+  const getCleanCategoryUrl = (base, category) =>
+    category && category !== "all" ? `/${base}/${category}/` : `/${base}/`;
+
+  const getCategoryFromPath = (base, fallback = "all") => {
+    const segments = getPathSegments();
+    const baseIndex = segments.indexOf(base);
+    const fromPath = baseIndex >= 0 ? segments[baseIndex + 1] : "";
+    if (fromPath && Object.prototype.hasOwnProperty.call(categories, fromPath)) {
+      return fromPath;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const fromQuery = params.get("category") || fallback;
+    return Object.prototype.hasOwnProperty.call(categories, fromQuery) ? fromQuery : fallback;
+  };
+
+  const getReelCategoryFromPath = () => {
+    const category = getCategoryFromPath("reel", "music-video");
+    return Object.prototype.hasOwnProperty.call(categoryConfig, category) ? category : "music-video";
+  };
+
+  const getSlugFromPath = (base, queryName) => {
+    const segments = getPathSegments();
+    const baseIndex = segments.indexOf(base);
+    const fromPath = baseIndex >= 0 ? segments[baseIndex + 1] : "";
+    if (fromPath) return fromPath;
+    return new URLSearchParams(window.location.search).get(queryName) || "";
+  };
+
+  const attachTeamImageFallback = (image, name) => {
+    let extensionIndex = 0;
+    image.addEventListener("error", () => {
+      extensionIndex += 1;
+      if (extensionIndex < teamImageExtensions.length) {
+        image.src = getTeamImagePath(name, teamImageExtensions[extensionIndex]);
+      } else {
+        image.hidden = true;
+      }
+    });
+  };
+
+  const renderTeamSection = () => {
+    const teamSection = document.querySelector("[data-team-section]");
+    const teamList = document.querySelector("[data-team-list]");
+    if (!teamSection || !teamList) return;
+
+    teamList.innerHTML = "";
+    const fragment = document.createDocumentFragment();
+    const currentCounter = teamSection.querySelector("[data-team-current]");
+    const totalCounter = teamSection.querySelector("[data-team-total]");
+    const nextButtons = Array.from(teamSection.querySelectorAll("[data-team-next]"));
+    const visibleTeamMembers = teamMembers.filter(
+      (member) => (member.title || member.role || "").toLowerCase() !== "founder & ceo"
+    );
+    const memberCount = visibleTeamMembers.length;
+    let activeIndex = 0;
+    let autoCycleTimer = null;
+
+    if (!memberCount) {
+      if (totalCounter) totalCounter.textContent = "00";
+      if (currentCounter) currentCounter.textContent = "00";
+      nextButtons.forEach((button) => button.setAttribute("disabled", ""));
+      return;
+    }
+
+    if (totalCounter) totalCounter.textContent = String(memberCount).padStart(2, "0");
+
+    visibleTeamMembers.forEach((member, index) => {
+      const card = document.createElement("article");
+      card.className = "team-card";
+      card.dataset.teamCard = "";
+      card.style.setProperty("--i", index);
+
+      const name = document.createElement("h3");
+      name.className = "team-card__name";
+      name.textContent = member.name;
+
+      const role = document.createElement("p");
+      role.className = "team-card__role";
+      role.textContent = member.role;
+
+      const number = document.createElement("span");
+      number.className = "team-card__index";
+      number.setAttribute("aria-hidden", "true");
+      number.textContent = String(index + 1).padStart(2, "0");
+
+      const description = document.createElement("p");
+      description.className = "team-card__description";
+      description.textContent = member.description;
+
+      const profileLink = document.createElement("a");
+      profileLink.className = "team-card__link";
+      profileLink.href = getTeamProfileUrl(member);
+      profileLink.setAttribute("aria-label", `View ${member.name} profile`);
+      profileLink.textContent = "Info";
+
+      const portrait = document.createElement("figure");
+      portrait.className = "team-card__portrait";
+
+      const image = document.createElement("img");
+      image.src = getTeamImagePath(member.name);
+      image.alt = `${member.name} portrait`;
+      image.loading = "lazy";
+      image.decoding = "async";
+      attachTeamImageFallback(image, member.name);
+
+      portrait.append(image);
+      card.append(portrait, number, profileLink, role, name, description);
+      fragment.append(card);
+    });
+
+    teamList.append(fragment);
+
+    const cards = Array.from(teamList.querySelectorAll("[data-team-card]"));
+    const getTeamStackScale = () => {
+      if (window.matchMedia("(max-width: 560px)").matches) return 0.42;
+      if (window.matchMedia("(max-width: 980px)").matches) return 0.7;
+      return 1;
+    };
+
+    const updateTeamStack = () => {
+      const secondaryIndex = memberCount > 1 ? (activeIndex + 1) % memberCount : activeIndex;
+      const visibleIndexes = [activeIndex, secondaryIndex].filter((index, arrayIndex, array) => index >= 0 && array.indexOf(index) === arrayIndex);
+      const layoutScale = getTeamStackScale();
+
+      cards.forEach((card, index) => {
+        const signedOffset = index - activeIndex;
+        const isPrimary = signedOffset === 0;
+        const isSecondary = index === secondaryIndex;
+        const isVisible = isPrimary || isSecondary;
+        const absOffset = Math.abs(signedOffset);
+        const stackDepth = isPrimary ? 0 : isSecondary ? 1 : Math.min(absOffset + 1, 5);
+        const hiddenDirection = signedOffset < 0 ? -1 : 1;
+        const x = isPrimary
+          ? -0.5
+          : isSecondary
+            ? 0.5
+            : hiddenDirection * (0.08 + stackDepth * 0.06);
+        const y = isPrimary ? 0 : isSecondary ? 0 : 18 + stackDepth * 12;
+        const z = isPrimary ? 0 : isSecondary ? -18 : -120 - stackDepth * 34;
+        const rotation = isPrimary
+          ? -0.45
+          : isSecondary
+            ? 0.35
+            : hiddenDirection * (1.2 + stackDepth * 0.2);
+        const scale = isPrimary ? 1 : isSecondary ? 0.995 : 0.82 - stackDepth * 0.035;
+        const opacity = isPrimary ? 1 : isSecondary ? 0.98 : 0.075;
+
+        card.classList.toggle("is-primary", isPrimary);
+        card.classList.toggle("is-secondary", isSecondary);
+        card.classList.toggle("is-visible-pair", isVisible);
+        card.setAttribute("aria-hidden", isVisible ? "false" : "true");
+        card.querySelector(".team-card__link")?.setAttribute("tabindex", isVisible ? "0" : "-1");
+        card.style.setProperty("--depth", stackDepth);
+        card.style.setProperty("--x", `${(x * layoutScale).toFixed(3)}`);
+        card.style.setProperty("--y", `${Math.round(y * layoutScale)}px`);
+        card.style.setProperty("--tz", `${z}px`);
+        card.style.setProperty("--r", `${rotation}deg`);
+        card.style.setProperty("--s", scale.toFixed(3));
+        card.style.setProperty("--card-opacity", String(opacity));
+        card.style.setProperty("--z", String(memberCount + 4 - stackDepth));
+      });
+
+      teamSection.dataset.activeTeam = String(activeIndex);
+      if (currentCounter) currentCounter.textContent = String(activeIndex + 1).padStart(2, "0");
+      teamList.setAttribute(
+        "aria-label",
+        `Zodiac II Media team: ${visibleIndexes.map((index) => visibleTeamMembers[index].name).join(" and ")}`
+      );
+    };
+
+    const shiftTeam = (direction = 1) => {
+      activeIndex = (activeIndex + direction + memberCount) % memberCount;
+      updateTeamStack();
+    };
+
+    const stopAutoCycle = () => {
+      window.clearInterval(autoCycleTimer);
+      autoCycleTimer = null;
+    };
+
+    const startAutoCycle = () => {
+      if (prefersReducedMotion || memberCount < 2 || autoCycleTimer) return;
+      autoCycleTimer = window.setInterval(() => shiftTeam(1), 5000);
+    };
+
+    const restartAutoCycle = () => {
+      stopAutoCycle();
+      startAutoCycle();
+    };
+
+    nextButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        shiftTeam(1);
+        restartAutoCycle();
+      });
+    });
+
+    window.addEventListener("resize", updateTeamStack);
+    updateTeamStack();
+    startAutoCycle();
+  };
+
+  const renderTeamProfilePage = () => {
+    const profileRoot = document.querySelector("[data-profile-root]");
+    if (!profileRoot || !teamMembers.length) return;
+
+    const requestedPerson = getSlugFromPath("profile", "person");
+    const member = teamMembers.find((item) => slugifyName(item.name) === requestedPerson) || teamMembers[0];
+    const activeIndex = teamMembers.indexOf(member);
+
+    const portrait = profileRoot.querySelector("[data-profile-portrait]");
+    const title = profileRoot.querySelector("[data-profile-name]");
+    const role = profileRoot.querySelector("[data-profile-role]");
+    const description = profileRoot.querySelector("[data-profile-description]");
+    const index = profileRoot.querySelector("[data-profile-index]");
+    const meta = profileRoot.querySelector("[data-profile-meta]");
+
+    if (title) title.textContent = member.name;
+    if (role) role.textContent = member.title || member.role;
+    if (description) description.textContent = member.bio || member.description;
+    if (index) index.textContent = String(activeIndex + 1).padStart(2, "0");
+    if (meta && Array.isArray(member.meta)) {
+      meta.innerHTML = "";
+      member.meta.forEach(([label, value]) => {
+        const row = document.createElement("div");
+        const term = document.createElement("dt");
+        const detail = document.createElement("dd");
+
+        term.textContent = label;
+        detail.textContent = value;
+        row.append(term, detail);
+        meta.append(row);
+      });
+    }
+
+    if (portrait) {
+      portrait.src = getTeamImagePath(member.name);
+      portrait.alt = `${member.name} portrait`;
+      attachTeamImageFallback(portrait, member.name);
+    }
+
+    document.title = `${member.name} | Zodiac II Media`;
+  };
 
   const createOverlay = () => {
     const overlay = document.createElement("div");
@@ -148,11 +421,11 @@
       <p class="work-overlay__label">Work Index</p>
       <button class="work-overlay__back" type="button" data-work-close>Back</button>
       <nav class="work-overlay__links" aria-label="Work category navigation">
-        <a style="--i:0" href="work.html?category=all">All Work</a>
-        <a style="--i:1" href="work.html?category=commercial">Commercial</a>
-        <a style="--i:2" href="work.html?category=music-video">Music Video</a>
-        <a style="--i:3" href="work.html?category=film">Film</a>
-        <a style="--i:4" href="work.html?category=billboard">Billboard</a>
+        <a style="--i:0" href="/work/">All Work</a>
+        <a style="--i:1" href="/work/commercial/">Commercial</a>
+        <a style="--i:2" href="/work/music-video/">Music Video</a>
+        <a style="--i:3" href="/work/film/">Film</a>
+        <a style="--i:4" href="/work/billboard/">Billboard</a>
       </nav>
     `;
     document.body.append(overlay);
@@ -172,16 +445,18 @@
           <video
             class="reel-modal__video"
             data-reel-modal-video
+            autoplay
+            controls
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="auto"
           ></video>
         </div>
         <div class="reel-modal__meta">
           <div class="reel-modal__actions">
             <button class="reel-modal__sound" type="button" data-reel-modal-sound>Sound Off</button>
-            <a class="reel-modal__work" href="work.html?category=music-video" data-reel-modal-work>View Work</a>
+            <a class="reel-modal__work" href="/work/music-video/" data-reel-modal-work>View Work</a>
           </div>
         </div>
       </div>
@@ -252,9 +527,19 @@
     if (url.origin !== window.location.origin) return false;
     if (url.hash) return false;
 
+    const path = normalizeCleanPath(url.pathname);
+    const isCleanPage =
+      path === "/" ||
+      path === "/about/" ||
+      path === "/contact/" ||
+      path === "/work/" ||
+      path.startsWith("/work/") ||
+      path.startsWith("/reel/") ||
+      path.startsWith("/project/") ||
+      path.startsWith("/profile/");
     const pageName = url.pathname.split("/").pop() || "index.html";
-    const navigablePages = new Set(["index.html", "about.html", "contact.html", "work.html", "reel.html"]);
-    if (!navigablePages.has(pageName)) return false;
+    const legacyPages = new Set(["index.html", "about.html", "contact.html", "work.html", "reel.html", "project.html", "profile.html"]);
+    if (!isCleanPage && !legacyPages.has(pageName)) return false;
 
     const currentUrl = new URL(window.location.href);
     const isSamePage =
@@ -361,24 +646,46 @@
     startSmoothScroll();
   };
 
+  const stopAllReelPreviews = () => {
+    document.querySelectorAll(".reel-card").forEach((card) => {
+      const video = card.querySelector(".reel-card__video");
+      if (!video) return;
+      video.pause();
+      video.currentTime = 0;
+      card.classList.remove("is-playing");
+    });
+  };
+
+  const requestModalPlayback = () => {
+    if (!reelModal.classList.contains("is-open")) return;
+    modalVideo.play().catch(() => {});
+  };
+
   const openReelModal = (reel) => {
     if (!reelModal || !modalVideo || !reel) return;
     const videoSrc = reel.fullVideo || reel.previewVideo;
+
+    stopAllReelPreviews();
+    modalVideo.pause();
+    modalVideo.removeAttribute("src");
+    modalVideo.innerHTML = "";
 
     body.classList.add("is-reel-modal-open");
     stopSmoothScroll();
     reelModal.classList.add("is-open");
     reelModal.setAttribute("aria-hidden", "false");
 
-    modalWork.href = `work.html?category=${reel.category}`;
+    modalWork.href = getCleanCategoryUrl("work", reel.category);
 
     modalVideo.poster = reel.poster || "";
-    modalVideo.innerHTML = `<source src="${videoSrc}" type="${getVideoType(videoSrc)}">`;
+    modalVideo.src = videoSrc;
     modalVideo.muted = true;
     modalSound.textContent = "Sound Off";
 
+    modalVideo.addEventListener("loadeddata", requestModalPlayback, { once: true });
+    modalVideo.addEventListener("canplay", requestModalPlayback, { once: true });
     modalVideo.load();
-    modalVideo.play().catch(() => {});
+    window.requestAnimationFrame(requestModalPlayback);
     modalSound.focus({ preventScroll: true });
   };
 
@@ -443,14 +750,17 @@
   }
 
   const getCategory = () => {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("category") || "all";
-    return Object.prototype.hasOwnProperty.call(categories, category) ? category : "all";
+    return getCategoryFromPath("work", "all");
   };
 
   const getProjectCategoryTitle = (project) => {
     return categories[project.category]?.title || project.categoryLabel;
   };
+
+  const getProjectDetailUrl = (project) => `/project/${project.slug}/`;
+
+  const getProjectBySlug = (slug) =>
+    projects.find((project) => project.slug === slug) || projects[0] || null;
 
   const getProjectLayoutClass = (index) => {
     const pattern = [
@@ -466,13 +776,14 @@
 
   const projectTemplate = (project, index) => {
     const article = document.createElement("article");
+    const thumbnail = getProjectThumbnail(project);
     article.className = `project-card ${getProjectLayoutClass(index)} reveal`;
     article.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
     article.innerHTML = `
-      <a href="${project.video}" aria-label="View ${project.title}">
+      <a href="${getProjectDetailUrl(project)}" aria-label="View ${project.title}">
         <figure class="project-frame">
-          <img src="${project.image}" alt="${project.title} project still" loading="${index < 2 ? "eager" : "lazy"}">
-          <video muted loop playsinline preload="metadata" poster="${project.image}">
+          <img src="${thumbnail}" alt="${project.title} project still" loading="${index < 2 ? "eager" : "lazy"}">
+          <video muted loop playsinline preload="metadata" poster="${thumbnail}">
             <source src="${project.video}" type="${project.video.endsWith(".webm") ? "video/webm" : "video/mp4"}">
           </video>
           <figcaption class="project-info">
@@ -501,12 +812,106 @@
     return article;
   };
 
+  const renderProjectDetailPage = () => {
+    const page = document.querySelector("[data-project-page]");
+    if (!page) return;
+
+    const requestedSlug = getSlugFromPath("project", "slug");
+    const project = getProjectBySlug(requestedSlug);
+    const title = page.querySelector("[data-project-title]");
+    const category = page.querySelector("[data-project-category]");
+    const client = page.querySelector("[data-project-client]");
+    const year = page.querySelector("[data-project-year]");
+    const type = page.querySelector("[data-project-type]");
+    const role = page.querySelector("[data-project-role]");
+    const description = page.querySelector("[data-project-description]");
+    const credits = page.querySelector("[data-project-credits]");
+    const awards = page.querySelector("[data-project-awards]");
+    const video = page.querySelector("[data-project-video]");
+    const gallery = page.querySelector("[data-project-gallery]");
+    const back = page.querySelector(".project-detail__back");
+
+    if (!project) {
+      page.innerHTML = '<p class="project-detail__empty reveal">Project data is not available.</p>';
+      document.title = "Project | Zodiac II Media";
+      return;
+    }
+
+    const projectCategoryTitle = getProjectCategoryTitle(project);
+    const creditItems = Array.isArray(project.credits) && project.credits.length
+      ? project.credits
+      : [
+          `Client / Artist - ${project.client || "Confidential"}`,
+          `Role - ${project.scope || "VFX, CGI, Compositing"}`,
+          "Studio - Zodiac II Media"
+        ];
+    const awardItems = Array.isArray(project.awards) && project.awards.length
+      ? project.awards
+      : ["Awards and festival notes are not publicly listed."];
+    const detailDescription =
+      project.description ||
+      `A ${projectCategoryTitle.toLowerCase()} project shaped through ${project.scope || "VFX, CGI, and compositing"} with a focus on cinematic image design, controlled finishing, and invisible technical craft.`;
+    const fallbackGalleryItems = [
+      getProjectThumbnail(project),
+      ...projects
+        .filter((item) => item.slug !== project.slug && item.category === project.category)
+        .map(getProjectThumbnail),
+      ...projects
+        .filter((item) => item.slug !== project.slug && item.category !== project.category)
+        .map(getProjectThumbnail)
+    ].filter(Boolean);
+    const galleryItems = Array.isArray(project.gallery) && project.gallery.length
+      ? project.gallery
+      : Array.from(new Set(fallbackGalleryItems)).slice(0, 5);
+
+    if (title) title.textContent = project.title;
+    if (category) category.textContent = projectCategoryTitle;
+    if (client) client.textContent = project.client || "";
+    if (year) year.textContent = project.year ? `[${project.year}]` : "";
+    if (type) type.textContent = projectCategoryTitle;
+    if (role) role.textContent = project.scope || "VFX / CGI";
+    if (description) description.textContent = detailDescription;
+    if (back) back.href = getCleanCategoryUrl("work", project.category || "all");
+    document.title = `${project.title} | Zodiac II Media`;
+
+    if (credits) {
+      credits.replaceChildren(...creditItems.map((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        return li;
+      }));
+    }
+
+    if (awards) {
+      awards.replaceChildren(...awardItems.map((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        return li;
+      }));
+    }
+
+    if (video && project.video) {
+      video.poster = getProjectThumbnail(project);
+      video.innerHTML = `<source src="${project.video}" type="${getVideoType(project.video)}">`;
+    }
+
+    if (gallery) {
+      const frames = galleryItems.map((src, index) => {
+        const figure = document.createElement("figure");
+        figure.className = "project-detail__frame";
+        figure.innerHTML = `<img src="${src}" alt="${project.title} frame ${index + 1}" loading="${index < 2 ? "eager" : "lazy"}">`;
+        return figure;
+      });
+      gallery.replaceChildren(...frames);
+    }
+  };
+
   const getVideoType = (src) => (src.endsWith(".webm") ? "video/webm" : "video/mp4");
 
   const reelTemplate = (reel, index) => {
     const link = document.createElement("a");
     link.className = `reel-card reel-card--${reel.layout} reveal`;
-    link.href = `work.html?category=${reel.category}`;
+    link.href = getCleanCategoryUrl("reel", reel.category);
     link.setAttribute("aria-label", `Watch ${reel.title}`);
     link.dataset.reelType = reel.category;
     link.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
@@ -619,10 +1024,10 @@
         media.loop = true;
         media.playsInline = true;
         media.preload = "metadata";
-        media.poster = project.image;
+        media.poster = getProjectThumbnail(project);
         media.innerHTML = `<source src="${project.video}" type="${getVideoType(project.video)}">`;
       } else {
-        media.src = project.image;
+        media.src = getProjectThumbnail(project);
         media.alt = "";
       }
       return media;
@@ -712,10 +1117,7 @@
   const renderReelPage = () => {
     const page = document.querySelector("[data-reel-page]");
     if (!page) return;
-    const requestedCategory = new URLSearchParams(window.location.search).get("category") || "music-video";
-    const category = Object.prototype.hasOwnProperty.call(categoryConfig, requestedCategory)
-      ? requestedCategory
-      : "music-video";
+    const category = getReelCategoryFromPath();
     const reel = categoryReels.find((item) => item.category === category) || categoryReels[0];
     const categoryProjects = getProjectsByCategory(category);
     const mainProject = categoryProjects.find((project) => project.featured) || categoryProjects[0];
@@ -732,7 +1134,7 @@
     document.title = `${reel.title} | Zodiac II Media`;
 
     if (mainProject) {
-      video.poster = mainProject.image;
+      video.poster = getProjectThumbnail(mainProject);
       video.innerHTML = `<source src="${mainProject.video}" type="${getVideoType(mainProject.video)}">`;
     } else if (playerWrap) {
       const empty = document.createElement("p");
@@ -985,6 +1387,9 @@
   renderProjectGrid();
   renderReelGrid();
   renderReelPage();
+  renderProjectDetailPage();
+  renderTeamSection();
+  renderTeamProfilePage();
   initCapabilitiesKinetic();
 
   const revealItems = Array.from(document.querySelectorAll(".reveal"));

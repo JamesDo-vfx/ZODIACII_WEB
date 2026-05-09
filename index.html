@@ -3,6 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (() => {
+        const { pathname, search, hash } = window.location;
+        if (!pathname.endsWith(".html")) return;
+        const page = pathname.split("/").pop();
+        const params = new URLSearchParams(search);
+        const routes = {
+          "index.html": "/",
+          "about.html": "/about/",
+          "contact.html": "/contact/",
+          "work.html": params.get("category") && params.get("category") !== "all" ? `/work/${params.get("category")}/` : "/work/",
+          "reel.html": params.get("category") ? `/reel/${params.get("category")}/` : "/reel/music-video/",
+          "project.html": params.get("slug") ? `/project/${params.get("slug")}/` : "/work/",
+          "profile.html": params.get("person") ? `/profile/${params.get("person")}/` : "/about/"
+        };
+        if (routes[page]) window.location.replace(`${routes[page]}${hash}`);
+      })();
+    </script>
     <meta
       name="description"
       content="Zodiac II Media is a Ho Chi Minh City VFX and CGI studio crafting cinematic visuals for music videos, commercials, and brand films."
@@ -11,14 +29,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body data-page="home">
     <div class="grain" aria-hidden="true"></div>
     <div class="intro-loader" data-loader><p>Zodiac II Media</p></div>
 
     <header class="site-header" data-header>
-      <a class="brand-mark" href="index.html" aria-label="Zodiac II Media home">Zodiac II Media</a>
+      <a class="brand-mark" href="/" aria-label="Zodiac II Media home">Zodiac II Media</a>
       <div class="nav-timeline" aria-hidden="true">
         <span data-progress-segment></span><span data-progress-segment></span>
         <span data-progress-segment></span><span data-progress-segment></span>
@@ -26,17 +44,17 @@
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
         <button type="button" data-work-trigger>Work</button>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
       </nav>
     </header>
 
     <main id="page" class="page-shell">
       <section class="hero" aria-label="Zodiac II Media hero">
         <div class="hero-media" aria-hidden="true">
-          <video autoplay muted loop playsinline preload="metadata" poster="assets/images/hero.jpg">
-            <source src="assets/videos/hero.mp4" type="video/mp4">
-            <source src="assets/videos/SHOWREELS_CINEMATIC_v01.webm" type="video/webm">
+          <video autoplay muted loop playsinline preload="metadata" poster="/assets/images/hero.jpg">
+            <source src="/assets/videos/hero.mp4" type="video/mp4">
+            <source src="/assets/videos/SHOWREELS_CINEMATIC_v01.webm" type="video/webm">
           </video>
         </div>
       </section>
@@ -123,8 +141,8 @@
       <span data-local-time>Local Time --:--</span>
     </footer>
 
-    <script src="data/projects.js" defer></script>
+    <script src="/data/projects.js" defer></script>
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
-    <script src="script.js" defer></script>
+    <script src="/script.js" defer></script>
   </body>
 </html>
