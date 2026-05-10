@@ -20,48 +20,109 @@
         <span data-progress-segment></span><span data-progress-segment></span>
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
-        <button type="button" data-work-trigger>Work</button>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+        <button class="nav-link nav-link--wipe" type="button" data-work-trigger>
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Work</span>
+        </button>
+        <a class="nav-link nav-link--wipe" href="/about/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">About</span>
+        </a>
+        <a class="nav-link nav-link--wipe" href="/contact/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Contact</span>
+        </a>
       </nav>
     </header>
 
     <main id="page" class="page-shell">
       <section class="page-hero about-hero" aria-labelledby="about-title">
         <div class="page-hero__media" aria-hidden="true">
-          <video autoplay muted loop playsinline preload="metadata" poster="/assets/images/about-hero.jpg">
-            <source src="/assets/videos/SHOWREELS_CINEMATIC_v01.webm" type="video/webm">
+          <video autoplay muted loop playsinline preload="metadata" poster="/assets/images/about-hero.webp">
+            <source src="/assets/images/about-hero.webp" type="video/webm">
           </video>
         </div>
+        <button class="hero-scroll-cue" type="button" aria-label="Scroll to next section" data-scroll-cue>
+          <span class="hero-scroll-cue__text">Scroll</span>
+          <span class="hero-scroll-cue__icon" aria-hidden="true">
+            <span class="hero-scroll-cue__line"></span>
+            <span class="hero-scroll-cue__dot"></span>
+          </span>
+        </button>
       </section>
 
-      <section class="section-pad client-playground content-over-hero" aria-labelledby="client-title">
-        <h2 id="client-title" class="client-playground__title reveal">
-          Our Creative Playground: Where Brands Shine.
-        </h2>
-        <div class="client-board reveal" aria-label="Selected clients">
-          <span class="client-logo client-logo--large" style="--x:10%; --y:12%">VIB</span>
-          <span class="client-logo client-logo--ghost" style="--x:36%; --y:1%">Vietcombank</span>
-          <span class="client-logo" style="--x:32%; --y:20%">Pepsi</span>
-          <span class="client-logo client-logo--small" style="--x:64%; --y:16%">Mitsubishi<br>Motors</span>
-          <span class="client-logo client-logo--small" style="--x:88%; --y:15%">Unilever</span>
-          <span class="client-logo client-logo--small" style="--x:10%; --y:31%">Techcombank</span>
-          <span class="client-logo client-logo--small" style="--x:32%; --y:38%">Acecook</span>
-          <span class="client-logo client-logo--small" style="--x:63%; --y:35%">Techcombank</span>
-          <span class="client-logo client-logo--large" style="--x:88%; --y:34%">Apple</span>
-          <span class="client-logo client-logo--wide" style="--x:9%; --y:50%">Samsung</span>
-          <span class="client-logo client-logo--small" style="--x:35%; --y:52%">VitaDairy</span>
-          <span class="client-logo client-logo--small" style="--x:63%; --y:50%">Sunplay<br>Skin Aqua</span>
-          <span class="client-logo client-logo--small" style="--x:88%; --y:50%">Sacombank</span>
-          <span class="client-logo" style="--x:9%; --y:67%">Nutifood</span>
-          <span class="client-logo client-logo--script" style="--x:34%; --y:66%">Dove</span>
-          <span class="client-logo" style="--x:63%; --y:71%">Nutifood</span>
-          <span class="client-logo client-logo--large" style="--x:88%; --y:71%">VIB</span>
-          <span class="client-logo client-logo--small" style="--x:10%; --y:84%">Honda</span>
-          <span class="client-logo client-logo--small" style="--x:35%; --y:86%">OMO</span>
-          <span class="client-logo client-logo--script" style="--x:63%; --y:85%">AirAsia</span>
-          <span class="client-logo client-logo--small" style="--x:88%; --y:86%">Techcombank</span>
-          <span class="client-logo client-logo--ghost" style="--x:10%; --y:101%">Vietnam Airlines</span>
+      <section class="section-pad client-playground content-over-hero" data-clients-section aria-labelledby="client-title">
+        <div class="client-playground__inner">
+          <header class="client-playground__header reveal">
+            <h2 id="client-title" class="client-playground__title">
+              Our Creative Playground: Where Brands Shine.
+            </h2>
+          </header>
+
+          <div class="clients-marquee reveal" aria-label="Selected clients">
+            <div class="clients-marquee__row" data-row="1">
+              <div class="clients-marquee__track">
+                <div class="clients-marquee__group">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vib.svg" alt="VIB" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/techcombank.svg" alt="Techcombank" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/samsung.svg" alt="Samsung" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/nutifood.svg" alt="Nutifood" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/honda.svg" alt="Honda" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vietcombank.svg" alt="Vietcombank" loading="lazy" decoding="async">
+                </div>
+                <div class="clients-marquee__group" aria-hidden="true">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vib.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/techcombank.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/samsung.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/nutifood.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/honda.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vietcombank.svg" alt="" loading="lazy" decoding="async">
+                </div>
+              </div>
+            </div>
+
+            <div class="clients-marquee__row" data-row="2">
+              <div class="clients-marquee__track">
+                <div class="clients-marquee__group">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/acecook.svg" alt="Acecook" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vitadairy.svg" alt="VitaDairy" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/dove.svg" alt="Dove" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/airasia.svg" alt="AirAsia" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/pepsi.svg" alt="Pepsi" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/unilever.svg" alt="Unilever" loading="lazy" decoding="async">
+                </div>
+                <div class="clients-marquee__group" aria-hidden="true">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/acecook.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vitadairy.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/dove.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/airasia.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/pepsi.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/unilever.svg" alt="" loading="lazy" decoding="async">
+                </div>
+              </div>
+            </div>
+
+            <div class="clients-marquee__row" data-row="3">
+              <div class="clients-marquee__track">
+                <div class="clients-marquee__group">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/sunplay.svg" alt="Sunplay Skin Aqua" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/omo.svg" alt="OMO" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vietnam-airlines.svg" alt="Vietnam Airlines" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/mitsubishi.svg" alt="Mitsubishi Motors" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/sacombank.svg" alt="Sacombank" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vib.svg" alt="VIB" loading="lazy" decoding="async">
+                </div>
+                <div class="clients-marquee__group" aria-hidden="true">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/sunplay.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/omo.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vietnam-airlines.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/mitsubishi.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/sacombank.svg" alt="" loading="lazy" decoding="async">
+                  <img class="clients-marquee__logo" src="/assets/images/clients/vib.svg" alt="" loading="lazy" decoding="async">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -127,7 +188,7 @@
               <div class="team-stack__stage" data-team-list aria-label="Zodiac II Media team"></div>
 
               <aside class="team-stack__copy" aria-label="Team overview">
-                <h2 id="team-title" class="team-section__title reveal">Zodiac<br>Team</h2>
+                <h2 id="team-title" class="team-section__title reveal">ZodiacII<br>Team</h2>
                 <p class="team-section__statement reveal">
                   <span>The people behind the frame</span>
                   <button class="team-section__next" type="button" data-team-next aria-label="Next team profile">-&gt;</button>
@@ -184,65 +245,136 @@
 
       <section class="section-pad mission-section" aria-labelledby="mission-title">
         <h2 id="mission-title" class="mission-title reveal">
-          Our Mission: To always respect, embrace and encourage the uniqueness of individuals and
-          their talents
+          Our Mission: To make the impossible feel photographed.
         </h2>
         <div class="values-grid">
           <article class="value-item reveal">
             <span class="value-item__number" aria-hidden="true">01</span>
-            <h3 class="value-item__title">Creativity</h3>
+            <h3 class="value-item__title">Imagination</h3>
             <p class="value-item__description">
-              We believe in the power of imagination and creative thinking. We strive to infuse
-              innovation and originality into everything we do, producing unique and captivating
-              visual content.
+              We build images beyond what can be captured in-camera - from invisible cleanup to
+              full CG environments.
             </p>
           </article>
           <article class="value-item value-item--right reveal">
             <span class="value-item__number" aria-hidden="true">02</span>
-            <h3 class="value-item__title">Quality</h3>
+            <h3 class="value-item__title">Precision</h3>
             <p class="value-item__description">
-              Excellence is non-negotiable. We are committed to delivering polished visual work
-              from concept to final composite.
+              Every shot is shaped through lighting, scale, motion, texture, and detail until it
+              feels naturally part of the frame.
             </p>
           </article>
           <article class="value-item reveal">
             <span class="value-item__number" aria-hidden="true">03</span>
             <h3 class="value-item__title">Collaboration</h3>
             <p class="value-item__description">
-              We work closely with directors, agencies, artists, and brands to make every project
-              feel intentional and visually precise.
+              We partner with directors, agencies, artists, and brands to keep the creative intent
+              sharp from brief to delivery.
             </p>
           </article>
           <article class="value-item value-item--right reveal">
             <span class="value-item__number" aria-hidden="true">04</span>
-            <h3 class="value-item__title">Integrity</h3>
+            <h3 class="value-item__title">Believability</h3>
             <p class="value-item__description">
-              Trust and clarity are at the heart of every production. We value honest communication
-              and long-term creative relationships.
+              Our work is at its best when the audience stops seeing the effect and starts
+              believing the image.
             </p>
           </article>
         </div>
       </section>
 
-      <section class="section-pad company-section" aria-labelledby="company-title">
-        <div class="company-section__inner company-section__inner--manifesto">
-          <div class="company-section__side reveal">
-            <p class="section-kicker">About Our Company</p>
-            <span class="company-mark" aria-hidden="true">*</span>
-          </div>
+      <section class="company-section" aria-labelledby="company-title">
+        <section class="about-timeline" data-horizontal-timeline>
+          <div class="about-timeline__sticky">
+            <div class="about-timeline__header">
+              <p class="section-kicker reveal">ABOUT OUR COMPANY</p>
 
-          <div class="company-content">
-            <p class="company-eyebrow reveal">2025's Visual Effects Studio</p>
-            <h2 id="company-title" class="company-heading reveal">
-              Zodiac II Media is a Vietnam-based VFX and CGI studio crafting cinematic images for
-              music videos, commercials, films, and large-format visual campaigns.
-            </h2>
-            <p class="company-copy reveal">
-              From on-set supervision to CGI, compositing, simulation, cleanup, and final finishing,
-              we build images that feel impossible yet believable.
-            </p>
+              <div class="about-timeline__intro">
+                <p class="about-timeline__eyebrow reveal">2025's Visual Effects Studio</p>
+                <h2 id="company-title" class="about-timeline__heading reveal">From set to final frame.</h2>
+                <p class="about-timeline__copy reveal">
+                  We move through supervision, CGI, simulation, compositing, cleanup, and finishing to craft images that feel cinematic and believable.
+                </p>
+              </div>
+            </div>
+
+            <div class="about-timeline__viewport">
+              <div class="about-timeline__track" data-horizontal-timeline-track>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">01</p>
+                    <h3>On-set Supervision</h3>
+                    <p>Planning shots from production through final delivery.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">02</p>
+                    <h3>Reference &amp; Planning</h3>
+                    <p>Breaking down plates, references, camera logic, and creative intent.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">03</p>
+                    <h3>CGI Build</h3>
+                    <p>Creating digital worlds, objects, spaces, and impossible visual elements.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">04</p>
+                    <h3>FX &amp; Simulation</h3>
+                    <p>Designing smoke, fire, destruction, particles, motion, and atmosphere.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">05</p>
+                    <h3>Compositing</h3>
+                    <p>Layering every element into a seamless cinematic final image.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">06</p>
+                    <h3>Cleanup &amp; Beauty</h3>
+                    <p>Removing distractions, polishing plates, and making the craft invisible.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">07</p>
+                    <h3>Final Finishing</h3>
+                    <p>Balancing contrast, texture, color, and detail for final delivery.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+                <article class="about-timeline__item">
+                  <div class="about-timeline__content">
+                    <p class="about-timeline__index">08</p>
+                    <h3>Delivery</h3>
+                    <p>Preparing final visuals for music videos, commercials, films, and large-format campaigns.</p>
+                  </div>
+                  <span class="about-timeline__dot" aria-hidden="true"></span>
+                </article>
+              </div>
+            </div>
+
+            <div class="about-timeline__footer">
+              <div class="about-timeline__progress" aria-hidden="true">
+                <span data-horizontal-timeline-progress></span>
+              </div>
+              <p class="about-timeline__hint">Scroll to move through the process</p>
+            </div>
           </div>
-        </div>
+        </section>
 
         <div class="about-stats about-stats--editorial reveal" aria-label="Studio statistics">
           <article class="about-stat">
@@ -268,9 +400,9 @@
         <p class="section-kicker reveal" id="contact-title">Contact</p>
         <a class="contact-email reveal" href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
         <nav class="social-links reveal" aria-label="Social links">
-          <a href="#">YouTube</a>
+          <a href="https://www.youtube.com/@ZodiacII" target="_blank" rel="noopener noreferrer">YouTube</a>
           <a href="#">Vimeo</a>
-          <a href="#">Instagram</a>
+          <a href="https://www.instagram.com/zodiacii_media/" target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href="#">LinkedIn</a>
         </nav>
       </section>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 96" role="img" aria-labelledby="title">
+  <title id="title">Pepsi</title>
+  <rect width="240" height="96" fill="none"/>
+  <circle cx="66" cy="48" r="22" fill="#fff" stroke="#005cb4" stroke-width="7"/>
+  <path d="M45 45c12-10 29-10 42 0" fill="none" stroke="#e32934" stroke-width="8"/>
+  <path d="M45 53c12 8 29 8 42 0" fill="none" stroke="#005cb4" stroke-width="7"/>
+  <text x="150" y="57" text-anchor="middle" fill="#005cb4" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" letter-spacing=".4">pepsi</text>
+</svg>
