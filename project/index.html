@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      (() => {
+        const { pathname, search, hash } = window.location;
+        if (!pathname.endsWith(".html")) return;
+        const page = pathname.split("/").pop();
+        const params = new URLSearchParams(search);
+        const routes = {
+          "index.html": "/",
+          "about.html": "/about/",
+          "contact.html": "/contact/",
+          "work.html": params.get("category") && params.get("category") !== "all" ? `/work/${params.get("category")}/` : "/work/",
+          "reel.html": params.get("category") ? `/reel/${params.get("category")}/` : "/reel/music-video/",
+          "project.html": params.get("slug") ? `/project/${params.get("slug")}/` : "/work/",
+          "profile.html": params.get("person") ? `/profile/${params.get("person")}/` : "/about/"
+        };
+        if (routes[page]) window.location.replace(`${routes[page]}${hash}`);
+      })();
+    </script>
+    <meta name="description" content="Project detail by Zodiac II Media.">
+    <title>Project | Zodiac II Media</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body data-page="project">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <a class="brand-mark" href="/" aria-label="Zodiac II Media home">Zodiac II Media</a>
+      <div class="nav-timeline" aria-hidden="true">
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+        <span data-progress-segment></span><span data-progress-segment></span>
+      </div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <button class="nav-link nav-link--wipe" type="button" data-work-trigger>
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Work</span>
+        </button>
+        <a class="nav-link nav-link--wipe" href="/about/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">About</span>
+        </a>
+        <a class="nav-link nav-link--wipe" href="/contact/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Contact</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="page" class="page-shell">
+      <article class="project-detail" data-project-page>
+        <aside class="project-detail__info reveal">
+          <a class="project-detail__back" href="/work/">Back To Work</a>
+          <header class="project-detail__header">
+            <p class="project-detail__category" data-project-category>Project</p>
+            <h1 data-project-title>Project</h1>
+            <p class="project-detail__client" data-project-client></p>
+            <p class="project-detail__year" data-project-year></p>
+          </header>
+
+          <dl class="project-detail__meta">
+            <div>
+              <dt>Type</dt>
+              <dd data-project-type></dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd data-project-role></dd>
+            </div>
+          </dl>
+
+          <div class="project-detail__sections">
+            <details class="project-disclosure">
+              <summary>Description</summary>
+              <p data-project-description></p>
+            </details>
+            <details class="project-disclosure">
+              <summary>Credits</summary>
+              <ul data-project-credits></ul>
+            </details>
+            <details class="project-disclosure">
+              <summary>Awards</summary>
+              <ul data-project-awards></ul>
+            </details>
+          </div>
+        </aside>
+
+        <section class="project-detail__media" aria-label="Project media">
+          <div class="project-detail__player reveal">
+            <video controls playsinline preload="metadata" data-project-video></video>
+          </div>
+          <div class="project-detail__gallery reveal" data-project-gallery></div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Zodiac II Media</span>
+      <span>Ho Chi Minh City, Vietnam</span>
+      <span>&copy; 2026</span>
+      <span data-local-time>Local Time --:--</span>
+    </footer>
+
+    <script src="/data/projects.js" defer></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="/script.js" defer></script>
+  </body>
+</html>
