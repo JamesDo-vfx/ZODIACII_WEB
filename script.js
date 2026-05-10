@@ -347,6 +347,7 @@
       const card = document.createElement("article");
       card.className = "team-card";
       card.dataset.teamCard = "";
+      card.dataset.profileUrl = getTeamProfileUrl(member);
       card.style.setProperty("--i", index);
 
       const name = document.createElement("h3");
@@ -478,16 +479,38 @@
     let dragStartX = 0;
     let dragAccumulatedX = 0;
     let isDraggingCards = false;
+    let suppressCardClick = false;
+    let tapCardCandidate = null;
     const dragStepThreshold = 72;
     const dragIntentThreshold = 8;
+    const openTeamProfileFromCard = (card) => {
+      if (!card) return false;
+      const profileUrl = card.dataset?.profileUrl || card.getAttribute("data-profile-url");
+      if (!profileUrl) return false;
+      if (card.classList.contains("is-secondary")) {
+        shiftTeam(1);
+        restartAutoCycle();
+        window.setTimeout(() => {
+          window.location.href = profileUrl;
+        }, 420);
+        return true;
+      }
+      window.location.href = profileUrl;
+      return true;
+    };
 
     const onDragStart = (event) => {
       if (event.pointerType === "mouse" && event.button !== 0) return;
-      if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
+      tapCardCandidate = event.target instanceof Element ? event.target.closest("[data-team-card]") : null;
+      if (event.target instanceof Element && event.target.closest(interactiveSelector)) {
+        tapCardCandidate = null;
+        return;
+      }
       dragPointerId = event.pointerId;
       dragStartX = event.clientX;
       dragAccumulatedX = 0;
       isDraggingCards = false;
+      suppressCardClick = false;
       stopAutoCycle();
       teamList.setPointerCapture?.(dragPointerId);
     };
@@ -500,6 +523,7 @@
 
       if (!isDraggingCards && Math.abs(dragAccumulatedX) > dragIntentThreshold) {
         isDraggingCards = true;
+        suppressCardClick = true;
       }
       if (!isDraggingCards) return;
 
@@ -517,9 +541,25 @@
     const onDragEnd = (event) => {
       if (dragPointerId !== event.pointerId) return;
       teamList.releasePointerCapture?.(dragPointerId);
+      const tapTargetCard =
+        !isDraggingCards &&
+        !suppressCardClick &&
+        tapCardCandidate &&
+        tapCardCandidate.classList.contains("is-visible-pair")
+          ? tapCardCandidate
+          : null;
       dragPointerId = null;
       dragStartX = 0;
       dragAccumulatedX = 0;
+      isDraggingCards = false;
+      tapCardCandidate = null;
+      if (tapTargetCard) {
+        if (openTeamProfileFromCard(tapTargetCard)) {
+          suppressCardClick = false;
+          return;
+        }
+      }
+      suppressCardClick = false;
       restartAutoCycle();
     };
 
@@ -527,7 +567,19 @@
     teamList.addEventListener("pointermove", onDragMove);
     teamList.addEventListener("pointerup", onDragEnd);
     teamList.addEventListener("pointercancel", onDragEnd);
-
+    cards.forEach((card) => {
+      card.addEventListener("click", (event) => {
+        if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
+        if (suppressCardClick || isDraggingCards || !card.classList.contains("is-visible-pair")) {
+          suppressCardClick = false;
+          event.preventDefault();
+          return;
+        }
+        event.preventDefault();
+        suppressCardClick = false;
+        openTeamProfileFromCard(card);
+      });
+    });
     nextButtons.forEach((button) => {
       button.addEventListener("click", () => {
         shiftTeam(1);
@@ -974,7 +1026,15 @@
 
   window.addEventListener("pagehide", stopSmoothScroll);
   window.addEventListener("beforeunload", stopSmoothScroll);
-  window.addEventListener("resize", syncMobileNavState);
+  let projectPreviewResizeRaf = 0;
+  window.addEventListener("resize", () => {
+    syncMobileNavState();
+    if (projectPreviewResizeRaf) return;
+    projectPreviewResizeRaf = window.requestAnimationFrame(() => {
+      initProjectViewportPreviews();
+      projectPreviewResizeRaf = 0;
+    });
+  });
   syncMobileNavState();
 
   if (loader) {
@@ -1099,17 +1159,94 @@
     `;
     const video = article.querySelector("video");
     if (!video) return article;
-    article.addEventListener("mouseenter", () => video.play().catch(() => {}));
+    article.addEventListener("mouseenter", () => {
+      video.play().then(() => article.classList.add("is-playing")).catch(() => {});
+    });
     article.addEventListener("mouseleave", () => {
       video.pause();
       video.currentTime = 0;
+      article.classList.remove("is-playing");
     });
-    article.addEventListener("focusin", () => video.play().catch(() => {}));
+    article.addEventListener("focusin", () => {
+      video.play().then(() => article.classList.add("is-playing")).catch(() => {});
+    });
     article.addEventListener("focusout", () => {
       video.pause();
       video.currentTime = 0;
+      article.classList.remove("is-playing");
     });
     return article;
+  };
+
+  let projectPreviewObserver = null;
+  let activeProjectPreviewCard = null;
+
+  const isProjectAutoPreviewViewport = () =>
+    window.matchMedia("(max-width: 820px)").matches ||
+    window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+  const stopProjectPreview = (card) => {
+    if (!card) return;
+    const video = card.querySelector(".project-frame video");
+    if (!video) return;
+    video.pause();
+    video.currentTime = 0;
+    card.classList.remove("is-playing");
+  };
+
+  const playProjectPreview = (card) => {
+    if (!card) return;
+    const video = card.querySelector(".project-frame video");
+    if (!video) return;
+    video.play().then(() => card.classList.add("is-playing")).catch(() => {});
+  };
+
+  const initProjectViewportPreviews = () => {
+    if (projectPreviewObserver) {
+      projectPreviewObserver.disconnect();
+      projectPreviewObserver = null;
+    }
+
+    const cards = Array.from(document.querySelectorAll(".project-card--has-preview"));
+    cards.forEach(stopProjectPreview);
+    activeProjectPreviewCard = null;
+
+    if (!cards.length || prefersReducedMotion || !("IntersectionObserver" in window) || !isProjectAutoPreviewViewport()) {
+      return;
+    }
+
+    const visibility = new Map();
+    const syncActivePreview = () => {
+      let nextCard = null;
+      let maxRatio = 0;
+      visibility.forEach((ratio, card) => {
+        if (ratio > maxRatio) {
+          maxRatio = ratio;
+          nextCard = card;
+        }
+      });
+
+      if (nextCard === activeProjectPreviewCard) return;
+      stopProjectPreview(activeProjectPreviewCard);
+      activeProjectPreviewCard = nextCard;
+      if (activeProjectPreviewCard) playProjectPreview(activeProjectPreviewCard);
+    };
+
+    projectPreviewObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+            visibility.set(entry.target, entry.intersectionRatio);
+          } else {
+            visibility.delete(entry.target);
+          }
+        });
+        syncActivePreview();
+      },
+      { threshold: [0.55, 0.7, 0.85], rootMargin: "-8% 0px -8% 0px" }
+    );
+
+    cards.forEach((card) => projectPreviewObserver.observe(card));
   };
 
   const renderProjectDetailPage = () => {
@@ -1949,6 +2086,7 @@
 
   renderWorkPage();
   renderProjectGrid();
+  initProjectViewportPreviews();
   renderReelGrid();
   renderReelPage();
   renderProjectDetailPage();

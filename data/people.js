@@ -76,8 +76,8 @@ window.teamMembers = [
   },
   {
     name: "Nguyen Manh Hung",
-    role: "Compositor",
-    title: "COMPOSITOR",
+    role: "Lead Compositor",
+    title: "Lead COMPOSITOR",
     bio: "Builds final-frame composites with clean integration, detail control, and cinematic finishing.",
     meta: [
       ["ROLE", "COMPOSITOR"],
