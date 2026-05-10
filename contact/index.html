@@ -20,28 +20,92 @@
         <span data-progress-segment></span><span data-progress-segment></span>
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
-        <button type="button" data-work-trigger>Work</button>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+        <button class="nav-link nav-link--wipe" type="button" data-work-trigger>
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Work</span>
+        </button>
+        <a class="nav-link nav-link--wipe" href="/about/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">About</span>
+        </a>
+        <a class="nav-link nav-link--wipe" href="/contact/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Contact</span>
+        </a>
       </nav>
     </header>
 
     <main id="page" class="page-shell">
-      <section class="section-pad contact-strip" aria-labelledby="contact-title">
-        <div class="contact-grid">
-          <div>
-            <p class="section-kicker reveal" id="contact-title">Get In Touch</p>
-            <a class="contact-email reveal" href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
+      <section class="contact-card contact-card--primary" aria-labelledby="contact-title">
+        <div class="contact-card__block contact-card__block--email reveal">
+          <p class="section-kicker" id="contact-title">Email Me</p>
+          <a class="contact-email" href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
+        </div>
+
+        <div class="contact-card__block contact-card__block--phone reveal">
+          <p class="section-kicker">Call Me</p>
+          <a class="contact-phone" href="tel:+84968882544">+84 96 888 2544</a>
+        </div>
+
+        <div class="contact-card__block contact-card__block--representation reveal">
+          <p class="section-kicker">Representation</p>
+          <div class="representation-grid">
+            <address>
+              <strong>Vietnam</strong>
+              <span>Zodiac II Media</span>
+              <span>Directorial | Commercial</span>
+              <a href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
+            </address>
+            <address>
+              <strong>Ho Chi Minh City</strong>
+              <span>Production Office</span>
+              <span>VFX | CGI | Film</span>
+              <a href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
+            </address>
           </div>
-          <div class="contact-data reveal">
-            <span>Ho Chi Minh City, Vietnam</span>
-            <a href="tel:+84000000000">+84 xxx xxx xxx</a>
-            <nav class="social-links" aria-label="Social links">
-              <a href="#">YouTube</a>
-              <a href="#">Vimeo</a>
-              <a href="#">Instagram</a>
-              <a href="#">LinkedIn</a>
-            </nav>
+        </div>
+      </section>
+
+      <section class="contact-directory" aria-label="Contact directory">
+        <div class="contact-directory__title reveal">
+          <span>Visual Effects <span class="contact-directory__plus" aria-hidden="true">+</span></span>
+          <span>CGI Studio</span>
+        </div>
+
+        <div class="contact-directory__content reveal">
+          <nav class="contact-directory__menu" aria-label="Contact page links">
+            <p class="section-kicker">Menu</p>
+            <a href="/">Home</a>
+            <button type="button" data-work-trigger>Work</button>
+            <a href="/about/">About</a>
+            <a href="/contact/">Contact</a>
+          </nav>
+
+          <div class="contact-directory__touch">
+            <p class="section-kicker">Get In Touch</p>
+            <a href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
+            <a href="tel:+84968882544">+84 96 888 2544</a>
+          </div>
+
+          <nav class="contact-directory__socials" aria-label="Social links">
+            <p class="section-kicker">Socials</p>
+            <a href="https://www.instagram.com/zodiacii_media/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">&nearr;</span></a>
+            <a href="https://www.youtube.com/@ZodiacII" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">&nearr;</span></a>
+            <a href="#">Vimeo <span aria-hidden="true">&nearr;</span></a>
+            <a href="#">LinkedIn <span aria-hidden="true">&nearr;</span></a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="contact-brand-wall" aria-label="Zodiac II Media footer mark">
+        <div class="contact-brand-wall__mark reveal" aria-hidden="true">
+          <div class="contact-brand-wall__track">
+            <span>Zodiac II Media</span>
+            <span>Zodiac II Media</span>
+            <span>Zodiac II Media</span>
+            <span>Zodiac II Media</span>
+            <span>Zodiac II Media</span>
+            <span>Zodiac II Media</span>
           </div>
         </div>
       </section>
