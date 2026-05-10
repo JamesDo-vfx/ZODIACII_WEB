@@ -62,47 +62,49 @@
     </header>
 
     <main id="page" class="page-shell">
-      <section class="hero" id="home-hero" aria-label="Zodiac II Media hero">
-        <div class="hero-media" aria-hidden="true">
-          <video autoplay muted loop playsinline preload="metadata" poster="/assets/videos/hero-poster.jpg">
-            <source src="/assets/videos/hero.mp4" type="video/mp4">
-            <source src="/assets/videos/SHOWREELS_CINEMATIC_v02.webm" type="video/webm">
-          </video>
-        </div>
-        <button class="hero-scroll-cue" type="button" aria-label="Scroll to next section" data-scroll-cue>
-          <span class="hero-scroll-cue__text">Scroll</span>
-          <span class="hero-scroll-cue__icon" aria-hidden="true">
-            <span class="hero-scroll-cue__line"></span>
-            <span class="hero-scroll-cue__dot"></span>
-          </span>
-        </button>
-      </section>
-
-      <section class="behind-bridge section-pad" id="behind-work" aria-labelledby="behind-title">
-        <div class="behind-bridge__inner">
-          <div class="behind-bridge__meta">
-            <p class="section-kicker reveal">Behind The Work</p>
-            <span class="behind-bridge__index reveal">01 / Studio</span>
+      <div class="stacked-home-sections" data-stacked-sections>
+        <section class="hero stack-section stack-section--hero" id="home-hero" aria-label="Zodiac II Media hero">
+          <div class="hero-media" aria-hidden="true">
+            <video autoplay muted loop playsinline preload="metadata" poster="/assets/videos/hero-poster.jpg">
+              <source src="/assets/videos/hero.mp4" type="video/mp4">
+              <source src="/assets/videos/SHOWREELS_CINEMATIC_v02.webm" type="video/webm">
+            </video>
           </div>
+          <button class="hero-scroll-cue" type="button" aria-label="Scroll to next section" data-scroll-cue>
+            <span class="hero-scroll-cue__text">Scroll</span>
+            <span class="hero-scroll-cue__icon" aria-hidden="true">
+              <span class="hero-scroll-cue__line"></span>
+              <span class="hero-scroll-cue__dot"></span>
+            </span>
+          </button>
+        </section>
 
-          <h2 id="behind-title" class="behind-bridge__heading reveal">
-            Reality, rebuilt<br>
-            frame by frame.
+        <section class="behind-bridge section-pad stack-section stack-section--behind" id="behind-work" aria-labelledby="behind-title">
+          <div class="behind-bridge__inner">
+            <div class="behind-bridge__meta">
+              <p class="section-kicker reveal">Behind The Work</p>
+              <span class="behind-bridge__index reveal">01 / Studio</span>
+            </div>
+
+            <h2 id="behind-title" class="behind-bridge__heading reveal">
+              Reality, rebuilt<br>
+              frame by frame.
+            </h2>
+
+            <p class="behind-bridge__copy reveal">
+              A Vietnam-based VFX and CGI studio creating cinematic visuals across music videos,
+              commercials, and brand films.
+            </p>
+          </div>
+        </section>
+
+        <section class="section-pad featured-reels stack-section stack-section--reels" id="featured-reels" aria-labelledby="featured-title">
+          <h2 id="featured-title" class="selected-work-title reveal">
+            Selected Work<sup>[12]</sup>
           </h2>
-
-          <p class="behind-bridge__copy reveal">
-            A Vietnam-based VFX and CGI studio creating cinematic visuals across music videos,
-            commercials, and brand films.
-          </p>
-        </div>
-      </section>
-
-      <section class="section-pad featured-reels" id="featured-reels" aria-labelledby="featured-title">
-        <h2 id="featured-title" class="selected-work-title reveal">
-          Selected Work<sup>[12]</sup>
-        </h2>
-        <div class="reel-grid" data-reel-grid></div>
-      </section>
+          <div class="reel-grid" data-reel-grid></div>
+        </section>
+      </div>
 
       <section class="capabilities-kinetic section-pad" id="capabilities" aria-labelledby="capabilities-title">
         <div class="capabilities-kinetic__head reveal">

@@ -449,14 +449,26 @@ body.is-page-transitioning .site-footer {
   padding: 120px var(--page-pad) 42px;
 }
 
-body[data-page="home"] .hero {
-  position: sticky;
-  top: 0;
+body[data-page="home"] .stacked-home-sections {
+  position: relative;
   z-index: 0;
 }
 
-body[data-page="home"] .hero + .section-pad {
-  margin-top: 0;
+body[data-page="home"] .stacked-home-sections .stack-section {
+  position: sticky;
+  top: 0;
+}
+
+body[data-page="home"] .stacked-home-sections .stack-section--hero {
+  z-index: 1;
+}
+
+body[data-page="home"] .stacked-home-sections .stack-section--behind {
+  z-index: 2;
+}
+
+body[data-page="home"] .stacked-home-sections .stack-section--reels {
+  z-index: 3;
 }
 
 .hero::after {
@@ -679,7 +691,7 @@ body[data-page="home"] .hero + .section-pad {
   border-top: 0;
 }
 
-body[data-page="home"] .hero + .behind-bridge {
+body[data-page="home"] .stacked-home-sections .stack-section--hero + .stack-section--behind {
   margin-top: clamp(-96px, -8vh, -48px);
 }
 
@@ -4778,7 +4790,7 @@ body[data-page="contact"] .contact-directory .section-kicker {
     padding-top: clamp(58px, 18vw, 96px);
     padding-bottom: clamp(70px, 18vw, 112px);
   }
-  body[data-page="home"] .hero + .behind-bridge {
+  body[data-page="home"] .stacked-home-sections .stack-section--hero + .stack-section--behind {
     margin-top: clamp(-70px, -7vh, -36px);
   }
   .behind-bridge__heading {

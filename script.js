@@ -1032,6 +1032,7 @@
     if (projectPreviewResizeRaf) return;
     projectPreviewResizeRaf = window.requestAnimationFrame(() => {
       initProjectViewportPreviews();
+      initReelViewportPreviews();
       projectPreviewResizeRaf = 0;
     });
   });
@@ -1180,6 +1181,8 @@
 
   let projectPreviewObserver = null;
   let activeProjectPreviewCard = null;
+  let reelPreviewObserver = null;
+  let activeReelPreviewCard = null;
 
   const isProjectAutoPreviewViewport = () =>
     window.matchMedia("(max-width: 820px)").matches ||
@@ -1247,6 +1250,65 @@
     );
 
     cards.forEach((card) => projectPreviewObserver.observe(card));
+  };
+
+  const initReelViewportPreviews = () => {
+    if (reelPreviewObserver) {
+      reelPreviewObserver.disconnect();
+      reelPreviewObserver = null;
+    }
+
+    const cards = Array.from(document.querySelectorAll(".reel-card"));
+    cards.forEach((card) => {
+      const video = card.querySelector(".reel-card__video");
+      if (!video) return;
+      stopPreview(card, video);
+    });
+    activeReelPreviewCard = null;
+
+    if (!cards.length || prefersReducedMotion || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    const visibility = new Map();
+    const syncActivePreview = () => {
+      let nextCard = null;
+      let maxRatio = 0;
+      visibility.forEach((ratio, card) => {
+        if (ratio > maxRatio) {
+          maxRatio = ratio;
+          nextCard = card;
+        }
+      });
+
+      if (nextCard === activeReelPreviewCard) return;
+      if (activeReelPreviewCard) {
+        const activeVideo = activeReelPreviewCard.querySelector(".reel-card__video");
+        if (activeVideo) stopPreview(activeReelPreviewCard, activeVideo);
+      }
+
+      activeReelPreviewCard = nextCard;
+      if (!activeReelPreviewCard) return;
+      const nextVideo = activeReelPreviewCard.querySelector(".reel-card__video");
+      if (!nextVideo) return;
+      nextVideo.play().then(() => activeReelPreviewCard.classList.add("is-playing")).catch(() => {});
+    };
+
+    reelPreviewObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
+            visibility.set(entry.target, entry.intersectionRatio);
+          } else {
+            visibility.delete(entry.target);
+          }
+        });
+        syncActivePreview();
+      },
+      { threshold: [0.45, 0.6, 0.8], rootMargin: "-8% 0px -8% 0px" }
+    );
+
+    cards.forEach((card) => reelPreviewObserver.observe(card));
   };
 
   const renderProjectDetailPage = () => {
@@ -1509,6 +1571,7 @@
       cards.forEach(setupReelPreview);
       cards.forEach(setupReelModalTrigger);
     });
+    initReelViewportPreviews();
   };
 
   const renderProjectGrid = () => {
