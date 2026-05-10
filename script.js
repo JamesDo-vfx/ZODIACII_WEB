@@ -2184,11 +2184,46 @@
     revealItems.forEach((item) => item.classList.add("is-visible"));
   }
 
+  let lastScrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+  let mobileHeaderHidden = false;
+  const mobileHeaderQuery = window.matchMedia("(max-width: 900px)");
+  const mobileHeaderHideDelta = 10;
+
+  const setMobileHeaderHidden = (nextHidden) => {
+    if (!header || mobileHeaderHidden === nextHidden) return;
+    mobileHeaderHidden = nextHidden;
+    header.classList.toggle("is-hidden", mobileHeaderHidden);
+  };
+
   const updateScrollState = () => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const progress = Math.min(scrollTop / maxScroll, 1);
     header?.classList.toggle("is-scrolled", scrollTop > 24);
+
+    if (!header) {
+      lastScrollTop = scrollTop;
+    } else if (!mobileHeaderQuery.matches) {
+      setMobileHeaderHidden(false);
+      lastScrollTop = scrollTop;
+    } else {
+      const lockedHeader =
+        body.classList.contains("is-mobile-nav-open") ||
+        body.classList.contains("is-work-overlay-open");
+
+      if (lockedHeader || scrollTop <= 24) {
+        setMobileHeaderHidden(false);
+      } else {
+        const delta = scrollTop - lastScrollTop;
+        if (delta > mobileHeaderHideDelta) {
+          setMobileHeaderHidden(true);
+        } else if (delta < -mobileHeaderHideDelta) {
+          setMobileHeaderHidden(false);
+        }
+      }
+      lastScrollTop = scrollTop;
+    }
+
     progressSegments.forEach((segment, index) => {
       const segmentStart = index / progressSegments.length;
       const segmentEnd = (index + 1) / progressSegments.length;

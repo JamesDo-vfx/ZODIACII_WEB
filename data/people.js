@@ -80,7 +80,7 @@ window.teamMembers = [
     title: "Lead COMPOSITOR",
     bio: "Builds final-frame composites with clean integration, detail control, and cinematic finishing.",
     meta: [
-      ["ROLE", "COMPOSITOR"],
+      ["ROLE", "Lead COMPOSITOR"],
       ["DEPARTMENT", "COMPOSITING"],
       ["FOCUS", "CLEANUP / INTEGRATION / FINAL FRAME"],
       ["LOCATION", "HO CHI MINH CITY"]
