@@ -37,45 +37,74 @@
 
     <header class="site-header" data-header>
       <a class="brand-mark" href="/" aria-label="Zodiac II Media home">Zodiac II Media</a>
-      <div class="nav-timeline" aria-hidden="true">
-        <span data-progress-segment></span><span data-progress-segment></span>
-        <span data-progress-segment></span><span data-progress-segment></span>
-        <span data-progress-segment></span><span data-progress-segment></span>
+      <div class="nav-timeline" aria-label="Page sections">
+        <a href="#home-hero" data-progress-segment data-nav-target="#home-hero" aria-label="Jump to hero"></a>
+        <a href="#behind-work" data-progress-segment data-nav-target="#behind-work" aria-label="Jump to behind the work"></a>
+        <a href="#featured-reels" data-progress-segment data-nav-target="#featured-reels" aria-label="Jump to featured reels"></a>
+        <a href="#capabilities" data-progress-segment data-nav-target="#capabilities" aria-label="Jump to capabilities"></a>
+        <a href="#about-preview" data-progress-segment data-nav-target="#about-preview" aria-label="Jump to about"></a>
+        <a href="#contact-strip" data-progress-segment data-nav-target="#contact-strip" aria-label="Jump to contact"></a>
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
-        <button type="button" data-work-trigger>Work</button>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+        <button class="nav-link nav-link--wipe" type="button" data-work-trigger>
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Work</span>
+        </button>
+        <a class="nav-link nav-link--wipe" href="/about/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">About</span>
+        </a>
+        <a class="nav-link nav-link--wipe" href="/contact/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Contact</span>
+        </a>
       </nav>
     </header>
 
     <main id="page" class="page-shell">
-      <section class="hero" aria-label="Zodiac II Media hero">
+      <section class="hero" id="home-hero" aria-label="Zodiac II Media hero">
         <div class="hero-media" aria-hidden="true">
-          <video autoplay muted loop playsinline preload="metadata" poster="/assets/images/hero.jpg">
+          <video autoplay muted loop playsinline preload="metadata" poster="/assets/videos/hero-poster.jpg">
             <source src="/assets/videos/hero.mp4" type="video/mp4">
-            <source src="/assets/videos/SHOWREELS_CINEMATIC_v01.webm" type="video/webm">
+            <source src="/assets/videos/SHOWREELS_CINEMATIC_v02.webm" type="video/webm">
           </video>
         </div>
+        <button class="hero-scroll-cue" type="button" aria-label="Scroll to next section" data-scroll-cue>
+          <span class="hero-scroll-cue__text">Scroll</span>
+          <span class="hero-scroll-cue__icon" aria-hidden="true">
+            <span class="hero-scroll-cue__line"></span>
+            <span class="hero-scroll-cue__dot"></span>
+          </span>
+        </button>
       </section>
 
-      <section class="section-pad behind content-over-hero" aria-labelledby="behind-title">
-        <p class="section-kicker reveal">Behind The Work</p>
-        <div class="behind-grid">
-          <h2 id="behind-title" class="large-statement reveal">
-            Zodiac II Media is a Vietnam-based VFX and CGI studio creating cinematic visuals for
-            music videos, commercials, and brand films. From invisible cleanup to full CG
-            environments, simulations, compositing, and final polish, we design images that feel
-            impossible yet believable.
+      <section class="behind-bridge section-pad" id="behind-work" aria-labelledby="behind-title">
+        <div class="behind-bridge__inner">
+          <div class="behind-bridge__meta">
+            <p class="section-kicker reveal">Behind The Work</p>
+            <span class="behind-bridge__index reveal">01 / Studio</span>
+          </div>
+
+          <h2 id="behind-title" class="behind-bridge__heading reveal">
+            Reality, rebuilt<br>
+            frame by frame.
           </h2>
+
+          <p class="behind-bridge__copy reveal">
+            A Vietnam-based VFX and CGI studio creating cinematic visuals across music videos,
+            commercials, and brand films.
+          </p>
         </div>
       </section>
 
       <section class="section-pad featured-reels" id="featured-reels" aria-labelledby="featured-title">
+        <h2 id="featured-title" class="selected-work-title reveal">
+          Selected Work<sup>[12]</sup>
+        </h2>
         <div class="reel-grid" data-reel-grid></div>
       </section>
 
-      <section class="capabilities-kinetic section-pad" aria-labelledby="capabilities-title">
+      <section class="capabilities-kinetic section-pad" id="capabilities" aria-labelledby="capabilities-title">
         <div class="capabilities-kinetic__head reveal">
           <p class="capabilities-kinetic__label">Capabilities</p>
           <h2 id="capabilities-title" class="capabilities-kinetic__title">Image Systems</h2>
@@ -108,27 +137,13 @@
         </div>
       </section>
 
-      <section class="section-pad about-preview" aria-labelledby="about-title">
-        <p class="section-kicker reveal">About</p>
-        <div class="about-copy">
-          <p class="reveal" id="about-title">
-            We are a Ho Chi Minh City based visual effects studio working across music videos,
-            commercials, brand films, and cinematic visual campaigns.
-          </p>
-          <p class="reveal">
-            Our focus is high-impact visuals, technical precision, and cinematic taste - from set
-            supervision to final composite.
-          </p>
-        </div>
-      </section>
-
-      <section class="section-pad contact-strip" aria-labelledby="contact-title">
+      <section class="section-pad contact-strip" id="contact-strip" aria-labelledby="contact-title">
         <p class="section-kicker reveal" id="contact-title">Contact</p>
         <a class="contact-email reveal" href="mailto:contact@zodiacii.com">contact@zodiacii.com</a>
         <nav class="social-links reveal" aria-label="Social links">
-          <a href="#">YouTube</a>
+          <a href="https://www.youtube.com/@ZodiacII" target="_blank" rel="noopener noreferrer">YouTube</a>
           <a href="#">Vimeo</a>
-          <a href="#">Instagram</a>
+          <a href="https://www.instagram.com/zodiacii_media/" target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href="#">LinkedIn</a>
         </nav>
       </section>

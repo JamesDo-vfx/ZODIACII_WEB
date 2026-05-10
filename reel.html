@@ -38,9 +38,18 @@
         <span data-progress-segment></span><span data-progress-segment></span>
       </div>
       <nav class="nav-links" aria-label="Primary navigation">
-        <button type="button" data-work-trigger>Work</button>
-        <a href="/about/">About</a>
-        <a href="/contact/">Contact</a>
+        <button class="nav-link nav-link--wipe" type="button" data-work-trigger>
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Work</span>
+        </button>
+        <a class="nav-link nav-link--wipe" href="/about/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">About</span>
+        </a>
+        <a class="nav-link nav-link--wipe" href="/contact/">
+          <span class="nav-link__mark" aria-hidden="true"></span>
+          <span class="nav-link__label">Contact</span>
+        </a>
       </nav>
     </header>
 
@@ -55,6 +64,13 @@
 
         <section class="reel-player-wrap reveal" aria-label="Reel video player">
           <video class="reel-player" controls playsinline preload="metadata" data-reel-video></video>
+          <button class="hero-scroll-cue" type="button" aria-label="Scroll to next section" data-scroll-cue>
+            <span class="hero-scroll-cue__text">Scroll</span>
+            <span class="hero-scroll-cue__icon" aria-hidden="true">
+              <span class="hero-scroll-cue__line"></span>
+              <span class="hero-scroll-cue__dot"></span>
+            </span>
+          </button>
         </section>
 
         <section class="other-reels reveal" aria-labelledby="other-reels-title">
