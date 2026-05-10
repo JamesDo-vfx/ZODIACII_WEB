@@ -1417,6 +1417,7 @@
     const heroReelLink = document.querySelector("[data-hero-reel-link]");
     const prevButton = document.querySelector(".work-category-hero__arrow--prev");
     const nextButton = document.querySelector(".work-category-hero__arrow--next");
+    const heroSection = heroMedia.closest(".work-category-hero");
 
     const createHeroMediaElement = (project) => {
       const localVideo = getProjectPreviewVideo(project) || getProjectPlayableVideo(project);
@@ -1542,6 +1543,59 @@
       heroProgress?.removeAttribute("hidden");
       prevButton?.addEventListener("click", () => setHeroByOffset(-1));
       nextButton?.addEventListener("click", () => setHeroByOffset(1));
+
+      if (heroSection) {
+        const interactiveSelector = "a, button, input, select, textarea, [role='button']";
+        let swipePointerId = null;
+        let swipeStartX = 0;
+        let swipeStartY = 0;
+        let swipeDone = false;
+        const swipeThreshold = 64;
+        const axisLockThreshold = 10;
+
+        const resetSwipe = () => {
+          swipePointerId = null;
+          swipeStartX = 0;
+          swipeStartY = 0;
+          swipeDone = false;
+        };
+
+        heroSection.addEventListener("pointerdown", (event) => {
+          if (event.pointerType !== "touch") return;
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+          if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
+          swipePointerId = event.pointerId;
+          swipeStartX = event.clientX;
+          swipeStartY = event.clientY;
+          swipeDone = false;
+          heroSection.setPointerCapture?.(swipePointerId);
+        });
+
+        heroSection.addEventListener("pointermove", (event) => {
+          if (swipePointerId !== event.pointerId || swipeDone) return;
+          const deltaX = event.clientX - swipeStartX;
+          const deltaY = event.clientY - swipeStartY;
+          const absX = Math.abs(deltaX);
+          const absY = Math.abs(deltaY);
+
+          if (absX < axisLockThreshold && absY < axisLockThreshold) return;
+          if (absY > absX) return;
+          if (absX < swipeThreshold) return;
+
+          swipeDone = true;
+          setHeroByOffset(deltaX < 0 ? 1 : -1);
+          event.preventDefault();
+        }, { passive: false });
+
+        const endSwipe = (event) => {
+          if (swipePointerId !== event.pointerId) return;
+          heroSection.releasePointerCapture?.(swipePointerId);
+          resetSwipe();
+        };
+
+        heroSection.addEventListener("pointerup", endSwipe);
+        heroSection.addEventListener("pointercancel", endSwipe);
+      }
     }
   };
 
