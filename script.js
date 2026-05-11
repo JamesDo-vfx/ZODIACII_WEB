@@ -9,6 +9,28 @@
   const teamImageBasePath = "/assets/images/people";
   const teamImageExtensions = ["jpg", "png", "webp"];
   const teamMembers = Array.isArray(window.teamMembers) ? window.teamMembers : [];
+  const brandLogoPath = "/assets/icons/header_logo.png";
+
+  const initBrandLogo = () => {
+    const brandMarks = Array.from(document.querySelectorAll(".brand-mark"));
+    if (!brandMarks.length) return;
+
+    brandMarks.forEach((brandMark) => {
+      if (brandMark.querySelector("img.brand-mark__logo")) return;
+
+      const label = (brandMark.textContent || "Zodiac II Media").trim() || "Zodiac II Media";
+      brandMark.textContent = "";
+
+      const logo = document.createElement("img");
+      logo.className = "brand-mark__logo";
+      logo.src = brandLogoPath;
+      logo.alt = label;
+      logo.decoding = "async";
+      logo.loading = "eager";
+
+      brandMark.append(logo);
+    });
+  };
 
   const initSmoothScroll = () => {
     if (prefersReducedMotion || typeof Lenis === "undefined") {
@@ -348,6 +370,9 @@
       card.className = "team-card";
       card.dataset.teamCard = "";
       card.dataset.profileUrl = getTeamProfileUrl(member);
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `${member.name}, ${member.role}. Press Enter for profile.`);
       card.style.setProperty("--i", index);
 
       const name = document.createElement("h3");
@@ -369,6 +394,7 @@
 
       const profileLink = document.createElement("a");
       profileLink.className = "team-card__link";
+      profileLink.dataset.teamInfo = "";
       profileLink.href = getTeamProfileUrl(member);
       profileLink.setAttribute("aria-label", `View ${member.name} profile`);
       profileLink.textContent = "Info";
@@ -391,9 +417,10 @@
     });
 
     teamList.append(fragment);
+    teamList.tabIndex = 0;
 
     const cards = Array.from(teamList.querySelectorAll("[data-team-card]"));
-    const interactiveSelector = "a, button, input, select, textarea, [role='button']";
+    const interactiveSelector = "a, button, input, select, textarea";
     const getTeamStackScale = () => {
       if (window.matchMedia("(max-width: 560px)").matches) return 0.42;
       if (window.matchMedia("(max-width: 980px)").matches) return 0.7;
@@ -475,14 +502,7 @@
       startAutoCycle();
     };
 
-    let dragPointerId = null;
-    let dragStartX = 0;
-    let dragAccumulatedX = 0;
-    let isDraggingCards = false;
     let suppressCardClick = false;
-    let tapCardCandidate = null;
-    const dragStepThreshold = 72;
-    const dragIntentThreshold = 8;
     const openTeamProfileFromCard = (card) => {
       if (!card) return false;
       const profileUrl = card.dataset?.profileUrl || card.getAttribute("data-profile-url");
@@ -499,78 +519,160 @@
       return true;
     };
 
-    const onDragStart = (event) => {
-      if (event.pointerType === "mouse" && event.button !== 0) return;
-      tapCardCandidate = event.target instanceof Element ? event.target.closest("[data-team-card]") : null;
-      if (event.target instanceof Element && event.target.closest(interactiveSelector)) {
+    const initTeamCardGestures = () => {
+      if (teamList.dataset.teamGestureInit === "true") return;
+      teamList.dataset.teamGestureInit = "true";
+      const TAP_THRESHOLD_MOUSE = 8;
+      const TAP_THRESHOLD_TOUCH = 10;
+      const TAP_DURATION_LIMIT = 320;
+      const SWIPE_THRESHOLD_MOUSE = 40;
+      const SWIPE_THRESHOLD_TOUCH = 48;
+      const VERTICAL_THRESHOLD = 22;
+      const HORIZONTAL_LOCK_RATIO_MOUSE = 1.35;
+      const HORIZONTAL_LOCK_RATIO_TOUCH = 1.5;
+      const VERTICAL_LOCK_RATIO = 1.08;
+      let startX = 0;
+      let startY = 0;
+      let currentX = 0;
+      let currentY = 0;
+      let startTime = 0;
+      let gesture = null;
+      let isPointerDown = false;
+      let activePointerId = null;
+      let tapCardCandidate = null;
+      let activePointerType = "mouse";
+      const clearGestureState = () => {
+        isPointerDown = false;
+        activePointerId = null;
+        gesture = null;
         tapCardCandidate = null;
-        return;
-      }
-      dragPointerId = event.pointerId;
-      dragStartX = event.clientX;
-      dragAccumulatedX = 0;
-      isDraggingCards = false;
-      suppressCardClick = false;
-      stopAutoCycle();
-      teamList.setPointerCapture?.(dragPointerId);
-    };
-
-    const onDragMove = (event) => {
-      if (dragPointerId !== event.pointerId) return;
-      const deltaX = event.clientX - dragStartX;
-      dragAccumulatedX += deltaX;
-      dragStartX = event.clientX;
-
-      if (!isDraggingCards && Math.abs(dragAccumulatedX) > dragIntentThreshold) {
-        isDraggingCards = true;
-        suppressCardClick = true;
-      }
-      if (!isDraggingCards) return;
-
-      while (dragAccumulatedX >= dragStepThreshold) {
-        shiftTeam(-1);
-        dragAccumulatedX -= dragStepThreshold;
-      }
-      while (dragAccumulatedX <= -dragStepThreshold) {
-        shiftTeam(1);
-        dragAccumulatedX += dragStepThreshold;
-      }
-      event.preventDefault();
-    };
-
-    const onDragEnd = (event) => {
-      if (dragPointerId !== event.pointerId) return;
-      teamList.releasePointerCapture?.(dragPointerId);
-      const tapTargetCard =
-        !isDraggingCards &&
-        !suppressCardClick &&
-        tapCardCandidate &&
-        tapCardCandidate.classList.contains("is-visible-pair")
-          ? tapCardCandidate
-          : null;
-      dragPointerId = null;
-      dragStartX = 0;
-      dragAccumulatedX = 0;
-      isDraggingCards = false;
-      tapCardCandidate = null;
-      if (tapTargetCard) {
-        if (openTeamProfileFromCard(tapTargetCard)) {
-          suppressCardClick = false;
+        activePointerType = "mouse";
+        teamList.classList.remove("is-dragging-intent", "is-swiping", "is-vertical-scroll");
+        const activeCard = teamList.querySelector("[data-team-card].is-primary");
+        activeCard?.classList.remove("is-dragging-intent", "is-swiping", "is-vertical-scroll");
+        activeCard?.style.removeProperty("--drag-x");
+        teamList.style.removeProperty("--drag-x");
+      };
+      const onStart = (event, point) => {
+        if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
+        tapCardCandidate = event.target instanceof Element ? event.target.closest("[data-team-card]") : null;
+        if (!tapCardCandidate || !tapCardCandidate.classList.contains("is-visible-pair")) {
+          tapCardCandidate = teamList.querySelector("[data-team-card].is-primary");
+        }
+        if (!tapCardCandidate || !tapCardCandidate.classList.contains("is-visible-pair")) return;
+        if ("button" in event && event.button !== undefined && event.button !== 0) return;
+        isPointerDown = true;
+        activePointerId = "pointerId" in event ? event.pointerId : "touch";
+        activePointerType = event.pointerType || ("touches" in event ? "touch" : "mouse");
+        gesture = null;
+        startX = point.clientX;
+        startY = point.clientY;
+        currentX = startX;
+        currentY = startY;
+        startTime = Date.now();
+        suppressCardClick = false;
+        stopAutoCycle();
+        teamList.classList.add("is-dragging-intent");
+        tapCardCandidate.classList.add("is-dragging-intent");
+        if ("pointerId" in event) teamList.setPointerCapture?.(event.pointerId);
+      };
+      const onMove = (event, point) => {
+        if (!isPointerDown) return;
+        if ("pointerId" in event && event.pointerId !== activePointerId) return;
+        currentX = point.clientX;
+        currentY = point.clientY;
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
+        const absX = Math.abs(deltaX);
+        const absY = Math.abs(deltaY);
+        const swipeThreshold = activePointerType === "touch" ? SWIPE_THRESHOLD_TOUCH : SWIPE_THRESHOLD_MOUSE;
+        const horizontalLockRatio =
+          activePointerType === "touch" ? HORIZONTAL_LOCK_RATIO_TOUCH : HORIZONTAL_LOCK_RATIO_MOUSE;
+        if (!gesture) {
+          if (absX > swipeThreshold && absX > absY * horizontalLockRatio) {
+            gesture = "horizontal";
+            suppressCardClick = true;
+            teamList.classList.add("is-swiping");
+            tapCardCandidate?.classList.add("is-swiping");
+          } else if (absY > VERTICAL_THRESHOLD && absY > absX * VERTICAL_LOCK_RATIO) {
+            gesture = "vertical";
+            teamList.classList.add("is-vertical-scroll");
+            tapCardCandidate?.classList.add("is-vertical-scroll");
+          }
+        }
+        if (gesture === "horizontal") {
+          event.preventDefault();
+          const dragX = Math.max(Math.min(deltaX, 80), -80);
+          teamList.style.setProperty("--drag-x", `${dragX}px`);
+          tapCardCandidate?.style.setProperty("--drag-x", `${dragX}px`);
+        }
+      };
+      const onEnd = (event, point) => {
+        if (!isPointerDown) return;
+        if ("pointerId" in event && event.pointerId !== activePointerId) return;
+        if ("pointerId" in event) teamList.releasePointerCapture?.(event.pointerId);
+        const deltaX = point.clientX - startX;
+        const deltaY = point.clientY - startY;
+        const absX = Math.abs(deltaX);
+        const absY = Math.abs(deltaY);
+        const duration = Date.now() - startTime;
+        const tapThreshold = activePointerType === "touch" ? TAP_THRESHOLD_TOUCH : TAP_THRESHOLD_MOUSE;
+        const handledGesture = gesture;
+        const targetCard = tapCardCandidate;
+        clearGestureState();
+        if (handledGesture === "horizontal") {
+          if (deltaX < 0) shiftTeam(1);
+          else shiftTeam(-1);
+          restartAutoCycle();
           return;
         }
+        if (handledGesture === "vertical") {
+          restartAutoCycle();
+          return;
+        }
+        const isTap = absX < tapThreshold && absY < tapThreshold && duration < TAP_DURATION_LIMIT;
+        if (isTap && targetCard?.classList.contains("is-visible-pair")) {
+          openTeamProfileFromCard(targetCard);
+          return;
+        }
+        restartAutoCycle();
+      };
+      if (window.PointerEvent) {
+        teamList.addEventListener("pointerdown", (event) => onStart(event, event));
+        teamList.addEventListener("pointermove", (event) => onMove(event, event), { passive: false });
+        teamList.addEventListener("pointerup", (event) => onEnd(event, event));
+        teamList.addEventListener("pointercancel", () => {
+          clearGestureState();
+          restartAutoCycle();
+        });
+      } else {
+        teamList.addEventListener("touchstart", (event) => {
+          const touch = event.changedTouches?.[0];
+          if (!touch) return;
+          onStart(event, touch);
+        }, { passive: true });
+        teamList.addEventListener("touchmove", (event) => {
+          const touch = event.changedTouches?.[0];
+          if (!touch) return;
+          onMove(event, touch);
+        }, { passive: false });
+        teamList.addEventListener("touchend", (event) => {
+          const touch = event.changedTouches?.[0];
+          if (!touch) return;
+          onEnd(event, touch);
+        });
+        teamList.addEventListener("touchcancel", () => {
+          clearGestureState();
+          restartAutoCycle();
+        });
       }
-      suppressCardClick = false;
-      restartAutoCycle();
     };
 
-    teamList.addEventListener("pointerdown", onDragStart);
-    teamList.addEventListener("pointermove", onDragMove);
-    teamList.addEventListener("pointerup", onDragEnd);
-    teamList.addEventListener("pointercancel", onDragEnd);
+    initTeamCardGestures();
     cards.forEach((card) => {
       card.addEventListener("click", (event) => {
         if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
-        if (suppressCardClick || isDraggingCards || !card.classList.contains("is-visible-pair")) {
+        if (suppressCardClick || !card.classList.contains("is-visible-pair")) {
           suppressCardClick = false;
           event.preventDefault();
           return;
@@ -579,6 +681,27 @@
         suppressCardClick = false;
         openTeamProfileFromCard(card);
       });
+      card.addEventListener("keydown", (event) => {
+        if (!card.classList.contains("is-visible-pair")) return;
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openTeamProfileFromCard(card);
+        }
+      });
+    });
+    teamList.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        shiftTeam(1);
+        restartAutoCycle();
+      } else if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        shiftTeam(-1);
+        restartAutoCycle();
+      }
+    });
+    teamList.querySelectorAll("[data-team-info]").forEach((button) => {
+      button.addEventListener("click", (event) => event.stopPropagation());
     });
     nextButtons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -789,6 +912,54 @@
     return !isSamePage;
   };
 
+  const showCopyMessage = (message) => {
+    if (typeof window.showToast === "function") {
+      window.showToast(message);
+    }
+  };
+
+  const copyThenOpen = async (valueToCopy, targetHref, successMessage) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(valueToCopy);
+        showCopyMessage(successMessage);
+      }
+    } catch (error) {
+      console.warn("Clipboard copy failed:", error);
+    } finally {
+      window.location.href = targetHref;
+    }
+  };
+
+  const initContactCopyLinks = () => {
+    const links = Array.from(document.querySelectorAll("a[data-copy-link]"));
+    if (!links.length) return;
+
+    links.forEach((link) => {
+      const href = (link.getAttribute("href") || "").trim().toLowerCase();
+      const isContactLink = link.classList.contains("contact-email") || link.classList.contains("contact-phone");
+      const isMailOrTel = href.startsWith("mailto:") || href.startsWith("tel:");
+      if (!isContactLink || !isMailOrTel) return;
+
+      link.addEventListener("click", (event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+
+        event.preventDefault();
+        const copyValue = link.dataset.copyValue;
+        const targetHref = link.getAttribute("href");
+        if (!copyValue || !targetHref) {
+          window.location.href = targetHref || href;
+          return;
+        }
+
+        const successMessage = href.startsWith("mailto:") ? "Email copied" : "Phone number copied";
+        copyThenOpen(copyValue, targetHref, successMessage);
+      });
+    });
+  };
+
   const initPageTransitions = () => {
     const transition = createPageTransition();
     const panel = transition.querySelector(".page-transition__panel");
@@ -872,6 +1043,7 @@
   const modalCloseButtons = reelModal.querySelectorAll("[data-reel-modal-close]");
 
   initPageTransitions();
+  initContactCopyLinks();
 
   const openWorkOverlay = () => {
     body.classList.add("is-work-overlay-open");
@@ -2149,6 +2321,7 @@
 
   renderWorkPage();
   renderProjectGrid();
+  initBrandLogo();
   initProjectViewportPreviews();
   renderReelGrid();
   renderReelPage();
