@@ -912,10 +912,32 @@
     return !isSamePage;
   };
 
+  let copyToastTimer = null;
+  let copyToastNode = null;
+  const getCopyToastNode = () => {
+    if (copyToastNode && document.body.contains(copyToastNode)) return copyToastNode;
+    const node = document.createElement("div");
+    node.className = "contact-copy-toast";
+    node.setAttribute("role", "status");
+    node.setAttribute("aria-live", "polite");
+    document.body.append(node);
+    copyToastNode = node;
+    return node;
+  };
+
   const showCopyMessage = (message) => {
     if (typeof window.showToast === "function") {
       window.showToast(message);
+      return;
     }
+
+    const node = getCopyToastNode();
+    node.textContent = message;
+    node.classList.add("is-visible");
+    if (copyToastTimer) window.clearTimeout(copyToastTimer);
+    copyToastTimer = window.setTimeout(() => {
+      node.classList.remove("is-visible");
+    }, 1600);
   };
 
   const copyThenOpen = async (valueToCopy, targetHref, successMessage) => {
@@ -954,7 +976,7 @@
           return;
         }
 
-        const successMessage = href.startsWith("mailto:") ? "Email copied" : "Phone number copied";
+        const successMessage = "I copied it already, contact me.";
         copyThenOpen(copyValue, targetHref, successMessage);
       });
     });
