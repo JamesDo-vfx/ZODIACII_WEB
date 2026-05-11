@@ -16,11 +16,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/be/thumbnail/thumb.jpg",
+        "previewVideo":  "/project/be/previewVideo/BE_video1.webm",
         "embedUrl":  "https://www.youtube.com/embed/hMBxytyaEOs",
         "gallery":  [
-
+                        "/project/be/gallery/BE_video1.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -42,11 +42,12 @@ const projects = [
                        "#1 Trending YouTube"
                    ],
         "awardTag":  "#1 Trending",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/du-cho-tan-the/thumbnail/thumb.jpg",
+        "previewVideo":  "/project/du-cho-tan-the/previewVideo/preview.mp4",
         "embedUrl":  "https://www.youtube.com/embed/js6JBdLzNn4",
         "gallery":  [
-
+                        "/project/du-cho-tan-the/thumbnail/thumb.jpg",
+                        "/project/du-cho-tan-the/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -68,11 +69,18 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.44.png",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.44.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.48.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.45.05.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.45.34.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.45.50.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.45.56.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.46.48.png",
+                        "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.57.02.png"
                     ],
         "year":  "2026",
         "featured":  true,
@@ -94,11 +102,12 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/vi-maxcard/thumbnail/thumb.jpg",
+        "previewVideo":  "/project/vi-maxcard/previewVideo/preview.mp4",
         "embedUrl":  "https://www.youtube.com/embed/qAAk3GyU-2k?si=lRMfZJzoMPR2J-Am",
         "gallery":  [
-
+                        "/project/vi-maxcard/thumbnail/thumb.jpg",
+                        "/project/vi-maxcard/thumbnail/thumb.webp"
                     ],
         "year":  "2026",
         "featured":  true,
@@ -120,11 +129,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/add-light-to-life/thumbnail/thumb.jpg",
+        "previewVideo":  "/project/add-light-to-life/previewVideo/AddLightToLight_video1.webm",
         "embedUrl":  "https://www.youtube.com/embed/jzhzJYYHe10",
         "gallery":  [
-
+                        "/project/add-light-to-life/gallery/AddLightToLight_video1.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -146,11 +155,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -172,11 +181,15 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/canh-chim-phuong-hoang/thumbnail/thumb.jpg",
+        "previewVideo":  "/project/canh-chim-phuong-hoang/previewVideo/CanhCHimPhuongHoang_video6.webm",
         "embedUrl":  "https://www.youtube.com/embed/of1eWaBwJLQ",
         "gallery":  [
-
+                        "/project/canh-chim-phuong-hoang/gallery/Screenshot 2026-05-04 at 22.57.27.png",
+                        "/project/canh-chim-phuong-hoang/gallery/Screenshot 2026-05-04 at 22.59.05.png",
+                        "/project/canh-chim-phuong-hoang/gallery/Screenshot 2026-05-04 at 23.00.09.png",
+                        "/project/canh-chim-phuong-hoang/gallery/Screenshot 2026-05-04 at 23.00.21.png",
+                        "/project/canh-chim-phuong-hoang/gallery/Screenshot 2026-05-04 at 23.00.31.png"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -198,11 +211,16 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/mv-mivn-dtap/thumbnail/thumb.webp",
+        "previewVideo":  "/project/mv-mivn-dtap/previewVideo/preview.mp4",
         "embedUrl":  "https://www.youtube.com/embed/HX3UcwUYMjM",
         "gallery":  [
-
+                        "/project/mv-mivn-dtap/gallery/maxresdefault.jpg",
+                        "/project/mv-mivn-dtap/gallery/Screenshot 2026-05-04 at 20.55.14.png",
+                        "/project/mv-mivn-dtap/gallery/Screenshot 2026-05-04 at 20.56.33.png",
+                        "/project/mv-mivn-dtap/gallery/Screenshot 2026-05-04 at 20.57.11.png",
+                        "/project/mv-mivn-dtap/gallery/Screenshot 2026-05-04 at 21.02.03.png",
+                        "/project/mv-mivn-dtap/gallery/Screenshot 2026-05-04 at 21.06.13.png"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -224,11 +242,12 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/kixx-2025/thumbnail/thumb.jpg",
+        "previewVideo":  "/project/kixx-2025/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/Umu6tmb9I0Q",
         "gallery":  [
-
+                        "/project/kixx-2025/thumbnail/thumb.jpg",
+                        "/project/kixx-2025/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -250,11 +269,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/over/thumbnail/thumb.webp",
+        "previewVideo":  "/project/over/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/RTBl0s8-y1o",
         "gallery":  [
-
+                        "/project/over/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -276,11 +295,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/hoa-xuan-ca/HoaXuanCa_video4.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/hoa-xuan-ca/HoaXuanCa_video4.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -302,11 +321,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/be-trap/thumbnail/thumb.webp",
+        "previewVideo":  "/project/be-trap/previewVideo/BeTrap_video4.webm",
         "embedUrl":  "https://www.youtube.com/embed/2GE373cUiPs",
         "gallery":  [
-
+                        "/project/be-trap/gallery/BeTrap_video4.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -328,11 +347,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/thai-chieu-tai/thumbnail/ThaiChieuTai_video2.jpg",
+        "previewVideo":  "/project/thai-chieu-tai/previewVideo/ThaiChieuTai_video2.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/thai-chieu-tai/gallery/ThaiChieuTai_video2.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -354,11 +373,14 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/vietjet/thumbnail/thumb.webp",
+        "previewVideo":  "/project/vietjet/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/1qiSxA96TZU",
         "gallery":  [
-
+                        "/project/vietjet/gallery/Screenshot 2026-05-08 at 00.27.39.png",
+                        "/project/vietjet/gallery/Screenshot 2026-05-08 at 00.28.02.png",
+                        "/project/vietjet/gallery/Screenshot 2026-05-08 at 00.29.00.png",
+                        "/project/vietjet/gallery/Screenshot 2026-05-08 at 00.30.04.png"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -380,11 +402,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/knorr-professional/thumbnail/thumb.webp",
+        "previewVideo":  "/project/knorr-professional/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/TDMN5-1x6L0",
         "gallery":  [
-
+                        "/project/knorr-professional/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -406,11 +428,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "https://www.facebook.com/Um.ProdHouse/videos/1786586945613464",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -432,11 +454,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/the-centric/thumbnail/thumb.webp",
+        "previewVideo":  "/project/the-centric/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/K5XxZT6Pk9g",
         "gallery":  [
-
+                        "/project/the-centric/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -458,11 +480,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/shb-saha-tvc/thumbnail/thumb.webp",
+        "previewVideo":  "/project/shb-saha-tvc/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/XERTDk80pTk",
         "gallery":  [
-
+                        "/project/shb-saha-tvc/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -484,11 +506,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/shb-saha-ooh/thumbnail/thumb.webp",
+        "previewVideo":  "/project/shb-saha-ooh/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/XERTDk80pTk",
         "gallery":  [
-
+                        "/project/shb-saha-ooh/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -510,11 +532,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "https://www.facebook.com/ViettelMoney/videos/374017871766896",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -536,11 +558,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/tiktok-award/thumbnail/thumb.webp",
+        "previewVideo":  "/project/tiktok-award/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/y9OcqMY3nBk",
         "gallery":  [
-
+                        "/project/tiktok-award/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -562,11 +584,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/xui-hay-vui-kotex/thumbnail/thumb.webp",
+        "previewVideo":  "/project/xui-hay-vui-kotex/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/aElFY3ZrP3s",
         "gallery":  [
-
+                        "/project/xui-hay-vui-kotex/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -588,11 +610,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -614,11 +636,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/jessica-jewelry/thumbnail/thumb.webp",
+        "previewVideo":  "/project/jessica-jewelry/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/gzzLwXBabns",
         "gallery":  [
-
+                        "/project/jessica-jewelry/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -640,11 +662,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -666,11 +688,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/lienviet-postbank/thumbnail/thumb.webp",
+        "previewVideo":  "/project/lienviet-postbank/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/6qmdLuLGl2Y",
         "gallery":  [
-
+                        "/project/lienviet-postbank/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -692,11 +714,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -718,11 +740,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/topzone/thumbnail/thumb.webp",
+        "previewVideo":  "/project/topzone/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/ApivbTaBK_k",
         "gallery":  [
-
+                        "/project/topzone/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -744,11 +766,11 @@ const projects = [
                        "#1 Trending YouTube"
                    ],
         "awardTag":  "#1 Trending",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/khong-ra-gi-truc-nhan/thumbnail/thumb.webp",
+        "previewVideo":  "/project/khong-ra-gi-truc-nhan/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/rRUzJJ9IV4s",
         "gallery":  [
-
+                        "/project/khong-ra-gi-truc-nhan/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -770,11 +792,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -796,11 +818,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/the-stars-atsh/thumbnail/thumb.webp",
+        "previewVideo":  "/project/the-stars-atsh/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/lqp2_F53XPM",
         "gallery":  [
-
+                        "/project/the-stars-atsh/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -822,11 +844,11 @@ const projects = [
                        "#1 Trending YouTube"
                    ],
         "awardTag":  "#1 Trending",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/thuc-giac-dalab/thumbnail/thumb.webp",
+        "previewVideo":  "/project/thuc-giac-dalab/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/R3trO4a49go",
         "gallery":  [
-
+                        "/project/thuc-giac-dalab/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -848,11 +870,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/skyline-dalab/thumbnail/thumb.webp",
+        "previewVideo":  "/project/skyline-dalab/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/JKS12fgCsv0",
         "gallery":  [
-
+                        "/project/skyline-dalab/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -874,11 +896,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/gio-thi-ai-cuoi-hieuthuhai/thumbnail/thumb.webp",
+        "previewVideo":  "/project/gio-thi-ai-cuoi-hieuthuhai/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/bfKKVGYMKgs",
         "gallery":  [
-
+                        "/project/gio-thi-ai-cuoi-hieuthuhai/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -900,11 +922,11 @@ const projects = [
                        "#1 Trending YouTube"
                    ],
         "awardTag":  "#1 Trending",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/em-hat-ai-nghe-orange/thumbnail/thumb.webp",
+        "previewVideo":  "/project/em-hat-ai-nghe-orange/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/wssbBe_t-r4",
         "gallery":  [
-
+                        "/project/em-hat-ai-nghe-orange/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -926,11 +948,11 @@ const projects = [
                        "#3 Trending YouTube"
                    ],
         "awardTag":  "#3 Trending",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/thieu-than-b-ray/thumbnail/thumb.webp",
+        "previewVideo":  "/project/thieu-than-b-ray/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/cfbNtHNCMBo",
         "gallery":  [
-
+                        "/project/thieu-than-b-ray/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -952,11 +974,11 @@ const projects = [
                        "#9 Trending YouTube"
                    ],
         "awardTag":  "#9 Trending",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/beautiful-monster-soobin-binz/thumbnail/thumb.webp",
+        "previewVideo":  "/project/beautiful-monster-soobin-binz/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/aEHSS6Q94S4",
         "gallery":  [
-
+                        "/project/beautiful-monster-soobin-binz/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -978,11 +1000,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/suzie-x-nhat-nguyen/thumbnail/thumb.webp",
+        "previewVideo":  "/project/suzie-x-nhat-nguyen/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/mn62fbWu5yE",
         "gallery":  [
-
+                        "/project/suzie-x-nhat-nguyen/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -1004,11 +1026,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/moi-nguoi-ke-tiep-karik/thumbnail/thumb.webp",
+        "previewVideo":  "/project/moi-nguoi-ke-tiep-karik/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/y1JEtJqQXS4",
         "gallery":  [
-
+                        "/project/moi-nguoi-ke-tiep-karik/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -1030,11 +1052,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/huyen-vi-masew/thumbnail/thumb.webp",
+        "previewVideo":  "/project/huyen-vi-masew/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/addfbs0kQDE",
         "gallery":  [
-
+                        "/project/huyen-vi-masew/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -1055,11 +1077,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/van-lang-30/thumbnail/1.jpg",
+        "previewVideo":  "/project/van-lang-30/previewVideo/van-lang-30.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/van-lang-30/gallery/1.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1070,7 +1092,7 @@ const projects = [
         "slug":  "hoa-hong-ai-vung-trong",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
-        "client":  "MINH HẰNG x TÓC TIÊN x DTAP",
+        "client":  "MINH Háº°NG x TÃ“C TIÃŠN x DTAP",
         "scope":  "VFX, Environment, Compositing",
         "description":  "Sci-fi cinematic treatment with spaceship environment.",
         "credits":  [
@@ -1080,11 +1102,14 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/hoa-hong-ai-vung-trong/thumbnail/thumb.webp",
+        "previewVideo":  "/project/hoa-hong-ai-vung-trong/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/Q2j8hraa2kA?si=Us_Z6hQnu-QKrsh4",
         "gallery":  [
-
+                        "/project/hoa-hong-ai-vung-trong/gallery/IMG_3325.heic",
+                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.55.41.png",
+                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.56.23.png",
+                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.57.02.png"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1095,7 +1120,7 @@ const projects = [
         "slug":  "chien-si-qua-cam-2025",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
-        "client":  "Bộ Quốc phòng",
+        "client":  "Bá»™ Quá»‘c phÃ²ng",
         "scope":  "VFX, Environment, Compositing",
         "description":  "Atmospheric cinematic music video visuals.",
         "credits":  [
@@ -1105,11 +1130,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1130,11 +1155,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
         "embedUrl":  "",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1155,11 +1180,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/mot-niem-tu-hao/previewVideo/preview.webm",
         "embedUrl":  "https://www.tiktok.com/@halinhofficial/video/7544361272075193607",
         "gallery":  [
-
+                        "/project/placehole_image.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1180,11 +1205,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/dan-choi-sao-phai-khoc/thumbnail/thumb.webp",
+        "previewVideo":  "/project/dan-choi-sao-phai-khoc/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/zDNOhR-Ms-I?si=WTukh9xYKVu53GGw",
         "gallery":  [
-
+                        "/project/dan-choi-sao-phai-khoc/thumbnail/thumb.webp"
                     ],
         "year":  "2023",
         "featured":  true,
@@ -1205,11 +1230,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/anh-la-ngoai-le-cua-em/thumbnail/thumb.webp",
+        "previewVideo":  "/project/anh-la-ngoai-le-cua-em/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/q2YUtZum9wc?si=-LHwTOrQ3ORGuMff",
         "gallery":  [
-
+                        "/project/anh-la-ngoai-le-cua-em/thumbnail/thumb.webp"
                     ],
         "year":  "2023",
         "featured":  true,
@@ -1230,11 +1255,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/lovely/thumbnail/thumb.webp",
+        "previewVideo":  "/project/lovely/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/QM7XI5hgZR8?si=Fe3QXhkzNZr2eSEd",
         "gallery":  [
-
+                        "/project/lovely/thumbnail/thumb.webp"
                     ],
         "year":  "2023",
         "featured":  true,
@@ -1255,11 +1280,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/bartender/thumbnail/thumb.webp",
+        "previewVideo":  "/project/bartender/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/eH-oxvUxZQU?si=L39do4T9OWA37IlF",
         "gallery":  [
-
+                        "/project/bartender/thumbnail/thumb.webp"
                     ],
         "year":  "2023",
         "featured":  true,
@@ -1281,11 +1306,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/kixx-2024/thumbnail/thumb.webp",
+        "previewVideo":  "/project/kixx-2024/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/Umu6tmb9I0Q",
         "gallery":  [
-
+                        "/project/kixx-2024/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1306,11 +1331,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "",
-        "previewVideo":  "",
+        "thumbnail":  "/project/where-your-own-venture-awaits/thumbnail/thumb.webp",
+        "previewVideo":  "/project/where-your-own-venture-awaits/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/RTTMxozVxOY?si=NqKDee4p-yNX4sH_",
         "gallery":  [
-
+                        "/project/where-your-own-venture-awaits/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
