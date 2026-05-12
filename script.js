@@ -1,7 +1,7 @@
 (function () {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const body = document.body;
-  const loader = document.querySelector("[data-loader]");
+  let loader = document.querySelector("[data-loader]");
   const header = document.querySelector("[data-header]");
   const progressSegments = Array.from(document.querySelectorAll("[data-progress-segment]"));
   const localTimeNodes = Array.from(document.querySelectorAll("[data-local-time]"));
@@ -9,7 +9,23 @@
   const teamImageBasePath = "/assets/images/people";
   const teamImageExtensions = ["jpg", "png", "webp"];
   const teamMembers = Array.isArray(window.teamMembers) ? window.teamMembers : [];
-  const brandLogoPath = "/assets/icons/header_logo.png";
+  const brandLogoPath = "/assets/icons/header_logo.svg";
+
+  const ensureIntroLoader = () => {
+    if (loader) return loader;
+
+    const introLoader = document.createElement("div");
+    introLoader.className = "intro-loader";
+    introLoader.setAttribute("data-loader", "");
+    introLoader.innerHTML = "<p>Zodiac II Media</p>";
+
+    const firstChild = body.firstChild;
+    if (firstChild) body.insertBefore(introLoader, firstChild);
+    else body.append(introLoader);
+
+    loader = introLoader;
+    return loader;
+  };
 
   const initBrandLogo = () => {
     const brandMarks = Array.from(document.querySelectorAll(".brand-mark"));
@@ -1232,6 +1248,7 @@
   });
   syncMobileNavState();
 
+  loader = ensureIntroLoader();
   if (loader) {
     body.classList.add("is-loading");
     const hideLoader = () => {
