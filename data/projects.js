@@ -162,11 +162,14 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/samsung-2025/gallery/SAMSUNG_OOH_REEL_00087.jpg",
+        "previewVideo":  "/project/samsung-2025/previewVideo/SAMSUNG_OOH_REEL.webm",
         "embedUrl":  "",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/samsung-2025/gallery/SAMSUNG_OOH_REEL_00087.jpg",
+                        "/project/samsung-2025/gallery/SAMSUNG_OOH_REEL_00443.jpg",
+                        "/project/samsung-2025/gallery/SAMSUNG_OOH_REEL_00689.jpg",
+                        "/project/samsung-2025/gallery/SAMSUNG_OOH_REEL_00787.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
