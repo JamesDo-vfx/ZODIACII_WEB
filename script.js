@@ -49,7 +49,12 @@
   };
 
   const initSmoothScroll = () => {
-    if (prefersReducedMotion || typeof Lenis === "undefined") {
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+    const cpuThreads = Number.isFinite(navigator.hardwareConcurrency) ? navigator.hardwareConcurrency : null;
+    const isLowPowerViewport = viewportWidth <= 1440;
+    const isLowPowerCpu = cpuThreads !== null && cpuThreads <= 8;
+    if (prefersReducedMotion || typeof Lenis === "undefined" || isLowPowerViewport || isLowPowerCpu) {
+      window.zodiacLenis = null;
       return null;
     }
 
@@ -1478,6 +1483,12 @@
     activeReelPreviewCard = null;
 
     if (!cards.length || prefersReducedMotion || !("IntersectionObserver" in window)) {
+      return;
+    }
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+    const cpuThreads = Number.isFinite(navigator.hardwareConcurrency) ? navigator.hardwareConcurrency : null;
+    const isLowPowerDesktop = viewportWidth <= 1440 || (cpuThreads !== null && cpuThreads <= 8);
+    if (isLowPowerDesktop) {
       return;
     }
 

@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal
 
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$bat = '%~f0'; $csvArg = '%~1'; $lines = Get-Content -LiteralPath $bat; $marker = [Array]::IndexOf($lines, '# POWERSHELL_START'); if ($marker -lt 0) { Write-Error 'PowerShell payload marker not found.'; exit 1 }; $script = $lines[($marker + 1)..($lines.Length - 1)] -join [Environment]::NewLine; & ([ScriptBlock]::Create($script)) -BatPath $bat -CsvArg $csvArg"
@@ -169,7 +169,7 @@ function New-ProjectIndexContent {
               <dd data-project-type></dd>
             </div>
             <div>
-              <dt>Role</dt>
+              <dt>Scope</dt>
               <dd data-project-role></dd>
             </div>
           </dl>
@@ -436,3 +436,4 @@ Write-Host "Project pages written: $projectPagesWritten"
 if ($deleteOrphans) {
   Write-Host "Orphan folders deleted: $deletedOrphanCount"
 }
+

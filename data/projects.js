@@ -7,9 +7,10 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "BE",
         "scope":  "CGI, Compositing, Motion",
-        "description":  "Commercial production with CGI, compositing, and motion finishing.",
+        "description":  "",
         "credits":  [
-                        "Client / Artist - BE",
+                        "Agency - The FRIDAY",
+                        "Production House - FGS",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -35,7 +36,8 @@ const projects = [
         "scope":  "VFX, CGI, Compositing",
         "description":  "Music video with VFX-heavy cinematic compositing.",
         "credits":  [
-                        "Client / Artist - ERIK",
+                        "Production House - Ganga Production",
+                        "Singer - ERIK",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -62,7 +64,9 @@ const projects = [
         "scope":  "CGI, Compositing",
         "description":  "Brand commercial with premium CGI lookdev.",
         "credits":  [
-                        "Client / Artist - VIB",
+                        "Client - VIB",
+                        "Agency - TBWA",
+                        "Production House - Flex Films",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -95,7 +99,9 @@ const projects = [
         "scope":  "CGI, Compositing",
         "description":  "Brand commercial with premium CGI lookdev.",
         "credits":  [
-                        "Client / Artist - VIB",
+                        "Client - VIB",
+                        "Agency - Peri Sunrise",
+                        "Production House - One Entertainment",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -122,7 +128,7 @@ const projects = [
         "scope":  "Cinematic VFX, Environment",
         "description":  "Narrative film project focused on cinematic environment and VFX.",
         "credits":  [
-                        "Project - Add Light to Life",
+                        "Production House - Memo Creative",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -136,7 +142,7 @@ const projects = [
                         "/project/add-light-to-life/gallery/AddLightToLight_video1.jpg"
                     ],
         "year":  "2025",
-        "featured":  true,
+        "featured":  false,
         "order":  5
     },
     {
@@ -148,7 +154,8 @@ const projects = [
         "scope":  "Compositing, Finishing",
         "description":  "Commercial campaign with high-end compositing and finishing.",
         "credits":  [
-                        "Client / Artist - Samsung",
+                        "Client - Samsung",
+                        "Agency - Cheil Vietnam",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -204,6 +211,7 @@ const projects = [
         "scope":  "CGI, Environment, Compositing",
         "description":  "Stylized water-temple music video production.",
         "credits":  [
+                        "Production House - Alien Media",
                         "Artist - DTAP",
                         "Studio - Zodiac II Media"
                     ],
@@ -235,7 +243,9 @@ const projects = [
         "scope":  "CGI Production, Motion Design",
         "description":  "Commercial visual campaign with product-focused CGI.",
         "credits":  [
-                        "Client / Artist - KIXX",
+                        "Client - KIXX",
+                        "Agency - Cheil Vietnam",
+                        "Production House - One Cut",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -262,6 +272,7 @@ const projects = [
         "scope":  "VFX, Compositing",
         "description":  "Music video with stylized visual treatment.",
         "credits":  [
+                        "Production House - Um Production",
                         "Artist - Khoi Vu",
                         "Studio - Zodiac II Media"
                     ],
@@ -288,7 +299,7 @@ const projects = [
         "scope":  "Cleanup, Beauty, Compositing",
         "description":  "Music video post-production and beauty finishing.",
         "credits":  [
-                        "Client - Confidential",
+                        "Client - VTV",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -314,6 +325,7 @@ const projects = [
         "scope":  "Compositing, Cleanup, Finishing",
         "description":  "Stylized pop music video finishing and compositing.",
         "credits":  [
+                        "Production House - Ganga Production",
                         "Artist - Trang Phap",
                         "Studio - Zodiac II Media"
                     ],
@@ -340,6 +352,7 @@ const projects = [
         "scope":  "VFX, Compositing, FX",
         "description":  "Fantasy-themed music video effects work.",
         "credits":  [
+                        "Production House - 13G Production",
                         "Artists - B Ray x Sofia x Chau Dang Khoa",
                         "Studio - Zodiac II Media"
                     ],
@@ -367,6 +380,8 @@ const projects = [
         "description":  "Commercial and branded aviation-themed content.",
         "credits":  [
                         "Client - Vietjet Air",
+                        "Agency - Cheil Vietnam",
+                        "Production House - One Cut",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -395,7 +410,9 @@ const projects = [
         "scope":  "TVC, Product CGI, Compositing",
         "description":  "Product TVC with food-focused visual storytelling.",
         "credits":  [
-                        "Client - Knorr Professional",
+                        "Client - Unilever",
+                        "Agency - Cheil Vietnam",
+                        "Production House - One Cut",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -421,7 +438,8 @@ const projects = [
         "scope":  "TVC, Architectural Visualization",
         "description":  "Real-estate TVC with cinematic urban look.",
         "credits":  [
-                        "Client - The Noble",
+                        "Client - Sunshine Group",
+                        "Production House - Æ¯m Production",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -447,7 +465,8 @@ const projects = [
         "scope":  "TVC, Compositing",
         "description":  "Real-estate commercial with urban compositing.",
         "credits":  [
-                        "Client - The Centric",
+                        "Client - Masterise Homes",
+                        "Production House: Antiantiart",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -474,6 +493,7 @@ const projects = [
         "description":  "Stylized commercial TVC project.",
         "credits":  [
                         "Client - SHB SAHA",
+                        "Production House - Æ¯m Production",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -493,13 +513,14 @@ const projects = [
     {
         "title":  "SHB SAHA OOH",
         "slug":  "shb-saha-ooh",
-        "category":  "commercial",
-        "categoryLabel":  "Commercial",
+        "category":  "billboard",
+        "categoryLabel":  "Billboard",
         "client":  "SHB SAHA",
         "scope":  "TVC, Motion Graphics, CGI",
         "description":  "Stylized commercial TVC project.",
         "credits":  [
                         "Client - SHB SAHA",
+                        "Production House - Æ¯m Production",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -552,6 +573,7 @@ const projects = [
         "description":  "Event-led TVC style visuals.",
         "credits":  [
                         "Client - TikTok",
+                        "Production House -  One Cut",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -578,7 +600,8 @@ const projects = [
         "description":  "Commercial campaign with vibrant stylized post work.",
         "credits":  [
                         "Client - Kotex",
-                        "Studio - Zodiac II Media"
+                        "Agency - The May",
+                        "Production House - Hillus Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -759,6 +782,8 @@ const projects = [
         "scope":  "VFX, Compositing",
         "description":  "Music video visual effects production.",
         "credits":  [
+                        "Client - KIM Entertainment",
+                        "Production House - Ganga Production",
                         "Artist - Truc Nhan",
                         "Studio - Zodiac II Media"
                     ],
@@ -777,7 +802,7 @@ const projects = [
         "order":  29
     },
     {
-        "title":  "EXSH",
+        "title":  "EXSH Theme Song",
         "slug":  "exsh",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -785,7 +810,8 @@ const projects = [
         "scope":  "CGI, FX, Compositing",
         "description":  "Dark fantasy cinematic music video visuals.",
         "credits":  [
-                        "Artist - EXSH",
+                        "Production House - Antiantiart",
+                        "Artists - EXSH",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -811,7 +837,8 @@ const projects = [
         "scope":  "VFX, Compositing",
         "description":  "Performance-led music video post and compositing.",
         "credits":  [
-                        "Artist - ATSH",
+                        "Production House - Antiantiart",
+                        "Artists - ATSH",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -1019,6 +1046,7 @@ const projects = [
         "scope":  "VFX, Compositing",
         "description":  "Narrative cinematic VFX for music video.",
         "credits":  [
+                        "Production House - HILLUS",
                         "Artist - Karik",
                         "Studio - Zodiac II Media"
                     ],
@@ -1045,6 +1073,7 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Natural environment enhancement and cinematic finishing.",
         "credits":  [
+                        "Production House - HILLUS",
                         "Artist - Masew",
                         "Studio - Zodiac II Media"
                     ],
@@ -1071,7 +1100,9 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Cinematic forest world-building for music video.",
         "credits":  [
-
+                        "Client - Van Lang University",
+                        "Production House - Flex Films",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1092,11 +1123,13 @@ const projects = [
         "slug":  "hoa-hong-ai-vung-trong",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
-        "client":  "MINH Háº°NG x TÃ“C TIÃŠN x DTAP",
+        "client":  "Ganga Production",
         "scope":  "VFX, Environment, Compositing",
         "description":  "Sci-fi cinematic treatment with spaceship environment.",
         "credits":  [
-
+                        "Production House - Ganga Production",
+                        "Artists - Minh Hang x DTAP",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1124,7 +1157,8 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Atmospheric cinematic music video visuals.",
         "credits":  [
-
+                        "Client - Zeit Media",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1145,11 +1179,13 @@ const projects = [
         "slug":  "van-su-nhu-y",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
-        "client":  "Truc Nhan",
+        "client":  "Kim Entertainment",
         "scope":  "VFX, Environment, Compositing",
         "description":  "Fantasy pop visual treatment for music video.",
         "credits":  [
-
+                        "Client - KIM Entertainment",
+                        "Artist - Truc Nhan",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1174,7 +1210,8 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Fire and destruction VFX sequence for music video.",
         "credits":  [
-
+                        "Client - ZAAHEE Production",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1199,7 +1236,9 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Performance-centered CGI set extension and VFX.",
         "credits":  [
-
+                        "Production House - Snake Fang",
+                        "Artist - AndreRightHand",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1224,7 +1263,9 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Neon city stylized music video visuals.",
         "credits":  [
-
+                        "Producer - Ngo Mai Phuong",
+                        "Artist: Phuong Ly",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1249,7 +1290,9 @@ const projects = [
         "scope":  "VFX, Environment, Compositing",
         "description":  "Narrative cinematic VFX for music video.",
         "credits":  [
-
+                        "Producer - Ngo Mai Phuong",
+                        "Artist: Ly Ly",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1271,10 +1314,11 @@ const projects = [
         "category":  "music-video",
         "categoryLabel":  "Music Video",
         "client":  "Duong Trieu Vu",
-        "scope":  "",
-        "description":  "",
+        "scope":  "VFX, Environment, Compositing",
+        "description":  "Narrative cinematic VFX for music video.",
         "credits":  [
-
+                        "Artist - Duong Trieu Vu",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
@@ -1300,6 +1344,8 @@ const projects = [
         "description":  "Commercial visual campaign with product-focused CGI.",
         "credits":  [
                         "Client - KIXX",
+                        "Agency - Cheil Vietnam",
+                        "Production House - Snake Fang",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -1325,7 +1371,9 @@ const projects = [
         "scope":  "CGI Production, Motion Design",
         "description":  "Commercial visual campaign with product-focused CGI.",
         "credits":  [
-
+                        "Client - BUV",
+                        "Production - Thanh Trá»‹nh",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
