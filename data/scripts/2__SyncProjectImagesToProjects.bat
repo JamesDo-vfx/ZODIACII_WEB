@@ -58,6 +58,24 @@ function Get-PreferredCoverImage {
   return $Files | Select-Object -First 1
 }
 
+function Read-TextFilePreferUtf8 {
+  param([string]$Path)
+
+  # Prefer UTF-8 with BOM detection to avoid mojibake when projects.js contains Vietnamese text.
+  try {
+    $utf8 = [System.Text.UTF8Encoding]::new($false)
+    $reader = [System.IO.StreamReader]::new($Path, $utf8, $true)
+    try {
+      return $reader.ReadToEnd()
+    } finally {
+      $reader.Dispose()
+    }
+  } catch {
+    # Fallback for legacy ANSI files.
+    return [System.IO.File]::ReadAllText($Path, [System.Text.Encoding]::Default)
+  }
+}
+
 $imageExtensions = @(
   '.jpg', '.jpeg', '.jpe', '.jfif',
   '.png', '.webp', '.avif', '.gif', '.bmp',
@@ -90,7 +108,7 @@ if (-not (Test-Path -LiteralPath $fallbackPreviewVideoPath)) {
   throw "Cannot find fallback preview video: $fallbackPreviewVideoPath."
 }
 
-$raw = Get-Content -LiteralPath $projectsPath -Raw
+$raw = Read-TextFilePreferUtf8 -Path $projectsPath
 $match = [regex]::Match($raw, '(?s)const\s+projects\s*=\s*(\[[\s\S]*?\]);')
 if (-not $match.Success) {
   throw "Cannot parse projects array from $projectsPath."

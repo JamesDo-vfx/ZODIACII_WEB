@@ -39,6 +39,12 @@ function Get-TextValue {
     return [string]$Row.$Name
   }
 
+  # Handle UTF-8 BOM in CSV header (e.g. "﻿title").
+  $bomName = ([char]0xFEFF) + $Name
+  if ($Row.PSObject.Properties.Name -contains $bomName) {
+    return [string]$Row.$bomName
+  }
+
   return ''
 }
 
@@ -46,10 +52,30 @@ function Import-ProjectCsvRows {
   param([string]$Path)
 
   # Prefer UTF-8 because project metadata contains Vietnamese text.
-  $rawUtf8 = [System.IO.File]::ReadAllText($Path, [System.Text.UTF8Encoding]::new($false))
-  $rowsUtf8 = @($rawUtf8 | ConvertFrom-Csv)
-  if ($rowsUtf8.Count -gt 0 -and ($rowsUtf8[0].PSObject.Properties.Name -contains 'title')) {
-    return $rowsUtf8
+  try {
+    $rowsUtf8 = @(Import-Csv -LiteralPath $Path -Encoding UTF8)
+    if ($rowsUtf8.Count -gt 0) {
+      return $rowsUtf8
+    }
+  } catch {
+    # Continue to fallback strategies.
+  }
+
+  # Fallback: force UTF-8 read with BOM detection then parse from raw text.
+  try {
+    $utf8 = [System.Text.UTF8Encoding]::new($false)
+    $reader = [System.IO.StreamReader]::new($Path, $utf8, $true)
+    try {
+      $rawUtf8 = $reader.ReadToEnd()
+    } finally {
+      $reader.Dispose()
+    }
+    $rowsFromRaw = @($rawUtf8 | ConvertFrom-Csv)
+    if ($rowsFromRaw.Count -gt 0) {
+      return $rowsFromRaw
+    }
+  } catch {
+    # Continue to ANSI fallback.
   }
 
   # Fallback for legacy ANSI CSV files.
