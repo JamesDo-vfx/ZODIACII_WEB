@@ -131,3 +131,195 @@ Trước khi commit thay đổi dữ liệu:
 
 Nếu có xung đột dữ liệu giữa CSV và media scan:
 - Ưu tiên chạy lại pipeline chuẩn theo thứ tự 1 -> 2 -> 3 để đưa data về trạng thái canonical.
+
+---
+
+## 10) Frontend performance & device compatibility rules
+
+Mục tiêu:
+- Website phải chạy mượt trên desktop Windows, MacBook Air/MacBook Pro, iPhone, iPad, Android và laptop cấu hình yếu.
+- Trải nghiệm visual phải giữ tinh thần cinematic/premium giống bản Windows mạnh, nhưng được adaptive theo thiết bị để tránh giật, lag, nóng máy hoặc đứng trình duyệt.
+- Không đánh đổi hiệu năng bằng cách ép tất cả thiết bị chạy cùng một lượng video, blur, filter, smooth-scroll và animation như desktop mạnh.
+
+Nguyên tắc bắt buộc:
+- Ưu tiên perceived experience giống nhau, không bắt buộc internal implementation giống nhau.
+- Thiết bị yếu phải được nhận bản nhẹ hơn: ít autoplay hơn, ít blur hơn, ít filter animation hơn, native scroll nhiều hơn.
+- Không thêm hiệu ứng mới nếu chưa đánh giá chi phí render trên MacBook Air và mobile.
+- Mọi thay đổi animation/video/scroll phải có fallback cho `prefers-reduced-motion`.
+
+## 11) Performance budget bắt buộc
+
+Video:
+- Hero video desktop: ưu tiên 1920x1080, H.264/WebM đã nén web, không dùng file master/render gốc.
+- Hero video laptop yếu/mobile: ưu tiên 1280x720 hoặc poster/static fallback nếu cần.
+- Project/reel preview video: ngắn 1–6 giây, file nhỏ, dùng `preload="metadata"`, không dùng `preload="auto"` cho grid/card preview.
+- Mỗi viewport chỉ nên có tối đa 1 preview video tự play theo viewport. Trên desktop yếu, không autoplay theo viewport; chỉ play khi hover/focus.
+- Video ngoài viewport hoặc khi không hover phải `pause()` và reset `currentTime = 0` nếu đó là preview loop.
+- Mọi video phải có poster/thumbnail fallback.
+
+Images:
+- Ảnh dưới fold phải dùng `loading="lazy"` và `decoding="async"`.
+- Ảnh hero/above-the-fold có thể `eager`, nhưng số lượng eager phải rất ít.
+- Thumbnail nên dùng WebP/JPEG tối ưu, không dùng PNG lớn cho card nếu không cần alpha.
+- Không đưa ảnh 4K/8K vào card/list view.
+
+CSS effects:
+- Không animate `filter`, `backdrop-filter`, `clip-path`, `mask-image`, `height`, `width`, `top`, `left` nếu không thật sự cần.
+- Animation chính chỉ nên dùng `transform` và `opacity`.
+- `filter: blur()` chỉ dùng rất hạn chế. Không dùng blur reveal hàng loạt cho nhiều element/card.
+- `backdrop-filter` phải có mức blur nhẹ và fallback. Header blur nên giữ thấp, thường 4–8px.
+- Overlay/modal có thể blur nhẹ, nhưng không blur toàn bộ page-shell ở mức cao trên laptop yếu.
+- Không lạm dụng `will-change`; chỉ set cho phần tử đang animate thật sự và tránh đặt trên nhiều card cùng lúc.
+
+Infinite animation:
+- Marquee, award ticker, scroll cue, looping text chỉ được chạy khi cần.
+- Trên laptop yếu/mobile hoặc `prefers-reduced-motion`, tắt hoặc giảm các animation infinite không quan trọng.
+- Award ticker/card marquee không chạy mặc định trên toàn bộ grid; chỉ chạy khi hover/focus hoặc khi card đang active.
+
+## 12) Adaptive performance mode
+
+Khi chỉnh frontend, luôn cân nhắc tạo hoặc giữ một helper nhận diện thiết bị yếu.
+
+Điều kiện gợi ý để bật performance mode:
+- `prefers-reduced-motion: reduce`
+- viewport width <= 1440px
+- `navigator.hardwareConcurrency <= 8` nếu browser hỗ trợ
+- `navigator.deviceMemory <= 8` nếu browser hỗ trợ
+- touch/coarse pointer hoặc mobile viewport
+
+Khi performance mode bật:
+- Không khởi tạo smooth scroll custom như Lenis nếu không cần.
+- Dùng native scroll thay vì requestAnimationFrame scroll loop.
+- Không autoplay nhiều preview video.
+- Reel/project preview chỉ play khi hover/focus hoặc chỉ 1 item active trên mobile.
+- Giảm backdrop blur và bỏ page-wide blur.
+- Tắt parallax/stacking animation quá nặng nếu gây lag.
+- Không animate filter trên media.
+- Giữ layout/content/brand feel gần giống bản desktop mạnh nhất có thể.
+
+Ví dụ helper JS được khuyến nghị:
+
+```js
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isLaptopOrBelow = window.matchMedia("(max-width: 1440px)").matches;
+const isCoarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+const lowCoreCount = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 8;
+const lowMemory = typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 8;
+const isPerformanceMode = prefersReducedMotion || isLaptopOrBelow || isCoarsePointer || lowCoreCount || lowMemory;
+```
+
+## 13) Smooth scroll / Lenis rules
+
+- Không mặc định bật Lenis cho mọi thiết bị.
+- Không để `requestAnimationFrame` chạy vô hạn trên laptop yếu nếu native scroll đã đủ tốt.
+- Lenis chỉ nên bật trên desktop mạnh, không bật khi `prefers-reduced-motion` hoặc performance mode.
+- Khi modal/overlay/page transition mở, phải stop smooth scroll; khi đóng mới start lại.
+- Nếu dùng Lenis cho scrollTo, phải có fallback native `scrollIntoView` hoặc `window.scrollTo`.
+
+Rule gợi ý:
+- Desktop mạnh: Lenis được phép bật.
+- MacBook Air/laptop <= 1440px/mobile: ưu tiên native scroll.
+- Timeline/horizontal section phải có nút `Continue`/`Skip` để người dùng không bị ép cuộn hết.
+
+## 14) Horizontal timeline / sticky section UX rules
+
+Với các section kiểu sticky, horizontal scroll, stacking section hoặc timeline:
+- Không ép người dùng phải cuộn hết mới thoát section.
+- Bắt buộc có nút bỏ qua như `Continue →`, `Skip Process →` hoặc tương đương.
+- Nút skip phải scroll tới section kế tiếp bằng Lenis nếu có, hoặc native scroll fallback.
+- Phải có progress/hint rõ ràng để người dùng biết đang ở đoạn nào.
+- Trên mobile hoặc thiết bị yếu, cân nhắc chuyển horizontal interaction thành vertical static list.
+- Không dùng sticky/horizontal animation quá dài nếu gây cảm giác mắc kẹt.
+
+## 15) Media interaction rules cho Work/Reel cards
+
+Project cards:
+- Desktop: preview video chỉ play khi hover/focus.
+- Mobile/touch: chỉ một preview video active trong viewport nếu cần; không play nhiều video cùng lúc.
+- Khi mouseleave/focusout/out-of-viewport: pause và reset preview.
+
+Reel cards:
+- Không autoplay reel previews trên desktop yếu/laptop nếu gây lag.
+- Nếu cần auto preview, chỉ cho một reel card active tại một thời điểm.
+- Với performance mode, reel preview chỉ play khi hover/focus hoặc khi user chủ động click.
+
+Modal/full player:
+- Full reel/project video chỉ load khi modal/detail mở.
+- Modal video có thể dùng `preload="auto"` chỉ khi user đã chủ động mở modal/player.
+- Khi modal đóng phải remove `src`, clear children/source nếu cần, và gọi `load()` để giải phóng tài nguyên.
+
+## 16) CSS performance rules
+
+Bắt buộc tránh:
+- `transition: filter ...` trên ảnh/video/card grid.
+- `filter: blur(...)` cho reveal hàng loạt.
+- `backdrop-filter` nhiều lớp chồng nhau.
+- `will-change` trên hàng chục card cùng lúc.
+- Animate layout properties như height/width/top/left trong scroll animation.
+
+Khuyến nghị:
+- Reveal dùng opacity + translateY.
+- Hover card dùng transform scale nhẹ + opacity overlay.
+- Giữ filter tĩnh nếu cần style, nhưng không animate filter.
+- Dùng CSS media query cho thiết bị <= 1440px để giảm hiệu ứng.
+
+Ví dụ CSS performance fallback:
+
+```css
+@media (max-width: 1440px), (prefers-reduced-motion: reduce) {
+  .reveal {
+    filter: none !important;
+    transition-property: opacity, transform !important;
+  }
+
+  .project-frame img,
+  .project-frame video,
+  .reel-card__poster,
+  .reel-card__video {
+    transition-property: opacity, transform !important;
+  }
+
+  .work-overlay,
+  .mobile-nav-overlay,
+  .reel-modal__backdrop {
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+```
+
+## 17) Testing checklist cho mọi thiết bị
+
+Trước khi merge hoặc deploy thay đổi UI/performance, phải test tối thiểu:
+
+Desktop/laptop:
+- Windows Chrome/Edge ở màn hình lớn.
+- MacBook Air Safari hoặc Chrome.
+- Màn hình khoảng 1366–1440px width.
+
+Mobile/tablet:
+- iPhone Safari.
+- Android Chrome nếu có thể.
+- iPad/tablet nếu layout có breakpoint riêng.
+
+Checklist:
+1. Trang không giật khi đứng yên.
+2. Scroll không bị khựng, không đứng máy.
+3. Header/menu vẫn đọc được và không gây blur quá nặng.
+4. Work grid không autoplay nhiều video cùng lúc.
+5. Reel section không autoplay nhiều video cùng lúc trên laptop yếu.
+6. Modal mở/đóng không giữ video chạy ngầm.
+7. Horizontal timeline có nút Continue/Skip.
+8. `prefers-reduced-motion` hoạt động: giảm animation, không ép smooth-scroll.
+9. Lighthouse/Performance hoặc DevTools Performance không báo long task liên tục khi idle.
+10. Không phá visual chính trên Windows desktop mạnh.
+
+## 18) Nguyên tắc khi giao task cho agent/code assistant
+
+Khi agent chỉnh web/UI:
+- Phải đọc `AGENTS.md` trước khi sửa.
+- Nếu có `Design.md`, phải đọc thêm `Design.md` trước khi chỉnh layout/visual.
+- Không được tối ưu bằng cách xóa bừa hiệu ứng làm mất tinh thần thiết kế.
+- Mọi tối ưu phải là adaptive: máy mạnh giữ trải nghiệm đầy đủ, máy yếu nhận bản nhẹ hơn.
+- Không refactor lớn nếu task chỉ yêu cầu performance fix nhỏ.
+- Sau khi sửa phải liệt kê rõ file đã chỉnh, lý do chỉnh, và trade-off nếu có.

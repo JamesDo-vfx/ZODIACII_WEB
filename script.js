@@ -104,31 +104,86 @@
     else startSmoothScroll();
   };
 
-  const getSectionTargets = () => {
-    const explicitTargets = progressSegments
-      .map((segment) => segment.getAttribute("data-nav-target"))
-      .filter(Boolean);
-    if (explicitTargets.length) return explicitTargets;
+  const getScrollMax = () =>
+    Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
-    return Array.from(document.querySelectorAll("main section[id], main section"))
-      .filter((section) => section.offsetParent !== null)
-      .slice(0, progressSegments.length)
-      .map((section, index) => {
-        if (!section.id) section.id = `page-section-${index + 1}`;
-        return `#${section.id}`;
+  const getElementY = (element) =>
+    element.getBoundingClientRect().top + window.scrollY;
+
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+  const pickEvenly = (items, count) => {
+    if (count <= 0) return [];
+    if (items.length <= count) return items;
+    return Array.from({ length: count }, (_, index) => {
+      const itemIndex = Math.round(((index + 1) * (items.length - 1)) / (count + 1));
+      return items[itemIndex];
+    });
+  };
+
+  const getVisibleSections = () =>
+    Array.from(
+      document.querySelectorAll("main [data-nav-section], main section[id], main section")
+    )
+      .filter((section, index, array) => array.indexOf(section) === index)
+      .filter((section) => {
+        const rect = section.getBoundingClientRect();
+        const style = window.getComputedStyle(section);
+        return (
+          section.offsetParent !== null &&
+          style.display !== "none" &&
+          style.visibility !== "hidden" &&
+          rect.height > 120
+        );
       });
+
+  const getSectionLabel = (section, index) => {
+    const explicit =
+      section?.dataset?.navLabel?.trim() ||
+      section?.dataset?.sectionTitle?.trim();
+    if (explicit) return explicit;
+
+    const heading = section?.querySelector("h1, h2, .section-kicker");
+    const headingText = heading?.textContent?.trim();
+    if (headingText) return headingText;
+
+    return `Section ${String(index + 1).padStart(2, "0")}`;
+  };
+
+  const resolveSelectorTarget = (selector) => {
+    if (!selector) return null;
+    try {
+      const element = document.querySelector(selector);
+      return element instanceof HTMLElement ? element : null;
+    } catch {
+      return null;
+    }
   };
 
   const scrollToTarget = (target, options = {}) => {
-    const { offset = 0, duration = 1.1 } = options;
-    if (window.zodiacLenis) {
-      window.zodiacLenis.scrollTo(target, { offset, duration });
+    const offset = Number.isFinite(options.offset) ? options.offset : 0;
+    const duration = Number.isFinite(options.duration) ? options.duration : 1.05;
+    if (target instanceof HTMLElement) {
+      if (window.zodiacLenis?.scrollTo) {
+        window.zodiacLenis.scrollTo(target, { duration, offset });
+      } else {
+        const top = clamp(getElementY(target) + offset, 0, getScrollMax());
+        window.scrollTo({
+          top,
+          behavior: prefersReducedMotion ? "auto" : "smooth"
+        });
+      }
       return;
     }
 
-    const top = target.getBoundingClientRect().top + window.scrollY + offset;
+    const y = clamp((Number(target) || 0) + offset, 0, getScrollMax());
+    if (window.zodiacLenis?.scrollTo) {
+      window.zodiacLenis.scrollTo(y, { duration });
+      return;
+    }
+
     window.scrollTo({
-      top,
+      top: y,
       behavior: prefersReducedMotion ? "auto" : "smooth"
     });
   };
@@ -1154,31 +1209,8 @@
   };
 
   const openReelModal = (reel) => {
-    if (!reelModal || !modalVideo || !reel) return;
-    const videoSrc = reel.fullVideo || reel.previewVideo;
-
-    stopAllReelPreviews();
-    modalVideo.pause();
-    modalVideo.removeAttribute("src");
-    modalVideo.innerHTML = "";
-
-    body.classList.add("is-reel-modal-open");
-    stopSmoothScroll();
-    reelModal.classList.add("is-open");
-    reelModal.setAttribute("aria-hidden", "false");
-
-    modalWork.href = getCleanCategoryUrl("work", reel.category);
-
-    modalVideo.poster = reel.poster || "";
-    modalVideo.src = videoSrc;
-    modalVideo.muted = true;
-    modalSound.textContent = "Sound Off";
-
-    modalVideo.addEventListener("loadeddata", requestModalPlayback, { once: true });
-    modalVideo.addEventListener("canplay", requestModalPlayback, { once: true });
-    modalVideo.load();
-    window.requestAnimationFrame(requestModalPlayback);
-    modalSound.focus({ preventScroll: true });
+    if (!reel) return;
+    window.location.href = getCleanCategoryUrl("work", reel.category || "music-video");
   };
 
   const closeReelModal = () => {
@@ -1313,6 +1345,11 @@
     return ["selection", "winner", "finalist", "featured"].includes(level) ? level : "";
   };
 
+  const formatAwardBadgeLabel = (awardTag) => {
+    if (typeof awardTag !== "string") return "";
+    return awardTag.trim().replace(/\s+/g, " ").toUpperCase();
+  };
+
   const getProjectLayoutClass = (index) => {
     const pattern = [
       "project-card--large",
@@ -1330,6 +1367,7 @@
     const thumbnail = getProjectThumbnail(project);
     const previewVideo = getProjectPreviewVideo(project);
     const awardTag = getProjectAwardTag(project);
+    const awardBadgeLabel = formatAwardBadgeLabel(awardTag);
     const awardLine = awardTag ? getProjectAwardLine(project) : "";
     const awardLevel = awardTag ? getProjectAwardLevel(project) : "";
     article.className = `project-card ${getProjectLayoutClass(index)}${previewVideo ? " project-card--has-preview" : ""}${awardTag ? " project-card--awarded" : ""}${awardLevel ? ` project-card--award-${awardLevel}` : ""} reveal`;
@@ -1339,20 +1377,7 @@
         <figure class="project-frame">
           ${awardTag ? `
             <span class="project-card__award-tag">
-              <span class="project-card__award-copy" aria-label="${awardTag}">
-                <span class="project-card__award-track">
-                  <span class="project-card__award-group" aria-hidden="true">
-                    <span>${awardTag}</span>
-                    <span>${awardTag}</span>
-                    <span>${awardTag}</span>
-                  </span>
-                  <span class="project-card__award-group" aria-hidden="true">
-                    <span>${awardTag}</span>
-                    <span>${awardTag}</span>
-                    <span>${awardTag}</span>
-                  </span>
-                </span>
-              </span>
+              <span class="project-card__award-copy" aria-label="${awardTag}">${awardBadgeLabel}</span>
             </span>
           ` : ""}
           <img src="${thumbnail}" alt="${project.title} project still" loading="${index < 2 ? "eager" : "lazy"}">
@@ -1732,8 +1757,8 @@
   const reelTemplate = (reel, index) => {
     const link = document.createElement("a");
     link.className = `reel-card reel-card--${reel.layout} reveal`;
-    link.href = getCleanCategoryUrl("reel", reel.category);
-    link.setAttribute("aria-label", `Watch ${reel.title}`);
+    link.href = getCleanCategoryUrl("work", reel.category);
+    link.setAttribute("aria-label", `View ${reel.title} work`);
     link.dataset.reelType = reel.category;
     link.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
     link.innerHTML = `
@@ -1776,22 +1801,11 @@
     card.addEventListener("focusout", () => stopPreview(card, video));
   };
 
-  const setupReelModalTrigger = (card) => {
-    card.addEventListener("click", (event) => {
-      const category = card.dataset.reelType || card.dataset.category;
-      const reel = categoryReels.find((item) => item.category === category);
-      if (!reel) return;
-      event.preventDefault();
-      openReelModal(reel);
-    });
-  };
-
   const renderReelGrid = () => {
     document.querySelectorAll("[data-reel-grid]").forEach((grid) => {
       const cards = featuredReels.map(reelTemplate);
       grid.replaceChildren(...cards);
       cards.forEach(setupReelPreview);
-      cards.forEach(setupReelModalTrigger);
     });
     initReelViewportPreviews();
   };
@@ -1906,16 +1920,9 @@
     document.querySelector("[data-category-subtitle]").textContent = categoryData.subtitle;
     document.title = `${categoryData.title} | Zodiac II Media`;
     if (heroReelLink) {
-      heroReelLink.setAttribute("href", getReelUrl(category));
-      heroReelLink.onclick = (event) => {
-        const reelCategory = category === "all" ? "music-video" : category;
-        const reel =
-          categoryReels.find((item) => item.category === reelCategory) ||
-          categoryReels.find((item) => item.category === "music-video");
-        if (!reel) return;
-        event.preventDefault();
-        openReelModal(reel);
-      };
+      const reelCategory = category === "all" ? "music-video" : category;
+      heroReelLink.setAttribute("href", getCleanCategoryUrl("work", reelCategory));
+      heroReelLink.onclick = null;
     }
 
     if (!heroProjects.length) {
@@ -2308,8 +2315,9 @@
         const track = section.querySelector("[data-horizontal-timeline-track]");
         const progress = section.querySelector("[data-horizontal-timeline-progress]");
         const items = Array.from(section.querySelectorAll(".about-timeline__item"));
+        const skipButton = section.querySelector("[data-about-timeline-skip]");
         if (!track) return null;
-        return { section, track, progress, items, maxShift: 0 };
+        return { section, track, progress, items, skipButton, maxShift: 0 };
       })
       .filter(Boolean);
 
@@ -2357,6 +2365,23 @@
 
     updateMetrics();
     updateProgress();
+
+    timelines.forEach((timeline) => {
+      if (!timeline.skipButton) return;
+      timeline.skipButton.addEventListener("click", () => {
+        const target = timeline.section.nextElementSibling;
+        if (!(target instanceof HTMLElement)) return;
+
+        const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+        if (window.zodiacLenis?.scrollTo) {
+          window.zodiacLenis.scrollTo(target, { duration: prefersReducedMotion ? 0.01 : 1.1 });
+          return;
+        }
+
+        target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
+      });
+    });
+
     window.addEventListener("scroll", requestTimelineUpdate, { passive: true });
     window.zodiacLenis?.on?.("scroll", requestTimelineUpdate);
     window.addEventListener("resize", () => {
@@ -2407,6 +2432,123 @@
     revealItems.forEach((item) => item.classList.add("is-visible"));
   }
 
+  const navTimeline = document.querySelector(".nav-timeline");
+  const navSegments = Array.from(navTimeline?.querySelectorAll("[data-progress-segment]") || []);
+  let navTimelineTargets = [];
+
+  const getMiddleFallbackRatios = (count) => {
+    if (count <= 0) return [];
+    return Array.from({ length: count }, (_, index) => (index + 1) / (count + 1));
+  };
+
+  const buildNavTimelineTargets = () => {
+    const segmentCount = navSegments.length;
+    if (!segmentCount) return [];
+    if (segmentCount === 1) return [{ type: "position", y: 0, label: "Top" }];
+
+    const middleCount = Math.max(0, segmentCount - 2);
+    const visibleSections = getVisibleSections();
+    const topY = 0;
+    const bottomY = getScrollMax();
+    const topCutoff = Math.min(160, bottomY * 0.1);
+    const bottomCutoff = Math.max(0, bottomY - Math.min(160, bottomY * 0.1));
+    const middleSections = visibleSections.filter((section) => {
+      const y = getElementY(section);
+      return y > topCutoff && y < bottomCutoff;
+    });
+
+    const explicitMiddle = navSegments.slice(1, segmentCount - 1).map((segment) => {
+      const explicitSelector = segment.getAttribute("data-nav-target");
+      const explicitElement = resolveSelectorTarget(explicitSelector);
+      return explicitElement ? { segment, element: explicitElement } : null;
+    });
+
+    const explicitElements = explicitMiddle
+      .filter(Boolean)
+      .map((item) => item.element);
+    const autoPool = middleSections.filter((section) => !explicitElements.includes(section));
+    const autoPicked = pickEvenly(
+      autoPool,
+      Math.max(0, middleCount - explicitElements.length)
+    );
+
+    const middleTargets = [];
+    let autoIndex = 0;
+    for (let slot = 0; slot < middleCount; slot += 1) {
+      const explicitItem = explicitMiddle[slot];
+      const section = explicitItem?.element || autoPicked[autoIndex] || null;
+      if (section && !explicitItem) autoIndex += 1;
+      if (section) {
+        middleTargets.push({
+          type: "element",
+          element: section,
+          label: getSectionLabel(section, slot + 1)
+        });
+      } else {
+        const fallbackRatio = getMiddleFallbackRatios(middleCount)[slot] || 0.5;
+        middleTargets.push({
+          type: "position",
+          y: () => getScrollMax() * fallbackRatio,
+          label: `Section ${String(slot + 2).padStart(2, "0")}`
+        });
+      }
+    }
+
+    return [
+      { type: "position", y: topY, label: "Top" },
+      ...middleTargets,
+      { type: "position", y: () => getScrollMax(), label: "End" }
+    ].slice(0, segmentCount);
+  };
+
+  const getTimelineTargetY = (target) => {
+    if (!target) return 0;
+    if (target.type === "element" && target.element) {
+      return clamp(getElementY(target.element), 0, getScrollMax());
+    }
+    const y = typeof target.y === "function" ? target.y() : target.y;
+    return clamp(Number(y) || 0, 0, getScrollMax());
+  };
+
+  const scrollToTimelineTarget = (target) => {
+    if (!target) return;
+    if (target.type === "element" && target.element) {
+      scrollToTarget(target.element, { duration: 1.05 });
+      return;
+    }
+    scrollToTarget(getTimelineTargetY(target), { duration: 1.05 });
+  };
+
+  const applyNavTimelineTargets = () => {
+    if (!navSegments.length) return;
+    navTimelineTargets = buildNavTimelineTargets();
+
+    navSegments.forEach((segment, index) => {
+      const target = navTimelineTargets[index];
+      if (!target) return;
+      const labelText = target.label || `Section ${String(index + 1).padStart(2, "0")}`;
+
+      segment.dataset.timelineIndex = String(index);
+      segment.setAttribute("tabindex", "0");
+      segment.setAttribute("role", "link");
+      segment.setAttribute("aria-label", `Jump to ${labelText}`);
+      if (index === 0) {
+        segment.setAttribute("data-nav-target", "__page_top__");
+      } else if (index === navSegments.length - 1) {
+        segment.setAttribute("data-nav-target", "__page_bottom__");
+      }
+
+      let labelNode = segment.querySelector(".nav-timeline__label");
+      if (!labelNode) {
+        labelNode = document.createElement("span");
+        labelNode.className = "nav-timeline__label";
+        segment.append(labelNode);
+      }
+      labelNode.textContent = labelText;
+      labelNode.title = labelText;
+    });
+  };
+
   let lastScrollTop = window.scrollY || document.documentElement.scrollTop || 0;
   let mobileHeaderHidden = false;
   const mobileHeaderQuery = window.matchMedia("(max-width: 900px)");
@@ -2420,8 +2562,7 @@
 
   const updateScrollState = () => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const progress = Math.min(scrollTop / maxScroll, 1);
+    const maxScroll = Math.max(getScrollMax(), 1);
     header?.classList.toggle("is-scrolled", scrollTop > 24);
 
     if (!header) {
@@ -2447,11 +2588,27 @@
       lastScrollTop = scrollTop;
     }
 
+    if (navSegments.length && navTimelineTargets.length === navSegments.length) {
+      const anchors = navTimelineTargets.map((target) => getTimelineTargetY(target));
+      navSegments.forEach((segment, index) => {
+        const prev = index === 0 ? 0 : anchors[index - 1];
+        const current = anchors[index];
+        const next = index === navSegments.length - 1 ? maxScroll : anchors[index + 1];
+        const start = index === 0 ? 0 : (prev + current) / 2;
+        const end = index === navSegments.length - 1 ? maxScroll : (current + next) / 2;
+        const span = Math.max(end - start, 1);
+        const fill = clamp((scrollTop - start) / span, 0, 1);
+        segment.style.setProperty("--fill", fill.toFixed(3));
+      });
+      return;
+    }
+
     progressSegments.forEach((segment, index) => {
       const segmentStart = index / progressSegments.length;
       const segmentEnd = (index + 1) / progressSegments.length;
+      const progress = Math.min(scrollTop / maxScroll, 1);
       const fill = (progress - segmentStart) / (segmentEnd - segmentStart);
-      segment.style.setProperty("--fill", Math.max(0, Math.min(fill, 1)).toFixed(3));
+      segment.style.setProperty("--fill", clamp(fill, 0, 1).toFixed(3));
     });
   };
 
@@ -2465,35 +2622,82 @@
     });
   };
   window.addEventListener("scroll", requestScrollUpdate, { passive: true });
-  window.addEventListener("resize", requestScrollUpdate);
-  updateScrollState();
-
-  const sectionTargets = getSectionTargets();
-  progressSegments.forEach((segment, index) => {
-    const targetId = segment.getAttribute("data-nav-target") || sectionTargets[index];
-    if (!targetId) return;
-
-    segment.setAttribute("data-nav-target", targetId);
-    segment.setAttribute("tabindex", "0");
-    segment.setAttribute("role", "link");
-    if (!segment.getAttribute("aria-label")) {
-      segment.setAttribute("aria-label", `Jump to section ${index + 1}`);
-    }
+  let navResizeRaf = 0;
+  window.addEventListener("resize", () => {
+    if (navResizeRaf) return;
+    navResizeRaf = window.requestAnimationFrame(() => {
+      navResizeRaf = 0;
+      applyNavTimelineTargets();
+      requestScrollUpdate();
+    });
   });
+  window.addEventListener("load", () => {
+    applyNavTimelineTargets();
+    requestScrollUpdate();
+  });
+  updateScrollState();
+  applyNavTimelineTargets();
+
+  if (navTimeline && navSegments.length) {
+    const setActiveSegment = (activeSegment = null) => {
+      navSegments.forEach((segment) => {
+        segment.classList.toggle("is-active-segment", segment === activeSegment);
+      });
+    };
+
+    navSegments.forEach((segment) => {
+      const activateSegment = (event) => {
+        event.preventDefault();
+        const index = Number.parseInt(segment.dataset.timelineIndex || "-1", 10);
+        const target = navTimelineTargets[index];
+        if (!target) return;
+        setActiveSegment(segment);
+        scrollToTimelineTarget(target);
+      };
+
+      segment.addEventListener("click", activateSegment);
+      segment.addEventListener("pointerenter", () => {
+        navTimeline.classList.add("is-hovering-segment");
+        setActiveSegment(segment);
+      });
+
+      segment.addEventListener("pointerleave", () => {
+        // Keep active state stable while pointer is still within timeline.
+      });
+
+      segment.addEventListener("focusin", () => {
+        navTimeline.classList.add("is-focus-within-segment");
+        setActiveSegment(segment);
+      });
+
+      segment.addEventListener("focusout", () => {
+        window.setTimeout(() => {
+          if (!navTimeline.contains(document.activeElement)) {
+            navTimeline.classList.remove("is-focus-within-segment");
+            setActiveSegment(null);
+          }
+        }, 0);
+      });
+
+      segment.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        activateSegment(event);
+      });
+    });
+
+    navTimeline.addEventListener("pointerleave", () => {
+      navTimeline.classList.remove("is-hovering-segment");
+      setActiveSegment(null);
+    });
+  }
 
   document.querySelectorAll("[data-nav-target]").forEach((trigger) => {
+    const isTimelineSegment = trigger.hasAttribute("data-progress-segment");
+    if (isTimelineSegment) return;
     trigger.addEventListener("click", (event) => {
       const targetId = trigger.getAttribute("data-nav-target");
-      if (!targetId) return;
-
-      let target = null;
-      try {
-        target = document.querySelector(targetId);
-      } catch {
-        return;
-      }
+      const target = resolveSelectorTarget(targetId);
       if (!target) return;
-
       event.preventDefault();
       scrollToTarget(target);
     });

@@ -457,24 +457,76 @@ body.is-page-transitioning .site-footer {
   position: relative;
   z-index: 2;
   justify-self: center;
-  display: grid;
-  grid-template-columns: minmax(110px, 160px) minmax(110px, 160px) 34px 28px 18px 6px;
-  gap: 14px;
+  display: flex;
   align-items: start;
+  gap: 12px;
   width: min(100%, 620px);
   pointer-events: auto;
 }
 .nav-timeline [data-progress-segment] {
+  position: relative;
   appearance: none;
   display: block;
-  width: 100%;
+  flex: 0 1 var(--nav-segment-base, 64px);
+  min-width: 6px;
   height: 15px;
   border-radius: 0;
   border: 0;
-  padding: 0;
-  background: rgba(242,242,242,0.88);
+  padding: 0 10px;
+  overflow: hidden;
+  background: rgba(242,242,242,0.38);
   transform-origin: left;
+  cursor: pointer;
+  pointer-events: auto;
   opacity: calc(0.36 + var(--fill, 0) * 0.64);
+  transition:
+    flex-basis 360ms var(--ease-cinematic),
+    opacity 220ms ease-out,
+    background-color 220ms ease-out;
+}
+.nav-timeline [data-progress-segment]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: scaleX(var(--fill, 0));
+  transform-origin: left center;
+  background: rgba(242,242,242,0.96);
+  opacity: 0.92;
+  transition: transform 160ms linear;
+}
+.nav-timeline [data-progress-segment] .nav-timeline__label {
+  display: none !important;
+}
+.nav-timeline.is-hovering-segment [data-progress-segment] {
+  flex-basis: var(--nav-segment-compressed, 28px);
+  opacity: 0.42;
+}
+.nav-timeline [data-progress-segment].is-active-segment,
+.nav-timeline.is-focus-within-segment [data-progress-segment]:focus-visible {
+  flex-basis: var(--nav-segment-expanded, 190px);
+  opacity: 1;
+  background: rgba(242,242,242,0.86);
+}
+.nav-timeline [data-progress-segment].is-active-segment .nav-timeline__label,
+.nav-timeline.is-focus-within-segment [data-progress-segment]:focus-visible .nav-timeline__label {
+  opacity: 1;
+  transform: translateX(0);
+}
+.nav-timeline [data-progress-segment]:nth-child(1),
+.nav-timeline [data-progress-segment]:nth-child(2) {
+  --nav-segment-base: 138px;
+}
+.nav-timeline [data-progress-segment]:nth-child(3) {
+  --nav-segment-base: 28px;
+}
+.nav-timeline [data-progress-segment]:nth-child(4) {
+  --nav-segment-base: 28px;
+}
+.nav-timeline [data-progress-segment]:nth-child(5) {
+  --nav-segment-base: 20px;
+}
+.nav-timeline [data-progress-segment]:nth-child(6) {
+  --nav-segment-base: 8px;
 }
 .nav-timeline [data-nav-target] {
   cursor: pointer;
@@ -1377,97 +1429,61 @@ body[data-page="work"] .page-shell {
 
 .project-card__award-tag {
   position: absolute;
-  top: 22px;
-  left: -58px;
+  top: 20px;
+  right: -56px;
   z-index: 5;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 210px;
-  height: 32px;
-  padding: 0 34px;
+  width: 220px;
+  min-height: 32px;
+  padding: 7px 24px;
 
-  background: rgba(40, 40, 40, 0.92);
-  color:  rgba(242, 242, 242, 0.92);
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  backdrop-filter: none;
+  background: #e50914;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  box-shadow:
+    0 9px 18px rgba(0, 0, 0, 0.3),
+    0 0 14px rgba(229, 9, 20, 0.35);
 
   font-family: var(--font-body);
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 900;
   line-height: 1;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
-  white-space: nowrap;
+  text-align: center;
 
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
 
-  transform: rotate(-45deg);
+  transform: rotate(45deg) translate3d(0, 0, 0);
   transform-origin: center;
-
-  opacity: 0.92;
+  opacity: 0.96;
   transition:
     opacity var(--duration-normal) var(--ease-cinematic),
-    transform var(--duration-normal) var(--ease-cinematic);
-}
-
-.project-card__award-tag::before,
-.project-card__award-tag::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 28px;
-  height: 100%;
-  background: inherit;
-}
-
-.project-card__award-tag::before {
-  left: -27px;
-}
-
-.project-card__award-tag::after {
-  right: -27px;
+    transform var(--duration-normal) var(--ease-cinematic),
+    box-shadow var(--duration-normal) var(--ease-cinematic);
 }
 
 .project-card__award-copy {
-  display: block;
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: 100%;
+  display: inline-block;
+  max-width: 180px;
+  white-space: nowrap;
   overflow: hidden;
-}
-
-.project-card__award-track {
-  display: flex;
-  align-items: center;
-  width: max-content;
-  min-width: max-content;
-  will-change: transform;
-  animation: projectAwardTextLoop 8s linear infinite;
-}
-
-.project-card__award-group {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  padding-right: 28px;
-  flex: 0 0 auto;
-}
-
-@keyframes projectAwardTextLoop {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+  text-overflow: ellipsis;
 }
 
 .project-card:hover .project-card__award-tag,
 .project-card:focus-within .project-card__award-tag {
   opacity: 1;
-  transform: rotate(-45deg) translateY(-2px);
+  transform: rotate(45deg) translate3d(0, -1px, 0);
+  box-shadow:
+    0 11px 22px rgba(0, 0, 0, 0.34),
+    0 0 18px rgba(255, 43, 43, 0.42);
 }
 
 .project-card--awarded .project-frame {
@@ -3636,16 +3652,6 @@ body[data-page="project"] .page-shell {
     backdrop-filter: blur(4px);
   }
 
-  .project-card__award-track {
-    animation: none;
-    transform: none;
-  }
-
-  .project-card:hover .project-card__award-track,
-  .project-card:focus-within .project-card__award-track {
-    animation: projectAwardTextLoop 8s linear infinite;
-  }
-
   .clients-marquee__track,
   .contact-brand-wall__track,
   .hero-scroll-cue__dot {
@@ -3936,6 +3942,7 @@ body[data-page="project"] .page-shell {
 
 .about-timeline__footer {
   display: grid;
+  grid-template-columns: 1fr auto;
   gap: 10px;
   width: min(100%, var(--max-width));
   margin-inline: auto;
@@ -3943,6 +3950,7 @@ body[data-page="project"] .page-shell {
 }
 
 .about-timeline__progress {
+  grid-column: 1 / -1;
   position: relative;
   width: min(100%, 700px);
   height: 1px;
@@ -3959,6 +3967,7 @@ body[data-page="project"] .page-shell {
 }
 
 .about-timeline__hint {
+  grid-column: 1;
   margin: 0;
   color: var(--color-text-faint);
   font-family: var(--font-body);
@@ -3966,6 +3975,38 @@ body[data-page="project"] .page-shell {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.about-timeline__skip {
+  grid-column: 2;
+  justify-self: end;
+  align-self: end;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(242,242,242,0.72);
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-cinematic),
+    transform var(--duration-fast) var(--ease-cinematic);
+}
+
+.about-timeline__skip:hover,
+.about-timeline__skip:focus-visible {
+  color: var(--color-text);
+  transform: translateX(4px);
+}
+
+.about-timeline__skip:focus-visible {
+  outline: 1px solid rgba(255,255,255,0.82);
+  outline-offset: 4px;
 }
 
 .company-section__side {
@@ -4839,6 +4880,9 @@ body[data-page="contact"] .contact-directory .section-kicker {
   .about-timeline__footer {
     gap: 8px;
   }
+  .about-timeline__skip {
+    display: none;
+  }
   .company-heading {
     font-size: clamp(36px, 10vw, 72px);
   }
@@ -5410,12 +5454,16 @@ body[data-page="contact"] .contact-directory .section-kicker {
     aspect-ratio: 16 / 10;
   }
   .project-card__award-tag {
-    top: 18px;
-    left: -54px;
-    width: 190px;
-    height: 30px;
-    padding: 0 30px;
+    top: 14px;
+    right: -54px;
+    width: 198px;
+    min-height: 28px;
+    padding: 6px 20px;
     font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+  .project-card__award-copy {
+    max-width: 160px;
   }
   .project-award-line {
     max-width: 100%;
@@ -5493,10 +5541,6 @@ body[data-page="contact"] .contact-directory .section-kicker {
     transition: none !important;
   }
   .clients-marquee__track {
-    animation: none !important;
-    transform: none !important;
-  }
-  .project-card__award-track {
     animation: none !important;
     transform: none !important;
   }

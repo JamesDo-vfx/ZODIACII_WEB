@@ -42,6 +42,20 @@ function Get-TextValue {
   return ''
 }
 
+function Import-ProjectCsvRows {
+  param([string]$Path)
+
+  # Prefer UTF-8 because project metadata contains Vietnamese text.
+  $rawUtf8 = [System.IO.File]::ReadAllText($Path, [System.Text.UTF8Encoding]::new($false))
+  $rowsUtf8 = @($rawUtf8 | ConvertFrom-Csv)
+  if ($rowsUtf8.Count -gt 0 -and ($rowsUtf8[0].PSObject.Properties.Name -contains 'title')) {
+    return $rowsUtf8
+  }
+
+  # Fallback for legacy ANSI CSV files.
+  return @(Import-Csv -LiteralPath $Path -Encoding Default)
+}
+
 function Get-VideoProvider {
   param([string]$Url)
 
@@ -403,7 +417,7 @@ if (-not $csvPath) {
   throw "No CSV file found in $scriptDir"
 }
 
-$rows = Import-Csv -LiteralPath $csvPath
+$rows = Import-ProjectCsvRows -Path $csvPath
 if (-not $rows -or $rows.Count -eq 0) {
   throw "CSV file has no rows: $csvPath"
 }

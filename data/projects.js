@@ -7,7 +7,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "BE",
         "scope":  "CGI, Compositing, Motion",
-        "description":  "",
+        "description":  "Brand commercial with premium CGI lookdev.",
         "credits":  [
                         "Agency - The FRIDAY",
                         "Production House - FGS",
@@ -28,7 +28,7 @@ const projects = [
         "order":  1
     },
     {
-        "title":  "Du Cho Tan The",
+        "title":  "DÃƒÂ¹ Cho TÃ¡ÂºÂ­n ThÃ¡ÂºÂ¿",
         "slug":  "du-cho-tan-the",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -73,8 +73,8 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.44.png",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/vib-privilege/thumbnail/Screenshot 2026-05-08 at 00.45.05.png",
+        "previewVideo":  "/project/vib-privilege/previewVideo/SH13_Preview_v049.webm",
         "embedUrl":  "",
         "gallery":  [
                         "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.44.png",
@@ -172,11 +172,11 @@ const projects = [
                         "/project/samsung-2025/gallery/SAMSUNG_OOH_REEL_00787.jpg"
                     ],
         "year":  "2025",
-        "featured":  true,
+        "featured":  false,
         "order":  6
     },
     {
-        "title":  "Canh Chim Phuong Hoang",
+        "title":  "CÃƒÂ¡nh Chim PhÃ†Â°Ã¡Â»Â£ng HoÃƒÂ ng",
         "slug":  "canh-chim-phuong-hoang",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -294,7 +294,7 @@ const projects = [
         "order":  10
     },
     {
-        "title":  "Hoa Xuan Ca",
+        "title":  "Hoa XuÃƒÂ¢n Ca",
         "slug":  "hoa-xuan-ca",
         "category":  "film",
         "categoryLabel":  "Film",
@@ -320,7 +320,7 @@ const projects = [
         "order":  11
     },
     {
-        "title":  "Be Trap",
+        "title":  "BÃƒÂª Trap",
         "slug":  "be-trap",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -347,7 +347,7 @@ const projects = [
         "order":  12
     },
     {
-        "title":  "Thai Chieu Tai",
+        "title":  "Thai ChiÃƒÂªu TÃƒÂ i",
         "slug":  "thai-chieu-tai",
         "category":  "film",
         "categoryLabel":  "Film",
@@ -442,7 +442,7 @@ const projects = [
         "description":  "Real-estate TVC with cinematic urban look.",
         "credits":  [
                         "Client - Sunshine Group",
-                        "Production House - Æ¯m Production",
+                        "Production House - Ã†Â¯m Production",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -496,7 +496,7 @@ const projects = [
         "description":  "Stylized commercial TVC project.",
         "credits":  [
                         "Client - SHB SAHA",
-                        "Production House - Æ¯m Production",
+                        "Production House - Ã†Â¯m Production",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -523,18 +523,18 @@ const projects = [
         "description":  "Stylized commercial TVC project.",
         "credits":  [
                         "Client - SHB SAHA",
-                        "Production House - Æ¯m Production",
+                        "Production House - Ã†Â¯m Production",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/shb-saha-ooh/thumbnail/thumb.webp",
-        "previewVideo":  "/project/shb-saha-ooh/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/XERTDk80pTk",
+        "thumbnail":  "/project/shb-saha-ooh/thumbnail/shb-saha-ooh.jpg",
+        "previewVideo":  "/project/shb-saha-ooh/previewVideo/shb-saha-ooh.webm",
+        "embedUrl":  "",
         "gallery":  [
-                        "/project/shb-saha-ooh/thumbnail/thumb.webp"
+                        "/project/shb-saha-ooh/thumbnail/shb-saha-ooh.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -777,7 +777,7 @@ const projects = [
         "order":  28
     },
     {
-        "title":  "Khong Ra Gi",
+        "title":  "KhÃƒÂ´ng Ra GÃƒÂ¬",
         "slug":  "khong-ra-gi-truc-nhan",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -859,7 +859,7 @@ const projects = [
         "order":  31
     },
     {
-        "title":  "Thuc Giac",
+        "title":  "ThÃ¡Â»Â©c GiÃ¡ÂºÂ¥c",
         "slug":  "thuc-giac-dalab",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -911,7 +911,7 @@ const projects = [
         "order":  33
     },
     {
-        "title":  "Gio Thi Ai Cuoi",
+        "title":  "GiÃ¡Â»Â ThÃƒÂ¬ Ai CÃ†Â°Ã¡Â»Âi",
         "slug":  "gio-thi-ai-cuoi-hieuthuhai",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -937,7 +937,7 @@ const projects = [
         "order":  34
     },
     {
-        "title":  "Em Hat Ai Nghe",
+        "title":  "Em HÃƒÂ¡t AI Nghe",
         "slug":  "em-hat-ai-nghe-orange",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -963,7 +963,7 @@ const projects = [
         "order":  35
     },
     {
-        "title":  "Thieu Than",
+        "title":  "ThiÃƒÂªu ThÃƒÂ¢n",
         "slug":  "thieu-than-b-ray",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1041,7 +1041,7 @@ const projects = [
         "order":  38
     },
     {
-        "title":  "Moi Nguoi Ke Tiep",
+        "title":  "MÃ¡Â»Âi ngÃ†Â°Ã¡Â»Âi kÃ¡ÂºÂ¿ tiÃ¡ÂºÂ¿p",
         "slug":  "moi-nguoi-ke-tiep-karik",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1068,7 +1068,7 @@ const projects = [
         "order":  39
     },
     {
-        "title":  "Huyen Vi",
+        "title":  "HuyÃ¡Â»Ân Vi",
         "slug":  "huyen-vi-masew",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1095,7 +1095,7 @@ const projects = [
         "order":  40
     },
     {
-        "title":  "Van Lang 30 Year",
+        "title":  "VÃ„Æ’n Lang 30 NÃ„Æ’m",
         "slug":  "van-lang-30",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
@@ -1122,7 +1122,7 @@ const projects = [
         "order":  41
     },
     {
-        "title":  "Hoa Hong AI Vung Trong",
+        "title":  "Hoa HÃ¡Â»â€œng AI Vung TrÃ¡Â»â€œng",
         "slug":  "hoa-hong-ai-vung-trong",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1152,11 +1152,11 @@ const projects = [
         "order":  42
     },
     {
-        "title":  "Chien Si Qua Cam",
+        "title":  "ChiÃ¡ÂºÂ¿n SÃ„Â© QuÃ¡ÂºÂ£ CÃ¡ÂºÂ£m",
         "slug":  "chien-si-qua-cam-2025",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
-        "client":  "Bá»™ Quá»‘c phÃ²ng",
+        "client":  "BÃ¡Â»â„¢ QuÃ¡Â»â€˜c phÃƒÂ²ng",
         "scope":  "VFX, Environment, Compositing",
         "description":  "Atmospheric cinematic music video visuals.",
         "credits":  [
@@ -1178,7 +1178,7 @@ const projects = [
         "order":  43
     },
     {
-        "title":  "Van Su Nhu Y",
+        "title":  "VÃ¡ÂºÂ¡n SÃ¡Â»Â± NhÃ†Â° ÃƒÂ",
         "slug":  "van-su-nhu-y",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1205,7 +1205,7 @@ const projects = [
         "order":  44
     },
     {
-        "title":  "Mot Niem Tu Hao",
+        "title":  "MÃ¡Â»â„¢t NiÃ¡Â»Âm TÃ¡Â»Â± HÃƒÂ o",
         "slug":  "mot-niem-tu-hao",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
@@ -1231,7 +1231,7 @@ const projects = [
         "order":  45
     },
     {
-        "title":  "Dan Choi Sao Phai Khoc",
+        "title":  "DÃƒÂ¢n ChÃ†Â¡i Sao PhÃ¡ÂºÂ£i KhÃƒÂ³c",
         "slug":  "dan-choi-sao-phai-khoc",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1258,7 +1258,7 @@ const projects = [
         "order":  46
     },
     {
-        "title":  "Anh La Ngoai Le Cua Em",
+        "title":  "Anh LÃƒÂ  NGoÃ¡ÂºÂ¡i LÃ¡Â»â€¡ CÃ¡Â»Â§a Em",
         "slug":  "anh-la-ngoai-le-cua-em",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1375,7 +1375,7 @@ const projects = [
         "description":  "Commercial visual campaign with product-focused CGI.",
         "credits":  [
                         "Client - BUV",
-                        "Production - Thanh Trá»‹nh",
+                        "Production - Thanh TrÃ¡Â»â€¹nh",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
