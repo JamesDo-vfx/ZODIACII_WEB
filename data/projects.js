@@ -311,7 +311,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/hoa-xuan-ca/HoaXuanCa_video4.jpg",
         "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
+        "embedUrl":  "https://www.youtube.com/embed/kHU4mR2SFnI?si",
         "gallery":  [
                         "/project/hoa-xuan-ca/HoaXuanCa_video4.jpg"
                     ],
@@ -374,7 +374,7 @@ const projects = [
         "order":  13
     },
     {
-        "title":  "Vietjet",
+        "title":  "Vietjet - Nàng dâu quốc dân",
         "slug":  "vietjet",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
@@ -451,7 +451,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/placehole_image.jpg",
         "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "https://www.facebook.com/Um.ProdHouse/videos/1786586945613464",
+        "embedUrl":  "https://player.vimeo.com/video/1060746804",
         "gallery":  [
                         "/project/placehole_image.jpg"
                     ],
@@ -558,7 +558,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/placehole_image.jpg",
         "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "https://www.facebook.com/ViettelMoney/videos/374017871766896",
+        "embedUrl":  "https://player.vimeo.com/video/929258680",
         "gallery":  [
                         "/project/placehole_image.jpg"
                     ],
@@ -781,7 +781,7 @@ const projects = [
         "slug":  "khong-ra-gi-truc-nhan",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
-        "client":  "Truc Nhan",
+        "client":  "Trúc Nhân",
         "scope":  "VFX, Compositing",
         "description":  "Music video visual effects production.",
         "credits":  [
@@ -805,7 +805,7 @@ const projects = [
         "order":  29
     },
     {
-        "title":  "EXSH Theme Song",
+        "title":  "THE REAL AURA",
         "slug":  "exsh",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -823,7 +823,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/placehole_image.jpg",
         "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
+        "embedUrl":  "https://www.youtube.com/embed/ya31HMyeHX0?si",
         "gallery":  [
                         "/project/placehole_image.jpg"
                     ],
@@ -832,7 +832,7 @@ const projects = [
         "order":  30
     },
     {
-        "title":  "The Stars",
+        "title":  "ALL EYES ON US",
         "slug":  "the-stars-atsh",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -937,7 +937,7 @@ const projects = [
         "order":  34
     },
     {
-        "title":  "Em Hát AI Nghe",
+        "title":  "Em Hát Ai Nghe",
         "slug":  "em-hat-ai-nghe-orange",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
@@ -1122,11 +1122,11 @@ const projects = [
         "order":  41
     },
     {
-        "title":  "Hoa Hồng AI Vung Trồng",
+        "title":  "Hoa Hồng Ai Vung Trồng",
         "slug":  "hoa-hong-ai-vung-trong",
         "category":  "music-video",
         "categoryLabel":  "Music Video",
-        "client":  "Ganga Production",
+        "client":  "MINH HẰNG x TÓC TIÊN x DTAP",
         "scope":  "VFX, Environment, Compositing",
         "description":  "Sci-fi cinematic treatment with spaceship environment.",
         "credits":  [
@@ -1140,7 +1140,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/hoa-hong-ai-vung-trong/thumbnail/thumb.webp",
         "previewVideo":  "/project/hoa-hong-ai-vung-trong/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/Q2j8hraa2kA?si=Us_Z6hQnu-QKrsh4",
+        "embedUrl":  "https://www.youtube.com/embed/Q2j8hraa2kA?si",
         "gallery":  [
                         "/project/hoa-hong-ai-vung-trong/gallery/IMG_3325.heic",
                         "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.55.41.png",
@@ -1169,7 +1169,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/placehole_image.jpg",
         "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
+        "embedUrl":  "https://www.youtube.com/embed/ULT3FbPW_MM?si",
         "gallery":  [
                         "/project/placehole_image.jpg"
                     ],
@@ -1196,7 +1196,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/placehole_image.jpg",
         "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
+        "embedUrl":  "https://www.youtube.com/embed/hjYOanJelUs?si",
         "gallery":  [
                         "/project/placehole_image.jpg"
                     ],
@@ -1249,7 +1249,7 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/dan-choi-sao-phai-khoc/thumbnail/thumb.webp",
         "previewVideo":  "/project/dan-choi-sao-phai-khoc/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/zDNOhR-Ms-I?si=WTukh9xYKVu53GGw",
+        "embedUrl":  "https://www.youtube.com/embed/zDNOhR-Ms-I?si",
         "gallery":  [
                         "/project/dan-choi-sao-phai-khoc/thumbnail/thumb.webp"
                     ],
