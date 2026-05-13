@@ -5232,7 +5232,7 @@ body[data-page="contact"] .contact-directory .section-kicker {
     font-size: clamp(48px, 15vw, 82px);
   }
   .client-playground__title {
-    font-size: clamp(36px, 13vw, 66px);
+    font-size: clamp(22px, 8vw, 40px);
   }
   .team-stack__header {
     display: grid;
@@ -5259,9 +5259,9 @@ body[data-page="contact"] .contact-directory .section-kicker {
     animation-duration: 54s;
   }
   .clients-marquee__logo {
-    width: clamp(126px, 44vw, 178px);
-    height: 74px;
-    padding: 12px;
+    width: clamp(76px, 26vw, 108px);
+    height: 44px;
+    padding: 7px;
   }
   .founder-profile {
     padding-block: 74px;
