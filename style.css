@@ -2728,7 +2728,7 @@ body[data-page="project"] .page-shell {
   padding: clamp(18px, 1.8vw, 28px);
   object-fit: contain;
   opacity: 0.78;
-  filter: brightness(0) invert(1) grayscale(1) contrast(1.08);
+  filter: brightness(1) invert(0) grayscale(0) contrast(1);
   transform: translateZ(0);
 }
 
