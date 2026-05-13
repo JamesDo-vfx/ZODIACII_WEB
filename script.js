@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const body = document.body;
   let loader = document.querySelector("[data-loader]");
@@ -12,18 +12,52 @@
   const brandLogoPath = "/assets/icons/header_logo.svg";
 
   const ensureIntroLoader = () => {
-    if (loader) return loader;
+    const loaderText = "ZODIAC II";
+    const buildLoaderChars = (loaderNode) => {
+      const wordNode =
+        loaderNode.querySelector("[data-loader-word]") ||
+        loaderNode.querySelector(".intro-loader__word") ||
+        loaderNode.querySelector("p") ||
+        loaderNode;
+      wordNode.classList.add("intro-loader__word");
+      wordNode.innerHTML = "";
 
-    const introLoader = document.createElement("div");
-    introLoader.className = "intro-loader";
-    introLoader.setAttribute("data-loader", "");
-    introLoader.innerHTML = "<p>Zodiac II Media</p>";
+      const letters = Array.from(loaderText);
+      const center = (letters.length - 1) / 2;
+      letters.forEach((char, index) => {
+        const span = document.createElement("span");
+        span.className = "intro-loader__char";
+        if (char === " ") {
+          span.classList.add("intro-loader__char--space");
+          span.innerHTML = "&nbsp;";
+        } else {
+          span.textContent = char;
+        }
 
-    const firstChild = body.firstChild;
-    if (firstChild) body.insertBefore(introLoader, firstChild);
-    else body.append(introLoader);
+        const distance = index - center;
+        const shift = Math.round(-distance * 18);
+        const delay = 120 + Math.abs(distance) * 48 + index * 20;
+        span.style.setProperty("--loader-shift", `${shift}px`);
+        span.style.setProperty("--loader-delay", `${delay}ms`);
+        wordNode.append(span);
+      });
+    };
 
-    loader = introLoader;
+    if (!loader) {
+      const introLoader = document.createElement("div");
+      introLoader.className = "intro-loader";
+      introLoader.setAttribute("data-loader", "");
+      introLoader.setAttribute("aria-label", loaderText);
+      introLoader.innerHTML = '<p class="intro-loader__word" data-loader-word></p>';
+
+      const firstChild = body.firstChild;
+      if (firstChild) body.insertBefore(introLoader, firstChild);
+      else body.append(introLoader);
+
+      loader = introLoader;
+    }
+
+    buildLoaderChars(loader);
     return loader;
   };
 
@@ -1289,14 +1323,14 @@
   if (loader) {
     body.classList.add("is-loading");
     const hideLoader = () => {
-      loader.classList.add("is-hidden");
+      loader.classList.add("is-hiding");
       body.classList.remove("is-loading");
       window.setTimeout(() => loader.remove(), 800);
     };
     if (prefersReducedMotion) {
-      hideLoader();
+      window.setTimeout(hideLoader, 560);
     } else {
-      window.setTimeout(hideLoader, 1350);
+      window.setTimeout(hideLoader, 2080);
     }
   }
 

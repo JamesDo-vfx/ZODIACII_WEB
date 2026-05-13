@@ -1,3 +1,10 @@
+﻿@font-face {
+  font-family: "Beaufort Heavy";
+  src: url("/assets/fonts/BeaufortforLOL-Heavy.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
 :root {
   --color-black: #040404;
   --color-ink: #070707;
@@ -184,18 +191,41 @@ body.is-page-transitioning .site-footer {
   z-index: 200;
   display: grid;
   place-items: center;
-  background: var(--color-black);
+  background: #020202;
   transition: opacity 700ms var(--ease-cinematic), visibility 700ms var(--ease-cinematic);
 }
-.intro-loader p {
+.intro-loader__word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(18px, 2vw, 30px);
-  filter: blur(14px);
-  opacity: 0;
-  animation: loaderTitle 1250ms var(--ease-cinematic) forwards;
+  font-family: "Beaufort Heavy", var(--font-display);
+  font-size: clamp(34px, 8.3vw, 134px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: #f5f5f5;
+  text-rendering: geometricPrecision;
+  white-space: nowrap;
+  max-width: min(90vw, 1200px);
 }
-.intro-loader.is-hidden { opacity: 0; visibility: hidden; }
+.intro-loader__char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateX(var(--loader-shift, 0px)) scaleX(0.85);
+  will-change: transform, opacity, filter;
+  animation: loaderCharReveal 960ms var(--ease-cinematic) forwards;
+  animation-delay: var(--loader-delay, 0ms);
+}
+.intro-loader__char--space {
+  width: clamp(0.32em, 0.4em, 0.45em);
+}
+.intro-loader.is-hiding,
+.intro-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
 
 .site-header {
   position: fixed;
@@ -4549,10 +4579,23 @@ body[data-page="contact"] .contact-directory .section-kicker {
     scale(var(--s, 0.92));
 }
 
-@keyframes loaderTitle {
-  0% { opacity: 0; filter: blur(16px); transform: translateY(10px); }
-  45%, 72% { opacity: 1; filter: blur(0); transform: translateY(0); }
-  100% { opacity: 0.34; filter: blur(8px); transform: translateY(-4px); }
+@keyframes loaderCharReveal {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateX(var(--loader-shift, 0px)) scaleX(0.85);
+    letter-spacing: 0;
+  }
+  60% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0) scaleX(1);
+    letter-spacing: 0.04em;
+  }
 }
 
 @keyframes pageWipeIn {
@@ -5528,7 +5571,12 @@ body[data-page="contact"] .contact-directory .section-kicker {
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
   }
-  .intro-loader { display: none; }
+  .intro-loader__char {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none;
+  }
   .reveal,
   .work-overlay__links a,
   .reel-modal__panel {
@@ -5565,4 +5613,10 @@ body[data-page="contact"] .contact-directory .section-kicker {
     transform: none;
   }
 }
+
+
+
+
+
+
 
