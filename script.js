@@ -1571,6 +1571,7 @@
     const type = page.querySelector("[data-project-type]");
     const role = page.querySelector("[data-project-role]");
     const description = page.querySelector("[data-project-description]");
+    const descriptionDisclosure = description?.closest(".project-disclosure");
     const credits = page.querySelector("[data-project-credits]");
     const awards = page.querySelector("[data-project-awards]");
     const video = page.querySelector("[data-project-video]");
@@ -1585,7 +1586,6 @@
     }
 
     const projectCategoryTitle = getProjectCategoryTitle(project);
-    const detailDescription = project.description || "";
     const creditItems = Array.isArray(project.credits) ? project.credits.filter(Boolean) : [];
     const awardItems = Array.isArray(project.awards) ? project.awards.filter(Boolean) : [];
     const fallbackGalleryItems = [
@@ -1607,7 +1607,7 @@
     if (year) year.textContent = project.year ? `[${project.year}]` : "";
     if (type) type.textContent = projectCategoryTitle;
     if (role) role.textContent = project.scope || "VFX / CGI";
-    if (description) description.textContent = detailDescription;
+    if (descriptionDisclosure) descriptionDisclosure.remove();
     if (back) back.href = getCleanCategoryUrl("work", project.category || "all");
     document.title = `${project.title} | Zodiac II Media`;
 
