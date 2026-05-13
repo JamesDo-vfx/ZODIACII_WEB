@@ -309,11 +309,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/hoa-xuan-ca/HoaXuanCa_video4.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/hoa-xuan-ca/thumbnail/thumb.webp",
+        "previewVideo":  "/project/hoa-xuan-ca/previewVideo/HoaXuanCa_video4.webm",
         "embedUrl":  "https://www.youtube.com/embed/kHU4mR2SFnI?si",
         "gallery":  [
-                        "/project/hoa-xuan-ca/HoaXuanCa_video4.jpg"
+                        "/project/hoa-xuan-ca/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -449,11 +449,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/the-noble/thumbnail/thumb.webp",
+        "previewVideo":  "/project/the-noble/previewVideo/preview.webm",
         "embedUrl":  "https://player.vimeo.com/video/1060746804",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/the-noble/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -556,11 +556,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/viettel-money/thumbnail/thumb.webp",
+        "previewVideo":  "/project/viettel-money/previewVideo/preview.webm",
         "embedUrl":  "https://player.vimeo.com/video/929258680",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/viettel-money/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -821,11 +821,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/exsh/thumbnail/thumb.webp",
+        "previewVideo":  "/project/exsh/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/ya31HMyeHX0?si",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/exsh/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
@@ -1167,11 +1167,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/chien-si-qua-cam-2025/thumbnail/thumb.webp",
+        "previewVideo":  "/project/chien-si-qua-cam-2025/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/ULT3FbPW_MM?si",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/chien-si-qua-cam-2025/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
@@ -1194,11 +1194,11 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
+        "thumbnail":  "/project/van-su-nhu-y/thumbnail/thumb.webp",
+        "previewVideo":  "/project/van-su-nhu-y/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/hjYOanJelUs?si",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/van-su-nhu-y/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,

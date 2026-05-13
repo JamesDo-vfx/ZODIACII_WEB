@@ -1720,9 +1720,14 @@ body[data-page="work"] .page-shell {
   filter: contrast(1.12) saturate(0.88) brightness(0.78);
 }
 
+.reel-card.is-playing .reel-card__poster,
+.reel-card:focus-visible .reel-card__poster {
+  opacity: 0;
+}
+
 .reel-card.is-playing .reel-card__video,
 .reel-card:focus-visible .reel-card__video {
-  opacity: 0.96;
+  opacity: 1;
 }
 
 .reel-card:hover::after,
