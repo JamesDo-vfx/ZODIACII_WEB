@@ -285,6 +285,10 @@
     billboard: {
       title: "Billboard",
       subtitle: "Selected billboard, outdoor, LED, and large-format visual work by Zodiac II Media."
+    },
+    tvshow: {
+      title: "TV Show",
+      subtitle: "Selected TV show visuals, broadcast design, and episodic VFX work by Zodiac II Media."
     }
   };
 
@@ -320,6 +324,14 @@
       description: "High-impact billboard, LED, outdoor, OOH, and large-format visual work built for public scale.",
       url: "/reel/billboard/",
       layout: "standard"
+    },
+    tvshow: {
+      title: "TV Show Reel",
+      label: "TV Show",
+      category: "tvshow",
+      description: "Broadcast and episodic VFX work designed for TV show storytelling and platform delivery.",
+      url: "/reel/tvshow/",
+      layout: "standard"
     }
   };
 
@@ -343,6 +355,11 @@
       poster: "/assets/videos/reel/reel-thumbnail-billboard.jpg",
       previewVideo: "/assets/videos/reel/reel-preview-billboard.webm",
       fullVideo: "/assets/videos/reel/reel-preview-billboard.webm"
+    },
+    tvshow: {
+      poster: "/assets/videos/reel/reel-thumbnail-film.jpg",
+      previewVideo: "/assets/videos/reel/reel-preview-film.webm",
+      fullVideo: "/assets/videos/reel/reel-preview-film.webm"
     }
   };
 
@@ -379,9 +396,20 @@
     };
   });
 
-  const featuredReels = ["music-video", "commercial", "film", "billboard"]
+  const featuredReels = ["music-video", "commercial", "film", "billboard", "tvshow"]
     .map((category) => categoryReels.find((reel) => reel.category === category))
     .filter(Boolean);
+
+  const inferCategoryLabel = (categorySlug) => {
+    const normalized = String(categorySlug || "").trim().toLowerCase();
+    if (!normalized) return "";
+    if (normalized === "tvshow") return "TVShow";
+    return normalized
+      .split(/[-_\s]+/g)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  };
 
   const slugifyName = (name) =>
     name
@@ -881,6 +909,7 @@
         <a style="--i:2" href="/work/music-video/">Music Video</a>
         <a style="--i:3" href="/work/film/">Film</a>
         <a style="--i:4" href="/work/billboard/">Billboard</a>
+        <a style="--i:5" href="/work/tvshow/">TV Show</a>
       </nav>
     `;
     document.body.append(overlay);
@@ -1339,7 +1368,7 @@
   };
 
   const getProjectCategoryTitle = (project) => {
-    return categories[project.category]?.title || project.categoryLabel;
+    return categories[project.category]?.title || project.categoryLabel || inferCategoryLabel(project.category);
   };
 
   const getProjectDetailUrl = (project) => `/project/${project.slug}/`;

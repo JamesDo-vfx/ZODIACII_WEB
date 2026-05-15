@@ -195,6 +195,7 @@ Commercial
 Music Video
 Film
 Billboard
+TV Show
 ```
 
 ### Bắt buộc
@@ -216,6 +217,7 @@ Commercial    -> work.html?category=commercial
 Music Video   -> work.html?category=music-video
 Film          -> work.html?category=film
 Billboard     -> work.html?category=billboard
+TV Show       -> work.html?category=tvshow
 ```
 
 ### Visual
@@ -945,6 +947,7 @@ commercial
 music-video
 film
 billboard
+tvshow
 ```
 
 `all` là virtual category, không dùng làm project category thật.

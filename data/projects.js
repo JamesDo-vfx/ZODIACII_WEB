@@ -1,13 +1,47 @@
 // Generated from CSV by data/temp/ApplyCsvToProjects.bat.
 const projects = [
     {
+        "title":  "Chiến Sĩ Quả Cảm",
+        "slug":  "chien-si-qua-cam-2025",
+        "category":  "tvshow",
+        "categoryLabel":  "TV Show",
+        "client":  "Bộ Quốc phòng",
+        "scope":  "VFX, Environment, Compositing",
+        "description":  "",
+        "credits":  [
+                        "Client - Zeit Media",
+                        "Studio - Zodiac II Media"
+                    ],
+        "awards":  [
+                       "Awards not publicly listed."
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/chien-si-qua-cam-2025/thumbnail/thumb.webp",
+        "previewVideo":  "/project/chien-si-qua-cam-2025/previewVideo/preview1.webm",
+        "embedUrl":  "https://www.youtube.com/embed/ULT3FbPW_MM?si",
+        "gallery":  [
+                        "/project/chien-si-qua-cam-2025/gallery/SH01_00491.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH01_EP4_v09_00008.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH01_EP5_v02_00035.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH02_CSQC_FINAL_00036.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH02_EP2_v03_00049.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH02_EP5_v02_00249.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH03_EP4_v05_00066.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/Sh06_V2_00049.jpg",
+                        "/project/chien-si-qua-cam-2025/gallery/SH07_tap7_v03_00171.jpg"
+                    ],
+        "year":  "2025",
+        "featured":  true,
+        "order":  1
+    },
+    {
         "title":  "BE",
         "slug":  "be",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
         "client":  "BE",
         "scope":  "CGI, Compositing, Motion",
-        "description":  "Brand commercial with premium CGI lookdev.",
+        "description":  "",
         "credits":  [
                         "Agency - The FRIDAY",
                         "Production House - FGS",
@@ -25,7 +59,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  1
+        "order":  2
     },
     {
         "title":  "Dù Cho Tận Thế",
@@ -34,7 +68,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "ERIK",
         "scope":  "VFX, CGI, Compositing",
-        "description":  "Music video with VFX-heavy cinematic compositing.",
+        "description":  "",
         "credits":  [
                         "Production House - Ganga Production",
                         "Singer - ERIK",
@@ -53,7 +87,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  2
+        "order":  3
     },
     {
         "title":  "VIB Privilege",
@@ -62,7 +96,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "VIB",
         "scope":  "CGI, Compositing",
-        "description":  "Brand commercial with premium CGI lookdev.",
+        "description":  "",
         "credits":  [
                         "Client - VIB",
                         "Agency - TBWA",
@@ -73,9 +107,9 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/vib-privilege/thumbnail/Screenshot 2026-05-08 at 00.45.05.png",
-        "previewVideo":  "/project/vib-privilege/previewVideo/SH13_Preview_v049.webm",
-        "embedUrl":  "",
+        "thumbnail":  "/project/vib-privilege/thumbnail/thumb.webp",
+        "previewVideo":  "/project/vib-privilege/previewVideo/preview.webm",
+        "embedUrl":  "https://player.vimeo.com/video/1183468069",
         "gallery":  [
                         "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.44.png",
                         "/project/vib-privilege/gallery/Screenshot 2026-05-08 at 00.44.48.png",
@@ -88,7 +122,7 @@ const projects = [
                     ],
         "year":  "2026",
         "featured":  true,
-        "order":  3
+        "order":  4
     },
     {
         "title":  "VIB MAX Card",
@@ -97,7 +131,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "VIB",
         "scope":  "CGI, Compositing",
-        "description":  "Brand commercial with premium CGI lookdev.",
+        "description":  "",
         "credits":  [
                         "Client - VIB",
                         "Agency - Peri Sunrise",
@@ -110,39 +144,13 @@ const projects = [
         "awardTag":  "",
         "thumbnail":  "/project/vi-maxcard/thumbnail/thumb.jpg",
         "previewVideo":  "/project/vi-maxcard/previewVideo/preview.mp4",
-        "embedUrl":  "https://www.youtube.com/embed/qAAk3GyU-2k?si=lRMfZJzoMPR2J-Am",
+        "embedUrl":  "https://www.youtube.com/embed/qAAk3GyU-2k?si",
         "gallery":  [
                         "/project/vi-maxcard/thumbnail/thumb.jpg",
                         "/project/vi-maxcard/thumbnail/thumb.webp"
                     ],
         "year":  "2026",
         "featured":  true,
-        "order":  4
-    },
-    {
-        "title":  "Add Light to Life",
-        "slug":  "add-light-to-life",
-        "category":  "film",
-        "categoryLabel":  "Film",
-        "client":  "Project Add Light to Life",
-        "scope":  "Cinematic VFX, Environment",
-        "description":  "Narrative film project focused on cinematic environment and VFX.",
-        "credits":  [
-                        "Production House - Memo Creative",
-                        "Studio - Zodiac II Media"
-                    ],
-        "awards":  [
-                       "Awards not publicly listed."
-                   ],
-        "awardTag":  "",
-        "thumbnail":  "/project/add-light-to-life/thumbnail/thumb.jpg",
-        "previewVideo":  "/project/add-light-to-life/previewVideo/AddLightToLight_video1.webm",
-        "embedUrl":  "https://www.youtube.com/embed/jzhzJYYHe10",
-        "gallery":  [
-                        "/project/add-light-to-life/gallery/AddLightToLight_video1.jpg"
-                    ],
-        "year":  "2025",
-        "featured":  false,
         "order":  5
     },
     {
@@ -152,7 +160,7 @@ const projects = [
         "categoryLabel":  "Billboard",
         "client":  "Samsung",
         "scope":  "Compositing, Finishing",
-        "description":  "Commercial campaign with high-end compositing and finishing.",
+        "description":  "",
         "credits":  [
                         "Client - Samsung",
                         "Agency - Cheil Vietnam",
@@ -182,7 +190,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Tung Duong",
         "scope":  "CGI, FX, Compositing",
-        "description":  "Mythic creature and effects-driven music video work.",
+        "description":  "",
         "credits":  [
                         "Artist - Tung Duong",
                         "Studio - Zodiac II Media"
@@ -212,7 +220,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "DTAP",
         "scope":  "CGI, Environment, Compositing",
-        "description":  "Stylized water-temple music video production.",
+        "description":  "",
         "credits":  [
                         "Production House - Alien Media",
                         "Artist - DTAP",
@@ -238,13 +246,43 @@ const projects = [
         "order":  8
     },
     {
+        "title":  "Hoa Hồng Ai Vung Trồng",
+        "slug":  "hoa-hong-ai-vung-trong",
+        "category":  "music-video",
+        "categoryLabel":  "Music Video",
+        "client":  "MINH HẰNG x TÓC TIÊN x DTAP",
+        "scope":  "VFX, Environment, Compositing",
+        "description":  "",
+        "credits":  [
+                        "Production House - Ganga Production",
+                        "Artists - Minh Hang x DTAP",
+                        "Studio - Zodiac II Media"
+                    ],
+        "awards":  [
+                       "Awards not publicly listed."
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/hoa-hong-ai-vung-trong/thumbnail/thumb.webp",
+        "previewVideo":  "/project/hoa-hong-ai-vung-trong/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/Q2j8hraa2kA?si",
+        "gallery":  [
+                        "/project/hoa-hong-ai-vung-trong/gallery/IMG_3325.heic",
+                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.55.41.png",
+                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.56.23.png",
+                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.57.02.png"
+                    ],
+        "year":  "2025",
+        "featured":  true,
+        "order":  9
+    },
+    {
         "title":  "KIXX 2025",
         "slug":  "kixx-2025",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
         "client":  "KIXX",
         "scope":  "CGI Production, Motion Design",
-        "description":  "Commercial visual campaign with product-focused CGI.",
+        "description":  "",
         "credits":  [
                         "Client - KIXX",
                         "Agency - Cheil Vietnam",
@@ -264,7 +302,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  9
+        "order":  10
     },
     {
         "title":  "Over",
@@ -273,7 +311,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Khoi Vu",
         "scope":  "VFX, Compositing",
-        "description":  "Music video with stylized visual treatment.",
+        "description":  "",
         "credits":  [
                         "Production House - Um Production",
                         "Artist - Khoi Vu",
@@ -291,16 +329,16 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  10
+        "order":  11
     },
     {
-        "title":  "Hoa Xuân Ca",
-        "slug":  "hoa-xuan-ca",
-        "category":  "film",
-        "categoryLabel":  "Film",
+        "title":  "Hoa Xuân Ca 2025",
+        "slug":  "hoa-xuan-ca2025",
+        "category":  "tvshow",
+        "categoryLabel":  "TV Show",
         "client":  "VTV",
         "scope":  "Cleanup, Beauty, Compositing",
-        "description":  "Music video post-production and beauty finishing.",
+        "description":  "",
         "credits":  [
                         "Client - VTV",
                         "Studio - Zodiac II Media"
@@ -309,15 +347,15 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/hoa-xuan-ca/thumbnail/thumb.webp",
-        "previewVideo":  "/project/hoa-xuan-ca/previewVideo/HoaXuanCa_video4.webm",
+        "thumbnail":  "/project/hoa-xuan-ca2025/thumbnail/thumb.webp",
+        "previewVideo":  "/project/hoa-xuan-ca2025/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/kHU4mR2SFnI?si",
         "gallery":  [
-                        "/project/hoa-xuan-ca/thumbnail/thumb.webp"
+                        "/project/hoa-xuan-ca2025/thumbnail/thumb.webp"
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  11
+        "order":  12
     },
     {
         "title":  "Bê Trap",
@@ -326,7 +364,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Trang Phap",
         "scope":  "Compositing, Cleanup, Finishing",
-        "description":  "Stylized pop music video finishing and compositing.",
+        "description":  "",
         "credits":  [
                         "Production House - Ganga Production",
                         "Artist - Trang Phap",
@@ -344,7 +382,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  12
+        "order":  14
     },
     {
         "title":  "Thai Chiêu Tài",
@@ -353,7 +391,7 @@ const projects = [
         "categoryLabel":  "Film",
         "client":  "Tran Nhan Kien",
         "scope":  "VFX, Compositing, FX",
-        "description":  "Fantasy-themed music video effects work.",
+        "description":  "",
         "credits":  [
                         "Production House - 13G Production",
                         "Artists - B Ray x Sofia x Chau Dang Khoa",
@@ -371,7 +409,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  13
+        "order":  15
     },
     {
         "title":  "Vietjet - Nàng dâu quốc dân",
@@ -380,7 +418,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "Vietjet Air",
         "scope":  "TVC, CGI, Compositing",
-        "description":  "Commercial and branded aviation-themed content.",
+        "description":  "",
         "credits":  [
                         "Client - Vietjet Air",
                         "Agency - Cheil Vietnam",
@@ -402,7 +440,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  14
+        "order":  16
     },
     {
         "title":  "KNORR PROFESSIONAL",
@@ -411,7 +449,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "Knorr Professional",
         "scope":  "TVC, Product CGI, Compositing",
-        "description":  "Product TVC with food-focused visual storytelling.",
+        "description":  "",
         "credits":  [
                         "Client - Unilever",
                         "Agency - Cheil Vietnam",
@@ -430,7 +468,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  15
+        "order":  17
     },
     {
         "title":  "The Noble",
@@ -439,7 +477,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "The Noble",
         "scope":  "TVC, Architectural Visualization",
-        "description":  "Real-estate TVC with cinematic urban look.",
+        "description":  "",
         "credits":  [
                         "Client - Sunshine Group",
                         "Production House - Ưm Production",
@@ -457,7 +495,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  16
+        "order":  18
     },
     {
         "title":  "The Centric",
@@ -466,7 +504,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "The Centric",
         "scope":  "TVC, Compositing",
-        "description":  "Real-estate commercial with urban compositing.",
+        "description":  "",
         "credits":  [
                         "Client - Masterise Homes",
                         "Production House: Antiantiart",
@@ -484,7 +522,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  17
+        "order":  19
     },
     {
         "title":  "SHB SAHA",
@@ -493,7 +531,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "SHB SAHA",
         "scope":  "TVC, Motion Graphics, CGI",
-        "description":  "Stylized commercial TVC project.",
+        "description":  "",
         "credits":  [
                         "Client - SHB SAHA",
                         "Production House - Ưm Production",
@@ -511,7 +549,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  18
+        "order":  20
     },
     {
         "title":  "SHB SAHA OOH",
@@ -520,7 +558,7 @@ const projects = [
         "categoryLabel":  "Billboard",
         "client":  "SHB SAHA",
         "scope":  "TVC, Motion Graphics, CGI",
-        "description":  "Stylized commercial TVC project.",
+        "description":  "",
         "credits":  [
                         "Client - SHB SAHA",
                         "Production House - Ưm Production",
@@ -538,7 +576,7 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  19
+        "order":  21
     },
     {
         "title":  "Viettel Money",
@@ -547,7 +585,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "Viettel Money",
         "scope":  "TVC, CGI, Compositing",
-        "description":  "Brand campaign TVC with character and motion-driven scenes.",
+        "description":  "",
         "credits":  [
                         "Client - Viettel Money",
                         "Studio - Zodiac II Media"
@@ -564,7 +602,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  20
+        "order":  22
     },
     {
         "title":  "TikTok Award",
@@ -573,7 +611,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "TikTok",
         "scope":  "TVC, Motion Graphics, Compositing",
-        "description":  "Event-led TVC style visuals.",
+        "description":  "",
         "credits":  [
                         "Client - TikTok",
                         "Production House -  One Cut",
@@ -591,7 +629,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  21
+        "order":  23
     },
     {
         "title":  "Xui Hay Vui",
@@ -600,7 +638,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Kotex",
         "scope":  "TVC, Beauty Compositing",
-        "description":  "Commercial campaign with vibrant stylized post work.",
+        "description":  "",
         "credits":  [
                         "Client - Kotex",
                         "Agency - The May",
@@ -618,7 +656,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  22
+        "order":  24
     },
     {
         "title":  "Vinhome Masteri",
@@ -627,61 +665,9 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "Vinhome Masteri",
         "scope":  "TVC, CGI, Compositing",
-        "description":  "Real-estate TVC with cinematic camera-driven VFX.",
+        "description":  "",
         "credits":  [
                         "Client - Vinhome Masteri",
-                        "Studio - Zodiac II Media"
-                    ],
-        "awards":  [
-                       "Awards not publicly listed."
-                   ],
-        "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
-        "gallery":  [
-                        "/project/placehole_image.jpg"
-                    ],
-        "year":  "2024",
-        "featured":  true,
-        "order":  23
-    },
-    {
-        "title":  "Jessica Jewelry",
-        "slug":  "jessica-jewelry",
-        "category":  "commercial",
-        "categoryLabel":  "Commercial",
-        "client":  "Jessica Jewelry",
-        "scope":  "TVC, CGI, Look Development",
-        "description":  "Luxury fashion/jewelry visual campaign.",
-        "credits":  [
-                        "Client - Jessica Jewelry",
-                        "Studio - Zodiac II Media"
-                    ],
-        "awards":  [
-                       "Awards not publicly listed."
-                   ],
-        "awardTag":  "",
-        "thumbnail":  "/project/jessica-jewelry/thumbnail/thumb.webp",
-        "previewVideo":  "/project/jessica-jewelry/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/gzzLwXBabns",
-        "gallery":  [
-                        "/project/jessica-jewelry/thumbnail/thumb.webp"
-                    ],
-        "year":  "2024",
-        "featured":  true,
-        "order":  24
-    },
-    {
-        "title":  "Sun Tropical Village Phu Quoc",
-        "slug":  "sun-tropical-village-phu-quoc",
-        "category":  "commercial",
-        "categoryLabel":  "Commercial",
-        "client":  "Sun Tropical Village",
-        "scope":  "TVC, Compositing, FX",
-        "description":  "Property campaign with cinematic magic effects.",
-        "credits":  [
-                        "Client - Sun Tropical Village",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -699,41 +685,41 @@ const projects = [
         "order":  25
     },
     {
-        "title":  "LienViet PostBank",
-        "slug":  "lienviet-postbank",
+        "title":  "Jessica Jewelry",
+        "slug":  "jessica-jewelry",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
-        "client":  "LienViet PostBank",
-        "scope":  "TVC, CGI, Compositing",
-        "description":  "Financial brand commercial with futuristic city visuals.",
+        "client":  "Jessica Jewelry",
+        "scope":  "TVC, CGI, Look Development",
+        "description":  "",
         "credits":  [
-                        "Client - LienViet PostBank",
+                        "Client - Jessica Jewelry",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/lienviet-postbank/thumbnail/thumb.webp",
-        "previewVideo":  "/project/lienviet-postbank/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/6qmdLuLGl2Y",
+        "thumbnail":  "/project/jessica-jewelry/thumbnail/thumb.webp",
+        "previewVideo":  "/project/jessica-jewelry/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/gzzLwXBabns",
         "gallery":  [
-                        "/project/lienviet-postbank/thumbnail/thumb.webp"
+                        "/project/jessica-jewelry/thumbnail/thumb.webp"
                     ],
         "year":  "2024",
         "featured":  true,
         "order":  26
     },
     {
-        "title":  "Daphaco",
-        "slug":  "daphaco",
+        "title":  "Sun Tropical Village Phu Quoc",
+        "slug":  "sun-tropical-village-phu-quoc",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
-        "client":  "Daphaco",
-        "scope":  "TVC, VFX, Compositing",
-        "description":  "Commercial project with studio VFX treatment.",
+        "client":  "Sun Tropical Village",
+        "scope":  "TVC, Compositing, FX",
+        "description":  "",
         "credits":  [
-                        "Client - Daphaco",
+                        "Client - Sun Tropical Village",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -751,13 +737,65 @@ const projects = [
         "order":  27
     },
     {
+        "title":  "LienViet PostBank",
+        "slug":  "lienviet-postbank",
+        "category":  "commercial",
+        "categoryLabel":  "Commercial",
+        "client":  "LienViet PostBank",
+        "scope":  "TVC, CGI, Compositing",
+        "description":  "",
+        "credits":  [
+                        "Client - LienViet PostBank",
+                        "Studio - Zodiac II Media"
+                    ],
+        "awards":  [
+                       "Awards not publicly listed."
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/lienviet-postbank/thumbnail/thumb.webp",
+        "previewVideo":  "/project/lienviet-postbank/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/6qmdLuLGl2Y",
+        "gallery":  [
+                        "/project/lienviet-postbank/thumbnail/thumb.webp"
+                    ],
+        "year":  "2024",
+        "featured":  true,
+        "order":  28
+    },
+    {
+        "title":  "Daphaco",
+        "slug":  "daphaco",
+        "category":  "commercial",
+        "categoryLabel":  "Commercial",
+        "client":  "Daphaco",
+        "scope":  "TVC, VFX, Compositing",
+        "description":  "",
+        "credits":  [
+                        "Client - Daphaco",
+                        "Studio - Zodiac II Media"
+                    ],
+        "awards":  [
+                       "Awards not publicly listed."
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
+        "embedUrl":  "",
+        "gallery":  [
+                        "/project/placehole_image.jpg"
+                    ],
+        "year":  "2024",
+        "featured":  true,
+        "order":  29
+    },
+    {
         "title":  "TopZone",
         "slug":  "topzone",
         "category":  "commercial",
         "categoryLabel":  "Commercial",
         "client":  "TopZone",
         "scope":  "TVC, Cleanup, Compositing",
-        "description":  "Retail campaign with dance/performance-based compositing.",
+        "description":  "",
         "credits":  [
                         "Client - TopZone",
                         "Studio - Zodiac II Media"
@@ -774,7 +812,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  28
+        "order":  30
     },
     {
         "title":  "Không Ra Gì",
@@ -783,7 +821,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Trúc Nhân",
         "scope":  "VFX, Compositing",
-        "description":  "Music video visual effects production.",
+        "description":  "",
         "credits":  [
                         "Client - KIM Entertainment",
                         "Production House - Ganga Production",
@@ -802,7 +840,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  29
+        "order":  31
     },
     {
         "title":  "THE REAL AURA",
@@ -811,7 +849,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "EXSH",
         "scope":  "CGI, FX, Compositing",
-        "description":  "Dark fantasy cinematic music video visuals.",
+        "description":  "",
         "credits":  [
                         "Production House - Antiantiart",
                         "Artists - EXSH",
@@ -829,7 +867,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  30
+        "order":  32
     },
     {
         "title":  "ALL EYES ON US",
@@ -838,7 +876,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "ATSH",
         "scope":  "VFX, Compositing",
-        "description":  "Performance-led music video post and compositing.",
+        "description":  "",
         "credits":  [
                         "Production House - Antiantiart",
                         "Artists - ATSH",
@@ -856,7 +894,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  31
+        "order":  33
     },
     {
         "title":  "Thức Giấc",
@@ -865,7 +903,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "DaLab",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Cinematic forest world-building for music video.",
+        "description":  "",
         "credits":  [
                         "Artist - DaLab",
                         "Studio - Zodiac II Media"
@@ -882,7 +920,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  32
+        "order":  34
     },
     {
         "title":  "Skyline",
@@ -891,7 +929,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "DaLab",
         "scope":  "CGI, Space Environment, Compositing",
-        "description":  "Sci-fi cinematic treatment with spaceship environment.",
+        "description":  "",
         "credits":  [
                         "Artist - DaLab",
                         "Studio - Zodiac II Media"
@@ -908,7 +946,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  33
+        "order":  35
     },
     {
         "title":  "Giờ Thì Ai Cười",
@@ -917,7 +955,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "HIEUTHUHAI",
         "scope":  "VFX, Compositing",
-        "description":  "Atmospheric cinematic music video visuals.",
+        "description":  "",
         "credits":  [
                         "Artist - HIEUTHUHAI",
                         "Studio - Zodiac II Media"
@@ -934,7 +972,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  34
+        "order":  36
     },
     {
         "title":  "Em Hát Ai Nghe",
@@ -943,7 +981,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Orange",
         "scope":  "VFX, Beauty Compositing",
-        "description":  "Fantasy pop visual treatment for music video.",
+        "description":  "",
         "credits":  [
                         "Artist - Orange",
                         "Studio - Zodiac II Media"
@@ -960,7 +998,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  35
+        "order":  37
     },
     {
         "title":  "Thiêu Thân",
@@ -969,7 +1007,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "B Ray",
         "scope":  "FX, Compositing",
-        "description":  "Fire and destruction VFX sequence for music video.",
+        "description":  "",
         "credits":  [
                         "Artist - B Ray",
                         "Studio - Zodiac II Media"
@@ -986,7 +1024,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  36
+        "order":  38
     },
     {
         "title":  "Beautiful Monster",
@@ -995,7 +1033,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "SOOBIN x Binz",
         "scope":  "CGI, Compositing",
-        "description":  "Performance-centered CGI set extension and VFX.",
+        "description":  "",
         "credits":  [
                         "Artists - SOOBIN x Binz",
                         "Studio - Zodiac II Media"
@@ -1012,7 +1050,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  37
+        "order":  39
     },
     {
         "title":  "SUZIE",
@@ -1021,7 +1059,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "SUZIE x Nhat Nguyen",
         "scope":  "CGI, Motion Graphics, Compositing",
-        "description":  "Neon city stylized music video visuals.",
+        "description":  "",
         "credits":  [
                         "Artists - SUZIE x Nhat Nguyen",
                         "Studio - Zodiac II Media"
@@ -1038,7 +1076,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  38
+        "order":  40
     },
     {
         "title":  "Mời người kế tiếp",
@@ -1047,7 +1085,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Karik",
         "scope":  "VFX, Compositing",
-        "description":  "Narrative cinematic VFX for music video.",
+        "description":  "",
         "credits":  [
                         "Production House - HILLUS",
                         "Artist - Karik",
@@ -1065,7 +1103,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  39
+        "order":  41
     },
     {
         "title":  "Huyền Vi",
@@ -1074,7 +1112,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Masew",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Natural environment enhancement and cinematic finishing.",
+        "description":  "",
         "credits":  [
                         "Production House - HILLUS",
                         "Artist - Masew",
@@ -1092,7 +1130,7 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  40
+        "order":  42
     },
     {
         "title":  "Văn Lang 30 Năm",
@@ -1101,7 +1139,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "Van Lang Univercity",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Cinematic forest world-building for music video.",
+        "description":  "",
         "credits":  [
                         "Client - Van Lang University",
                         "Production House - Flex Films",
@@ -1119,62 +1157,6 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  41
-    },
-    {
-        "title":  "Hoa Hồng Ai Vung Trồng",
-        "slug":  "hoa-hong-ai-vung-trong",
-        "category":  "music-video",
-        "categoryLabel":  "Music Video",
-        "client":  "MINH HẰNG x TÓC TIÊN x DTAP",
-        "scope":  "VFX, Environment, Compositing",
-        "description":  "Sci-fi cinematic treatment with spaceship environment.",
-        "credits":  [
-                        "Production House - Ganga Production",
-                        "Artists - Minh Hang x DTAP",
-                        "Studio - Zodiac II Media"
-                    ],
-        "awards":  [
-                       "Awards not publicly listed."
-                   ],
-        "awardTag":  "",
-        "thumbnail":  "/project/hoa-hong-ai-vung-trong/thumbnail/thumb.webp",
-        "previewVideo":  "/project/hoa-hong-ai-vung-trong/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/Q2j8hraa2kA?si",
-        "gallery":  [
-                        "/project/hoa-hong-ai-vung-trong/gallery/IMG_3325.heic",
-                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.55.41.png",
-                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.56.23.png",
-                        "/project/hoa-hong-ai-vung-trong/gallery/Screenshot 2026-05-04 at 19.57.02.png"
-                    ],
-        "year":  "2025",
-        "featured":  true,
-        "order":  42
-    },
-    {
-        "title":  "Chiến Sĩ Quả Cảm",
-        "slug":  "chien-si-qua-cam-2025",
-        "category":  "commercial",
-        "categoryLabel":  "Commercial",
-        "client":  "Bộ Quốc phòng",
-        "scope":  "VFX, Environment, Compositing",
-        "description":  "Atmospheric cinematic music video visuals.",
-        "credits":  [
-                        "Client - Zeit Media",
-                        "Studio - Zodiac II Media"
-                    ],
-        "awards":  [
-                       "Awards not publicly listed."
-                   ],
-        "awardTag":  "",
-        "thumbnail":  "/project/chien-si-qua-cam-2025/thumbnail/thumb.webp",
-        "previewVideo":  "/project/chien-si-qua-cam-2025/previewVideo/preview.webm",
-        "embedUrl":  "https://www.youtube.com/embed/ULT3FbPW_MM?si",
-        "gallery":  [
-                        "/project/chien-si-qua-cam-2025/thumbnail/thumb.webp"
-                    ],
-        "year":  "2025",
-        "featured":  true,
         "order":  43
     },
     {
@@ -1184,7 +1166,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Kim Entertainment",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Fantasy pop visual treatment for music video.",
+        "description":  "",
         "credits":  [
                         "Client - KIM Entertainment",
                         "Artist - Truc Nhan",
@@ -1211,7 +1193,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "Ha Linh",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Fire and destruction VFX sequence for music video.",
+        "description":  "",
         "credits":  [
                         "Client - ZAAHEE Production",
                         "Studio - Zodiac II Media"
@@ -1237,7 +1219,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "AndreRightHand",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Performance-centered CGI set extension and VFX.",
+        "description":  "",
         "credits":  [
                         "Production House - Snake Fang",
                         "Artist - AndreRightHand",
@@ -1264,7 +1246,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Phuong Ly",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Neon city stylized music video visuals.",
+        "description":  "",
         "credits":  [
                         "Producer - Ngo Mai Phuong",
                         "Artist: Phuong Ly",
@@ -1291,7 +1273,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "LYLY",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Narrative cinematic VFX for music video.",
+        "description":  "",
         "credits":  [
                         "Producer - Ngo Mai Phuong",
                         "Artist: Ly Ly",
@@ -1318,7 +1300,7 @@ const projects = [
         "categoryLabel":  "Music Video",
         "client":  "Duong Trieu Vu",
         "scope":  "VFX, Environment, Compositing",
-        "description":  "Narrative cinematic VFX for music video.",
+        "description":  "",
         "credits":  [
                         "Artist - Duong Trieu Vu",
                         "Studio - Zodiac II Media"
@@ -1344,7 +1326,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "KIXX",
         "scope":  "CGI Production, Motion Design",
-        "description":  "Commercial visual campaign with product-focused CGI.",
+        "description":  "",
         "credits":  [
                         "Client - KIXX",
                         "Agency - Cheil Vietnam",
@@ -1372,7 +1354,7 @@ const projects = [
         "categoryLabel":  "Commercial",
         "client":  "British University Vietnam",
         "scope":  "CGI Production, Motion Design",
-        "description":  "Commercial visual campaign with product-focused CGI.",
+        "description":  "",
         "credits":  [
                         "Client - BUV",
                         "Production - Thanh Trịnh",
@@ -1391,6 +1373,56 @@ const projects = [
         "year":  "2025",
         "featured":  true,
         "order":  51
+    },
+    {
+        "title":  "Em và Trịnh",
+        "slug":  "em-va-trinh",
+        "category":  "film",
+        "categoryLabel":  "Film",
+        "client":  "",
+        "scope":  "",
+        "description":  "",
+        "credits":  [
+
+                    ],
+        "awards":  [
+
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
+        "embedUrl":  "",
+        "gallery":  [
+                        "/project/placehole_image.jpg"
+                    ],
+        "year":  "",
+        "featured":  true,
+        "order":  52
+    },
+    {
+        "title":  "Mask Girl",
+        "slug":  "mask-girl",
+        "category":  "film",
+        "categoryLabel":  "Film",
+        "client":  "",
+        "scope":  "",
+        "description":  "",
+        "credits":  [
+
+                    ],
+        "awards":  [
+
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/placehole_image.jpg",
+        "previewVideo":  "/project/placehole_video.webm",
+        "embedUrl":  "",
+        "gallery":  [
+                        "/project/placehole_image.jpg"
+                    ],
+        "year":  "",
+        "featured":  true,
+        "order":  53
     }
 ];
 

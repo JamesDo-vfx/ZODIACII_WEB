@@ -88,6 +88,7 @@ function Normalize-CategorySlug {
     '^(music-video|music video|mv)$' { return 'music-video' }
     '^(film|movie|cinema|short-film|short film)$' { return 'film' }
     '^(billboard|ooh|outdoor|large-format|large format|led)$' { return 'billboard' }
+    '^(tvshow|tv-show|tv show|television|tv)$' { return 'tvshow' }
     default { return $v }
   }
 }
@@ -102,6 +103,7 @@ function Get-CategoryLabel {
     'music-video' { return 'Music Video' }
     'film' { return 'Film' }
     'billboard' { return 'Billboard' }
+    'tvshow' { return 'TV Show' }
     default {
       if ([string]::IsNullOrWhiteSpace($slug)) { return '' }
 

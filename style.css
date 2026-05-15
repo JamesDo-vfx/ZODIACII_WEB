@@ -1600,6 +1600,7 @@ body[data-page="work"] .page-shell {
   grid-template-areas:
     "music music commercial commercial"
     "music music film film"
+    "tvshow tvshow tvshow tvshow"
     "billboard billboard billboard billboard";
   grid-auto-rows: clamp(210px, 22vw, 430px);
   gap: clamp(14px, 1.25vw, 24px);
@@ -1620,6 +1621,7 @@ body[data-page="work"] .page-shell {
 .reel-card[data-reel-type="music-video"] { grid-area: music; }
 .reel-card[data-reel-type="commercial"] { grid-area: commercial; }
 .reel-card[data-reel-type="film"] { grid-area: film; }
+.reel-card[data-reel-type="tvshow"] { grid-area: tvshow; }
 .reel-card[data-reel-type="billboard"] { grid-area: billboard; }
 
 .reel-card__media,
@@ -4968,6 +4970,7 @@ body[data-page="contact"] .contact-directory .section-kicker {
       "music"
       "commercial"
       "film"
+      "tvshow"
       "billboard";
     grid-auto-rows: auto;
   }

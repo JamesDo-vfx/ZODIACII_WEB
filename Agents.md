@@ -53,6 +53,7 @@ Category slug chuẩn:
 - `music-video`
 - `film`
 - `billboard`
+- `tvshow`
 
 Rule:
 - Không dùng `all` làm category thật trong project data (`all` chỉ là virtual filter ở UI).
