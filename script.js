@@ -357,9 +357,9 @@
       fullVideo: "/assets/videos/reel/reel-preview-billboard.webm"
     },
     tvshow: {
-      poster: "/assets/videos/reel/reel-thumbnail-film.jpg",
-      previewVideo: "/assets/videos/reel/reel-preview-film.webm",
-      fullVideo: "/assets/videos/reel/reel-preview-film.webm"
+      poster: "/assets/videos/reel/reel-thumbnail-tvshow.jpg",
+      previewVideo: "/assets/videos/reel/reel-preview-tvshow.webm",
+      fullVideo: "/assets/videos/reel/reel-preview-tvshow.webm"
     }
   };
 

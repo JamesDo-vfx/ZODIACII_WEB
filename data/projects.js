@@ -1202,11 +1202,14 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/mot-niem-tu-hao/previewVideo/preview.webm",
+        "thumbnail":  "/project/mot-niem-tu-hao/thumbnail/SH02_Preview_00103.jpg",
+        "previewVideo":  "/project/mot-niem-tu-hao/previewVideo/preview1.webm",
         "embedUrl":  "https://www.tiktok.com/@halinhofficial/video/7544361272075193607",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/mot-niem-tu-hao/gallery/SH01_Preview_00094.jpg",
+                        "/project/mot-niem-tu-hao/gallery/SH02_Preview_00103.jpg",
+                        "/project/mot-niem-tu-hao/gallery/SH03_Preview_00201.jpg",
+                        "/project/mot-niem-tu-hao/gallery/SH04_Preview_00017.jpg"
                     ],
         "year":  "2025",
         "featured":  true,
