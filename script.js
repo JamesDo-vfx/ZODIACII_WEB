@@ -348,7 +348,7 @@
 
   const categoryConfig = {
     commercial: {
-      title: "Commercial Reel",
+      title: "Commercial",
       label: "Commercial",
       category: "commercial",
       description: "Commercial CGI, compositing, and visual effects work for brands, campaigns, and premium advertising.",
@@ -356,7 +356,7 @@
       layout: "standard"
     },
     "music-video": {
-      title: "Music Video Reel",
+      title: "Music Video",
       label: "Music Video",
       category: "music-video",
       description: "Cinematic VFX and visual effects work crafted for music videos, artists, and high-impact visual storytelling.",
@@ -364,7 +364,7 @@
       layout: "large"
     },
     film: {
-      title: "Film Reel",
+      title: "Film",
       label: "Film",
       category: "film",
       description: "Cinematic film, brand film, environment, invisible VFX, and long-form visual effects work.",
@@ -372,7 +372,7 @@
       layout: "wide"
     },
     billboard: {
-      title: "Billboard Reel",
+      title: "Billboard",
       label: "Billboard",
       category: "billboard",
       description: "High-impact billboard, LED, outdoor, OOH, and large-format visual work built for public scale.",
@@ -380,7 +380,7 @@
       layout: "standard"
     },
     tvshow: {
-      title: "TV Show Reel",
+      title: "TV Show",
       label: "TV Show",
       category: "tvshow",
       description: "Broadcast and episodic VFX work designed for TV show storytelling and platform delivery.",
@@ -1995,8 +1995,14 @@
     const category = getCategory();
     const categoryData = categories[category];
     const filteredProjects = category === "all" ? projects : projects.filter((project) => project.category === category);
-    const heroProjects = filteredProjects.filter((project) => project.featured);
-    const firstProject = heroProjects[0];
+    const requestedWorkSlug = new URLSearchParams(window.location.search).get("slug") || "";
+    const requestedProject = requestedWorkSlug
+      ? filteredProjects.find((project) => project.slug === requestedWorkSlug)
+      : null;
+    const heroProjects = category === "film"
+      ? filteredProjects
+      : filteredProjects.filter((project) => project.featured);
+    const firstProject = requestedProject || heroProjects[0];
     let activeHeroIndex = Math.max(heroProjects.indexOf(firstProject), 0);
     const heroCategoryLabel = document.querySelector("[data-hero-category-label]");
     const heroProjectTitle = document.querySelector("[data-hero-project-title]");
@@ -2007,6 +2013,200 @@
     const prevButton = document.querySelector(".work-category-hero__arrow--prev");
     const nextButton = document.querySelector(".work-category-hero__arrow--next");
     const heroSection = heroMedia.closest(".work-category-hero");
+    const filmDetailSection = document.querySelector("[data-film-detail]");
+    const filmContributionSection = document.querySelector("[data-film-contribution]");
+    const filmWatchMoreSection = document.querySelector("[data-film-watch-more]");
+    const body = document.body;
+    body?.removeAttribute("data-work-category");
+    if (body) body.dataset.workCategory = category;
+
+    const buildFilmContributionItems = (project) => {
+      const defaultItems = [
+        { title: "VFX Supervision", description: "Shot planning and supervision from on-set capture to final delivery." },
+        { title: "CGI / Set Extension", description: "Digital world-building and environment extension integrated with live-action plates." },
+        { title: "Compositing", description: "Seamless compositing, color harmonization, and final polish for cinematic continuity." },
+        { title: "Cleanup / Invisible VFX", description: "Precision cleanup and invisible effects to keep storytelling clear and natural." }
+      ];
+      const scopeParts = (project?.scope || "")
+        .split(/[|,;/]/)
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .slice(0, 4);
+      if (!scopeParts.length) return defaultItems;
+      return scopeParts.map((part) => ({
+        title: part.toUpperCase(),
+        description: `Delivered ${part.toLowerCase()} work tailored to the visual language of this project.`
+      }));
+    };
+
+    const buildCreditMeta = (project) => {
+      if (!Array.isArray(project?.credits)) return [];
+      return project.credits
+        .map((item) => String(item || "").trim())
+        .filter(Boolean)
+        .slice(0, 3)
+        .map((line) => {
+          const parts = line.split("-");
+          if (parts.length >= 2) {
+            const key = parts.shift()?.trim() || "";
+            const value = parts.join("-").trim();
+            return key && value ? { key, value } : null;
+          }
+          return null;
+        })
+        .filter(Boolean);
+    };
+
+    const renderFilmDetailSections = (project, sourceProjects) => {
+      if (!filmDetailSection) return;
+      if (category !== "film" || !project) {
+        filmDetailSection.hidden = true;
+        if (filmContributionSection) filmContributionSection.hidden = true;
+        if (filmWatchMoreSection) filmWatchMoreSection.hidden = true;
+        return;
+      }
+
+      const titleNode = filmDetailSection.querySelector("[data-film-title]");
+      const metaNode = filmDetailSection.querySelector("[data-film-meta]");
+      const descriptionNode = filmDetailSection.querySelector("[data-film-description]");
+      const posterWrapNode = filmDetailSection.querySelector("[data-film-poster-wrap]");
+      const ctaNode = filmDetailSection.querySelector("[data-film-cta]");
+      const contributionGrid = filmContributionSection?.querySelector("[data-film-contribution-grid]");
+      const watchMoreRow = filmWatchMoreSection?.querySelector("[data-film-watch-more-row]");
+      const detailInner = filmDetailSection.querySelector(".film-detail-inner");
+
+      const sanitizeImageCandidate = (value) => {
+        const src = String(value || "").trim();
+        if (!src) return "";
+        const normalized = src.toLowerCase();
+        if (normalized === "undefined" || normalized === "null" || normalized === "false") return "";
+        return src;
+      };
+      const thumbnailSrc = sanitizeImageCandidate(project?.thumbnail);
+      const imageSrc = sanitizeImageCandidate(project?.image);
+      const posterFieldSrc = sanitizeImageCandidate(project?.poster);
+      const posterVerticalSrc = sanitizeImageCandidate(project?.posterVertical);
+      const galleryPosterSrc = Array.isArray(project.gallery)
+        ? (project.gallery
+          .map((item) => sanitizeImageCandidate(item))
+          .find((item) => item && /\.(avif|webp|png|jpe?g)$/i.test(item)) || "")
+        : "";
+      const posterSrc = thumbnailSrc
+        || imageSrc
+        || posterFieldSrc
+        || posterVerticalSrc
+        || galleryPosterSrc
+        || "/project/placehole_image.jpg";
+      const ghostSrc = posterSrc;
+      const metaItems = [
+        { key: "Year", value: project.year },
+        { key: "Category", value: project.categoryLabel || getProjectCategoryTitle(project) },
+        { key: "Client", value: project.client }
+      ];
+
+      if (titleNode) titleNode.textContent = project.title || "Selected Film";
+      if (posterWrapNode) {
+        posterWrapNode.style.backgroundImage = `url("${posterSrc}")`;
+        posterWrapNode.style.setProperty("--film-poster-image", `url("${posterSrc}")`);
+        posterWrapNode.setAttribute("aria-label", project.title ? `${project.title} poster` : "Film poster");
+      }
+      // Keep CSS-driven background layer in sync with current project thumbnail/image/poster.
+      filmDetailSection.style.setProperty("--film-detail-thumb", `url("${ghostSrc}")`);
+
+      if (metaNode) {
+        const safeMeta = metaItems.filter((item) => item?.value && String(item.value).trim());
+        metaNode.replaceChildren(...safeMeta.map((item) => {
+          const wrap = document.createElement("div");
+          wrap.className = "film-meta__item";
+          const label = document.createElement("span");
+          label.className = "film-meta__label";
+          label.textContent = item.key;
+          const value = document.createElement("span");
+          value.className = "film-meta__value";
+          value.textContent = String(item.value).trim();
+          wrap.append(label, value);
+          return wrap;
+        }));
+      }
+
+      if (descriptionNode) {
+        const safeDescription = (project.description || "").trim();
+        descriptionNode.textContent = safeDescription;
+        descriptionNode.hidden = !safeDescription;
+      }
+
+      if (ctaNode) {
+        const buttons = [];
+        const playable = getProjectPlayableVideo(project);
+        if (playable) {
+          const watchReel = document.createElement("a");
+          watchReel.className = "film-cta__button";
+          watchReel.href = getProjectDetailUrl(project);
+          watchReel.textContent = "Watch Reel";
+          watchReel.setAttribute("aria-label", `Watch reel for ${project.title}`);
+          buttons.push(watchReel);
+        }
+        const viewProject = document.createElement("a");
+        viewProject.className = "film-cta__button";
+        viewProject.href = getProjectDetailUrl(project);
+        viewProject.textContent = "View Project";
+        viewProject.setAttribute("aria-label", `View project detail for ${project.title}`);
+        buttons.push(viewProject);
+        ctaNode.replaceChildren(...buttons);
+      }
+
+      if (contributionGrid) {
+        const items = buildFilmContributionItems(project);
+        contributionGrid.replaceChildren(...items.map((item) => {
+          const card = document.createElement("article");
+          card.className = "film-contribution-card reveal";
+          const heading = document.createElement("h3");
+          heading.textContent = item.title;
+          const text = document.createElement("p");
+          text.textContent = item.description;
+          card.append(heading, text);
+          return card;
+        }));
+      }
+
+      if (watchMoreRow && filmWatchMoreSection) {
+        const moreProjects = sourceProjects.filter((item) => item.slug !== project.slug).slice(0, 10);
+        if (!moreProjects.length) {
+          filmWatchMoreSection.hidden = true;
+        } else {
+          filmWatchMoreSection.hidden = false;
+          watchMoreRow.replaceChildren(...moreProjects.map((item) => {
+            const card = document.createElement("article");
+            card.className = "film-watch-card reveal";
+            card.classList.add("is-visible");
+            const link = document.createElement("a");
+            link.href = `/work/film/?slug=${encodeURIComponent(item.slug || "")}`;
+            link.className = "film-watch-card__link";
+            const media = document.createElement("div");
+            media.className = "film-watch-card__media";
+            const image = document.createElement("img");
+            image.src = item.posterVertical || item.thumbnail || item.image || item.poster || "/project/placehole_image.jpg";
+            image.alt = item.title ? `${item.title} still` : "Film still";
+            image.loading = "lazy";
+            image.decoding = "async";
+            const overlay = document.createElement("div");
+            overlay.className = "film-watch-card__overlay";
+            const heading = document.createElement("h3");
+            heading.textContent = item.title || "Untitled";
+            const sub = document.createElement("p");
+            const subText = [item.year, item.client || item.scope].filter(Boolean).join(" • ");
+            sub.textContent = subText || "Film";
+            media.append(image, overlay);
+            link.append(media, heading, sub);
+            card.append(link);
+            return card;
+          }));
+        }
+      }
+
+      filmDetailSection.hidden = false;
+      if (filmContributionSection) filmContributionSection.hidden = false;
+    };
 
     const createHeroMediaElement = (project) => {
       const localVideo = getProjectPreviewVideo(project) || getProjectPlayableVideo(project);
@@ -2074,7 +2274,8 @@
       updateHeroProgress();
     };
 
-    document.querySelector("[data-category-subtitle]").textContent = categoryData.subtitle;
+    const categorySubtitle = document.querySelector("[data-category-subtitle]");
+    if (categorySubtitle) categorySubtitle.textContent = categoryData.subtitle;
     document.title = `${categoryData.title} | Zodiac II Media`;
     if (heroReelLink) {
       heroReelLink.onclick = null;
@@ -2092,15 +2293,18 @@
       heroProgress?.setAttribute("hidden", "");
       prevButton?.setAttribute("disabled", "");
       nextButton?.setAttribute("disabled", "");
+      renderFilmDetailSections(null, filteredProjects);
       return;
     }
 
     renderHeroProject(firstProject, "next");
+    renderFilmDetailSections(firstProject, filteredProjects);
 
     const setHeroByOffset = (offset) => {
       if (!heroProjects.length) return;
       activeHeroIndex = (activeHeroIndex + offset + heroProjects.length) % heroProjects.length;
       renderHeroProject(heroProjects[activeHeroIndex], offset < 0 ? "prev" : "next");
+      renderFilmDetailSections(heroProjects[activeHeroIndex], filteredProjects);
     };
 
     if (heroProgress) {
@@ -2113,6 +2317,7 @@
           const direction = index > activeHeroIndex ? "next" : "prev";
           activeHeroIndex = index;
           renderHeroProject(heroProjects[activeHeroIndex], direction);
+          renderFilmDetailSections(heroProjects[activeHeroIndex], filteredProjects);
         });
         return button;
       });
