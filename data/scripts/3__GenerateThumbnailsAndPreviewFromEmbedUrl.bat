@@ -28,6 +28,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+# Prevent native tool stderr (ffmpeg/yt-dlp banners/progress) from becoming terminating errors.
+$PSNativeCommandUseErrorActionPreference = $false
 
 function Get-TextValue {
   param(
@@ -170,12 +172,16 @@ function Invoke-DownloadFile {
   )
 
   try {
+    $oldProgressPreference = $ProgressPreference
+    $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri $Url -OutFile $OutputPath -UseBasicParsing -TimeoutSec 30 | Out-Null
+    $ProgressPreference = $oldProgressPreference
     if (Test-Path -LiteralPath $OutputPath) {
       $fi = Get-Item -LiteralPath $OutputPath
       return $fi.Length -gt 0
     }
   } catch {
+    $ProgressPreference = $oldProgressPreference
     return $false
   }
 
@@ -186,21 +192,22 @@ function Convert-ImageToWebp {
   param(
     [object]$FfmpegRunner,
     [string]$InputPath,
-    [string]$OutputPath
+    [string]$OutputPath,
+    [ref]$ErrorLines
   )
 
   $args = @(
+    '-hide_banner',
+    '-loglevel', 'error',
+    '-nostats',
     '-y',
     '-i', $InputPath,
     '-vf', 'scale=960:-2',
     '-q:v', '80',
     $OutputPath
   )
-  & $FfmpegRunner.Command @($FfmpegRunner.BaseArgs + $args) | Out-Null
-  if ($LASTEXITCODE -ne 0) {
-    return $false
-  }
-  return (Test-Path -LiteralPath $OutputPath)
+  $ok = Invoke-ExternalQuiet -Command $FfmpegRunner.Command -BaseArgs $FfmpegRunner.BaseArgs -NativeArgs $args -ErrorLines $ErrorLines
+  return ($ok -and (Test-Path -LiteralPath $OutputPath))
 }
 
 function Convert-ToEmbedUrl {
@@ -229,7 +236,7 @@ function Get-ThumbnailUrlFromYtDlp {
   )
 
   try {
-    $thumbUrl = & $YtRunner.Command @($YtRunner.BaseArgs + @('--skip-download', '--no-warnings', '--print', 'thumbnail', $SourceUrl)) 2>$null
+    $thumbUrl = & $YtRunner.Command @($YtRunner.BaseArgs + @('--quiet', '--no-warnings', '--no-progress', '--skip-download', '--print', 'thumbnail', $SourceUrl)) 2>$null
     if ($LASTEXITCODE -ne 0) {
       return ''
     }
@@ -304,6 +311,62 @@ window.projects = projects
 function Resolve-ToolCommand {
   param([string]$Name)
   return Get-Command $Name -ErrorAction SilentlyContinue
+}
+
+function Invoke-ExternalQuiet {
+  param(
+    [string]$Command,
+    [string[]]$BaseArgs = @(),
+    [string[]]$NativeArgs = @(),
+    [ref]$ErrorLines
+  )
+
+  $ErrorLines.Value = @()
+  $oldErrorActionPreference = $ErrorActionPreference
+  $previousNativePref = $PSNativeCommandUseErrorActionPreference
+  $stderrFile = Join-Path $env:TEMP ("zodiacii_stderr_" + [guid]::NewGuid().ToString('N') + ".log")
+  $stdoutFile = Join-Path $env:TEMP ("zodiacii_stdout_" + [guid]::NewGuid().ToString('N') + ".log")
+  try {
+    # Keep native stderr from being promoted to terminating PowerShell errors.
+    $ErrorActionPreference = 'Continue'
+    $PSNativeCommandUseErrorActionPreference = $false
+
+    $argList = @($BaseArgs + $NativeArgs) |
+      Where-Object { $_ -ne $null } |
+      ForEach-Object { [string]$_ } |
+      Where-Object { $_.Length -gt 0 }
+    $proc = Start-Process -FilePath $Command -ArgumentList $argList -NoNewWindow -Wait -PassThru -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile
+    $exitCode = $proc.ExitCode
+  } finally {
+    $ErrorActionPreference = $oldErrorActionPreference
+    $PSNativeCommandUseErrorActionPreference = $previousNativePref
+  }
+
+  if ($exitCode -eq 0) {
+    Remove-Item -LiteralPath $stderrFile, $stdoutFile -Force -ErrorAction SilentlyContinue
+    return $true
+  }
+
+  $stderrLines = @()
+  if (Test-Path -LiteralPath $stderrFile) {
+    $stderrLines = @(Get-Content -LiteralPath $stderrFile -ErrorAction SilentlyContinue)
+  }
+  $stdoutLines = @()
+  if (Test-Path -LiteralPath $stdoutFile) {
+    $stdoutLines = @(Get-Content -LiteralPath $stdoutFile -ErrorAction SilentlyContinue)
+  }
+
+  $parsed = @($stderrLines + $stdoutLines) |
+    ForEach-Object { [string]$_ } |
+    Where-Object {
+      -not [string]::IsNullOrWhiteSpace($_) -and
+      $_ -notmatch '^\s*ffmpeg version\s'
+    } |
+    Select-Object -First 3
+
+  Remove-Item -LiteralPath $stderrFile, $stdoutFile -Force -ErrorAction SilentlyContinue
+  $ErrorLines.Value = @($parsed)
+  return $false
 }
 
 function Resolve-YtDlpRunner {
@@ -633,60 +696,15 @@ Write-Host ""
 Write-Host "Preflight summary"
 Write-Host "-----------------"
 Write-Host "CSV source                 : $csvPath"
-Write-Host "Project root               : $projectRoot"
-Write-Host "Output thumbnail pattern   : project/<slug>/thumbnail/thumb.webp"
-Write-Host "Output preview pattern     : project/<slug>/previewVideo/preview.webm"
 Write-Host "Total rows                 : $totalRows"
 Write-Host "Ready to process           : $rowsReady"
 Write-Host "Will skip (missing slug)   : $rowsMissingSlug"
 Write-Host "Will skip (missing embed)  : $rowsMissingEmbed"
 Write-Host "Will skip (unsupported URL): $rowsUnsupportedProvider"
-Write-Host "Estimated skipped rows     : $estimatedSkip"
 Write-Host "Projects with existing media: $rowsExistingMedia"
 Write-Host "Existing media mode        : $existingMediaMode"
 Write-Host "Preview duration (seconds) : $previewDurationArg"
-Write-Host "Using yt-dlp               : $($yt.Label)"
-Write-Host "Using ffmpeg               : $($ffmpeg.Label)"
 Write-Host ""
-if ($skipMissingSlugItems.Count -gt 0) {
-  Write-Host "Skip detail - missing slug:"
-  foreach ($item in ($skipMissingSlugItems | Select-Object -Unique)) {
-    Write-Host "  - $item"
-  }
-}
-if ($skipMissingEmbedItems.Count -gt 0) {
-  Write-Host "Skip detail - missing embedUrl:"
-  foreach ($item in ($skipMissingEmbedItems | Select-Object -Unique)) {
-    Write-Host "  - $item"
-  }
-}
-if ($skipUnsupportedProviderItems.Count -gt 0) {
-  Write-Host "Skip detail - unsupported provider URL:"
-  foreach ($item in ($skipUnsupportedProviderItems | Select-Object -Unique)) {
-    Write-Host "  - $item"
-  }
-}
-if ($skipParseVideoIdItems.Count -gt 0) {
-  Write-Host "Skip detail - cannot parse video id:"
-  foreach ($item in ($skipParseVideoIdItems | Select-Object -Unique)) {
-    Write-Host "  - $item"
-  }
-}
-if ($existingMediaItems.Count -gt 0) {
-  Write-Host "Existing media detected:"
-  foreach ($item in ($existingMediaItems | Select-Object -Unique)) {
-    Write-Host "  - $item"
-  }
-}
-if (
-  $skipMissingSlugItems.Count -gt 0 -or
-  $skipMissingEmbedItems.Count -gt 0 -or
-  $skipUnsupportedProviderItems.Count -gt 0 -or
-  $skipParseVideoIdItems.Count -gt 0 -or
-  $existingMediaItems.Count -gt 0
-) {
-  Write-Host ""
-}
 Write-Host "No files will be changed until you confirm."
 $startConfirm = Read-Host "Type Y then press Enter to start"
 if ($startConfirm.Trim().ToLowerInvariant() -notin @('y', 'yes')) {
@@ -712,11 +730,14 @@ Write-Host ""
 Write-Host "Start processing..."
 Write-Host ""
 
+$processedCount = 0
 foreach ($row in $rows) {
+  $processedCount += 1
   $slug = (Get-TextValue -Row $row -Name 'slug').Trim()
   $title = (Get-TextValue -Row $row -Name 'title').Trim()
   $embedUrl = (Get-TextValue -Row $row -Name 'embedUrl').Trim()
   $nameForLog = if ($slug) { $slug } elseif ($title) { $title } else { '<unknown>' }
+  Write-Host "[$processedCount/$totalRows] Processing: $nameForLog"
 
   try {
     if ([string]::IsNullOrWhiteSpace($slug)) {
@@ -806,18 +827,23 @@ foreach ($row in $rows) {
     if ($provider -eq 'youtube' -and $thumbnailSaved) {
       $tempDownloadedJpg = Join-Path $tempRoot ($slug + '_thumb_src.jpg')
       Move-Item -LiteralPath $thumbPath -Destination $tempDownloadedJpg -Force
-      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempDownloadedJpg -OutputPath $thumbPath
+      $thumbErr = @()
+      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempDownloadedJpg -OutputPath $thumbPath -ErrorLines ([ref]$thumbErr)
       Remove-Item -LiteralPath $tempDownloadedJpg -Force -ErrorAction SilentlyContinue
     } elseif (($provider -eq 'vimeo' -or $provider -eq 'tiktok') -and $thumbnailSaved) {
-      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempThumbInputPath -OutputPath $thumbPath
+      $thumbErr = @()
+      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempThumbInputPath -OutputPath $thumbPath -ErrorLines ([ref]$thumbErr)
       Remove-Item -LiteralPath $tempThumbInputPath -Force -ErrorAction SilentlyContinue
     }
 
     if ($thumbnailSaved) {
-      Write-Host "[OK] $slug -> thumbnail saved"
+      Write-Host "[OK] thumbnail saved"
       $thumbOk += 1
     } else {
-      Write-Host "[WARN] $slug -> thumbnail failed"
+      Write-Host "[WARN] thumbnail failed"
+      if ($thumbErr -and $thumbErr.Count -gt 0) {
+        Write-Host ("       " + (($thumbErr -join ' | ')))
+      }
       $warnCount += 1
     }
 
@@ -826,6 +852,7 @@ foreach ($row in $rows) {
 
     $ytFormat = 'bestvideo*[height>=1080]+bestaudio/best[height>=1080]/bestvideo*+bestaudio/best'
     $ytArgs = @(
+      '--quiet',
       '--no-warnings',
       '--no-progress',
       '--restrict-filenames',
@@ -833,9 +860,14 @@ foreach ($row in $rows) {
       '-o', $tmpOutTemplate,
       $sourceUrl
     )
-    & $yt.Command @($yt.BaseArgs + $ytArgs) | Out-Null
-    if ($LASTEXITCODE -ne 0) {
-      Write-Host "[ERROR] $slug -> yt-dlp failed"
+    Write-Host "[..] downloading source video..."
+    $ytErr = @()
+    $ytOk = Invoke-ExternalQuiet -Command $yt.Command -BaseArgs $yt.BaseArgs -NativeArgs $ytArgs -ErrorLines ([ref]$ytErr)
+    if (-not $ytOk) {
+      Write-Host "[ERROR] yt-dlp failed"
+      if ($ytErr.Count -gt 0) {
+        Write-Host ("       " + (($ytErr -join ' | ')))
+      }
       $errorCount += 1
       $failedProjects.Add($slug) | Out-Null
       continue
@@ -854,6 +886,9 @@ foreach ($row in $rows) {
     }
 
     $ffArgs = @(
+      '-hide_banner',
+      '-loglevel', 'error',
+      '-nostats',
       '-y',
       '-ss', '5',
       '-i', $downloaded.FullName,
@@ -865,9 +900,14 @@ foreach ($row in $rows) {
       '-crf', '34',
       $previewPath
     )
-    & $ffmpeg.Command @($ffmpeg.BaseArgs + $ffArgs) | Out-Null
-    if ($LASTEXITCODE -ne 0) {
-      Write-Host "[ERROR] $slug -> ffmpeg failed"
+    Write-Host "[..] saving preview..."
+    $ffErr = @()
+    $ffOk = Invoke-ExternalQuiet -Command $ffmpeg.Command -BaseArgs $ffmpeg.BaseArgs -NativeArgs $ffArgs -ErrorLines ([ref]$ffErr)
+    if (-not $ffOk) {
+      Write-Host "[ERROR] ffmpeg failed"
+      if ($ffErr.Count -gt 0) {
+        Write-Host ("       " + (($ffErr -join ' | ')))
+      }
       $errorCount += 1
       $failedProjects.Add($slug) | Out-Null
       continue
@@ -876,7 +916,7 @@ foreach ($row in $rows) {
     Remove-Item -LiteralPath $downloaded.FullName -Force -ErrorAction SilentlyContinue
 
     if (Test-Path -LiteralPath $previewPath) {
-      Write-Host "[OK] $slug -> preview saved"
+      Write-Host "[OK] preview saved"
       $previewOk += 1
     } else {
       Write-Host "[ERROR] $slug -> preview output missing"
@@ -906,31 +946,15 @@ Write-Host ""
 Write-Host "========== Summary =========="
 Write-Host "CSV source              : $csvPath"
 Write-Host "Total rows              : $totalRows"
-Write-Host "Projects with embedUrl  : $withEmbedCount"
+Write-Host "Processed               : $processedCount"
 Write-Host "Thumbnails created      : $thumbOk"
 Write-Host "Previews created        : $previewOk"
-Write-Host "Skipped projects        : $skipCount"
-Write-Host "Skipped (existing media): $skipExistingCount"
+Write-Host "Skipped                 : $skipCount"
 Write-Host "Warnings                : $warnCount"
 Write-Host "Failed projects         : $errorCount"
 if ($failedProjects.Count -gt 0) {
   $failedList = ($failedProjects | Select-Object -Unique) -join ', '
   Write-Host "Failed slug(s)          : $failedList"
-}
-if ($skipMissingSlugItems.Count -gt 0) {
-  Write-Host "Skipped (missing slug)  : $(($skipMissingSlugItems | Select-Object -Unique) -join ', ')"
-}
-if ($skipMissingEmbedItems.Count -gt 0) {
-  Write-Host "Skipped (missing embed) : $(($skipMissingEmbedItems | Select-Object -Unique) -join ', ')"
-}
-if ($skipUnsupportedProviderItems.Count -gt 0) {
-  Write-Host "Skipped (unsupported URL): $(($skipUnsupportedProviderItems | Select-Object -Unique) -join ' | ')"
-}
-if ($skipParseVideoIdItems.Count -gt 0) {
-  Write-Host "Skipped (parse id fail) : $(($skipParseVideoIdItems | Select-Object -Unique) -join ' | ')"
-}
-if ($skipExistingProjects.Count -gt 0) {
-  Write-Host "Skipped (existing media): $(($skipExistingProjects | Select-Object -Unique) -join ', ')"
 }
 
 Write-Host ""
