@@ -1,0 +1,4 @@
+TV SHOW và FILM và Billboard sẽ phải layout trang phù hợp hơn
+
+Đổi thứ tự reel Commer với music 
+Tim cách kiểm soát được vị trí hình to hình nhỏ trong  dự án
