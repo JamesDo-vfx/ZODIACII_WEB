@@ -115,6 +115,17 @@ function Get-CategoryLabel {
   }
 }
 
+function Normalize-CardSize {
+  param([string]$Value)
+
+  $v = "$Value".Trim().ToLowerInvariant()
+  if ($v -eq 'large') {
+    return 'large'
+  }
+
+  return 'small'
+}
+
 function Import-ProjectCsvRows {
   param([string]$Path)
 
@@ -298,6 +309,8 @@ foreach ($row in $rows) {
     $category = 'commercial'
   }
   $categoryLabel = Get-CategoryLabel $category
+  $cardSizeRaw = (Get-TextValue $row 'cardSize').Trim()
+  $cardSize = Normalize-CardSize $cardSizeRaw
 
   $project = [ordered]@{
     title = $title
@@ -317,6 +330,7 @@ foreach ($row in $rows) {
     year = (Get-TextValue $row 'year').Trim()
     featured = $featured
     order = $order
+    cardSize = $cardSize
   }
 
   $projects += [pscustomobject]$project

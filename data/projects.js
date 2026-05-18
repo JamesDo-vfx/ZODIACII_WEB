@@ -32,7 +32,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  1
+        "order":  1,
+        "cardSize":  "small"
     },
     {
         "title":  "BE",
@@ -59,7 +60,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  2
+        "order":  2,
+        "cardSize":  "small"
     },
     {
         "title":  "Dù Cho Tận Thế",
@@ -87,7 +89,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  3
+        "order":  3,
+        "cardSize":  "small"
     },
     {
         "title":  "VIB Privilege",
@@ -122,7 +125,8 @@ const projects = [
                     ],
         "year":  "2026",
         "featured":  true,
-        "order":  4
+        "order":  4,
+        "cardSize":  "large"
     },
     {
         "title":  "VIB MAX Card",
@@ -151,7 +155,8 @@ const projects = [
                     ],
         "year":  "2026",
         "featured":  true,
-        "order":  5
+        "order":  5,
+        "cardSize":  "small"
     },
     {
         "title":  "Samsung 2025",
@@ -181,7 +186,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  false,
-        "order":  6
+        "order":  6,
+        "cardSize":  "small"
     },
     {
         "title":  "Cánh Chim Phượng Hoàng",
@@ -211,7 +217,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  7
+        "order":  7,
+        "cardSize":  "small"
     },
     {
         "title":  "MADE IN VIETNAM",
@@ -243,7 +250,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  8
+        "order":  8,
+        "cardSize":  "large"
     },
     {
         "title":  "Hoa Hồng Ai Vung Trồng",
@@ -272,7 +280,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  9
+        "order":  9,
+        "cardSize":  "small"
     },
     {
         "title":  "KIXX 2025",
@@ -301,7 +310,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  10
+        "order":  10,
+        "cardSize":  "small"
     },
     {
         "title":  "Over",
@@ -328,7 +338,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  11
+        "order":  11,
+        "cardSize":  "small"
     },
     {
         "title":  "Hoa Xuân Ca 2025",
@@ -354,7 +365,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  12
+        "order":  12,
+        "cardSize":  "large"
     },
     {
         "title":  "Bê Trap",
@@ -381,7 +393,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  14
+        "order":  14,
+        "cardSize":  "small"
     },
     {
         "title":  "Thai Chiêu Tài",
@@ -392,8 +405,7 @@ const projects = [
         "scope":  "VFX, Compositing, FX",
         "description":  "",
         "credits":  [
-                        "Production House - 13G Production",
-                        "Artists - B Ray x Sofia x Chau Dang Khoa",
+                        "Production House - 1990 Studio",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -408,7 +420,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  15
+        "order":  15,
+        "cardSize":  "small"
     },
     {
         "title":  "Vietjet - Nàng dâu quốc dân",
@@ -439,7 +452,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  16
+        "order":  16,
+        "cardSize":  "small"
     },
     {
         "title":  "KNORR PROFESSIONAL",
@@ -467,7 +481,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  17
+        "order":  17,
+        "cardSize":  "large"
     },
     {
         "title":  "The Noble",
@@ -494,7 +509,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  18
+        "order":  18,
+        "cardSize":  "small"
     },
     {
         "title":  "The Centric",
@@ -521,7 +537,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  19
+        "order":  19,
+        "cardSize":  "small"
     },
     {
         "title":  "SHB SAHA",
@@ -548,7 +565,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  20
+        "order":  20,
+        "cardSize":  "small"
     },
     {
         "title":  "SHB SAHA OOH",
@@ -575,7 +593,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  21
+        "order":  21,
+        "cardSize":  "large"
     },
     {
         "title":  "Viettel Money",
@@ -601,7 +620,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  22
+        "order":  22,
+        "cardSize":  "small"
     },
     {
         "title":  "TikTok Award",
@@ -628,7 +648,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  23
+        "order":  23,
+        "cardSize":  "small"
     },
     {
         "title":  "Xui Hay Vui",
@@ -655,7 +676,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  24
+        "order":  24,
+        "cardSize":  "small"
     },
     {
         "title":  "Vinhome Masteri",
@@ -681,7 +703,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  25
+        "order":  25,
+        "cardSize":  "large"
     },
     {
         "title":  "Jessica Jewelry",
@@ -707,7 +730,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  26
+        "order":  26,
+        "cardSize":  "small"
     },
     {
         "title":  "Sun Tropical Village Phu Quoc",
@@ -733,7 +757,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  27
+        "order":  27,
+        "cardSize":  "small"
     },
     {
         "title":  "LienViet PostBank",
@@ -759,7 +784,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  28
+        "order":  28,
+        "cardSize":  "small"
     },
     {
         "title":  "Daphaco",
@@ -785,7 +811,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  29
+        "order":  29,
+        "cardSize":  "large"
     },
     {
         "title":  "TopZone",
@@ -811,7 +838,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  30
+        "order":  30,
+        "cardSize":  "small"
     },
     {
         "title":  "Không Ra Gì",
@@ -839,7 +867,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  31
+        "order":  31,
+        "cardSize":  "small"
     },
     {
         "title":  "THE REAL AURA",
@@ -866,7 +895,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  32
+        "order":  32,
+        "cardSize":  "small"
     },
     {
         "title":  "ALL EYES ON US",
@@ -893,7 +923,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  33
+        "order":  33,
+        "cardSize":  "large"
     },
     {
         "title":  "Thức Giấc",
@@ -919,7 +950,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  34
+        "order":  34,
+        "cardSize":  "small"
     },
     {
         "title":  "Skyline",
@@ -945,7 +977,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  35
+        "order":  35,
+        "cardSize":  "small"
     },
     {
         "title":  "Giờ Thì Ai Cười",
@@ -971,7 +1004,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  36
+        "order":  36,
+        "cardSize":  "small"
     },
     {
         "title":  "Em Hát Ai Nghe",
@@ -997,7 +1031,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  37
+        "order":  37,
+        "cardSize":  "large"
     },
     {
         "title":  "Thiêu Thân",
@@ -1008,7 +1043,8 @@ const projects = [
         "scope":  "FX, Compositing",
         "description":  "",
         "credits":  [
-                        "Artist - B Ray",
+                        "Production House - 13G Production",
+                        "Artists - B Ray x Sofia x Chau Dang Khoa",
                         "Studio - Zodiac II Media"
                     ],
         "awards":  [
@@ -1023,7 +1059,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  38
+        "order":  38,
+        "cardSize":  "small"
     },
     {
         "title":  "Beautiful Monster",
@@ -1049,7 +1086,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  39
+        "order":  39,
+        "cardSize":  "small"
     },
     {
         "title":  "SUZIE",
@@ -1075,7 +1113,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  40
+        "order":  40,
+        "cardSize":  "small"
     },
     {
         "title":  "Mời người kế tiếp",
@@ -1102,7 +1141,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  41
+        "order":  41,
+        "cardSize":  "large"
     },
     {
         "title":  "Huyền Vi",
@@ -1129,7 +1169,8 @@ const projects = [
                     ],
         "year":  "2024",
         "featured":  true,
-        "order":  42
+        "order":  42,
+        "cardSize":  "small"
     },
     {
         "title":  "Hoa Xuân Ca 2026",
@@ -1158,7 +1199,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  13
+        "order":  13,
+        "cardSize":  "small"
     },
     {
         "title":  "Văn Lang 30 Năm",
@@ -1185,7 +1227,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  43
+        "order":  43,
+        "cardSize":  "small"
     },
     {
         "title":  "Vạn Sự Như Ý",
@@ -1212,7 +1255,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  44
+        "order":  44,
+        "cardSize":  "large"
     },
     {
         "title":  "Một Niềm Tự Hào",
@@ -1241,7 +1285,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  45
+        "order":  45,
+        "cardSize":  "large"
     },
     {
         "title":  "Dân Chơi Sao Phải Khóc",
@@ -1268,7 +1313,8 @@ const projects = [
                     ],
         "year":  "2023",
         "featured":  true,
-        "order":  46
+        "order":  46,
+        "cardSize":  "small"
     },
     {
         "title":  "Anh Là NGoại Lệ Của Em",
@@ -1295,7 +1341,8 @@ const projects = [
                     ],
         "year":  "2023",
         "featured":  true,
-        "order":  47
+        "order":  47,
+        "cardSize":  "small"
     },
     {
         "title":  "LoveLy",
@@ -1322,7 +1369,8 @@ const projects = [
                     ],
         "year":  "2023",
         "featured":  true,
-        "order":  48
+        "order":  48,
+        "cardSize":  "small"
     },
     {
         "title":  "Bartender",
@@ -1348,7 +1396,8 @@ const projects = [
                     ],
         "year":  "2023",
         "featured":  true,
-        "order":  49
+        "order":  49,
+        "cardSize":  "large"
     },
     {
         "title":  "KIXX 2024",
@@ -1376,7 +1425,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  50
+        "order":  50,
+        "cardSize":  "small"
     },
     {
         "title":  "Where Your Own Venture Awaits",
@@ -1403,7 +1453,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  51
+        "order":  51,
+        "cardSize":  "small"
     },
     {
         "title":  "Em và Trịnh",
@@ -1428,7 +1479,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  52
+        "order":  52,
+        "cardSize":  "small"
     },
     {
         "title":  "Mask Girl",
@@ -1454,7 +1506,8 @@ const projects = [
                     ],
         "year":  "2025",
         "featured":  true,
-        "order":  53
+        "order":  53,
+        "cardSize":  "large"
     }
 ];
 

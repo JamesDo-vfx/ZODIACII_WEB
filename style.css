@@ -1285,15 +1285,19 @@ body[data-page="work"][data-work-category="film"] .page-shell {
 
 html:has(body[data-page="work"][data-work-category="film"]) {
   overflow-x: hidden !important;
+  overflow-x: clip !important;
+  background: #030303;
 }
 
 body[data-page="work"][data-work-category="film"] {
   overflow-x: hidden !important;
+  overflow-x: clip !important;
 }
 
 .film-poster {
   margin: 0;
-  min-height: clamp(420px, 58vw, 760px);
+  min-height: 0;
+  aspect-ratio: 2 / 3;
   border-radius: 12px;
   background-color: #070707;
   background-image: var(--film-poster-image, linear-gradient(160deg, rgba(20,20,20,0.94), rgba(8,8,8,0.98)));
@@ -1328,8 +1332,8 @@ body[data-page="work"][data-work-category="film"] {
 
 .film-meta {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px 20px;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 
 .film-meta__item {
@@ -1558,7 +1562,8 @@ body[data-page="work"][data-work-category="film"] {
   }
 
   .film-poster {
-    min-height: clamp(260px, 58vw, 420px);
+    min-height: 0;
+    aspect-ratio: 2 / 3;
   }
 
   .film-meta {
@@ -1662,8 +1667,7 @@ body[data-page="work"][data-work-category="film"] {
   grid-row: span 2;
 }
 
-.project-grid--editorial .project-card--wide,
-.project-grid--editorial .project-card--standard {
+.project-grid--editorial .project-card--small {
   grid-column: span 6;
   grid-row: span 1;
 }
@@ -5493,8 +5497,7 @@ body[data-page="home"] .ghost-media.is-loaded {
   }
   .project-grid--editorial .project-card,
   .project-grid--editorial .project-card--large,
-  .project-grid--editorial .project-card--wide,
-  .project-grid--editorial .project-card--standard {
+  .project-grid--editorial .project-card--small {
     grid-column: 1 / -1;
     grid-row: auto;
   }
@@ -5503,9 +5506,8 @@ body[data-page="home"] .ghost-media.is-loaded {
     height: auto;
   }
   .project-card--large .project-frame,
-  .project-card--wide .project-frame,
-  .project-card--standard .project-frame {
-    aspect-ratio: 16 / 10;
+  .project-card--small .project-frame {
+    aspect-ratio: 16 / 9;
   }
   .reel-grid {
     grid-template-columns: 1fr;
@@ -6039,13 +6041,12 @@ body[data-page="home"] .ghost-media.is-loaded {
   .project-info h3 { font-size: clamp(34px, 12vw, 64px); }
   .project-grid--editorial .project-info h3,
   .project-grid--editorial .project-card--large .project-info h3,
-  .project-grid--editorial .project-card--wide .project-info h3 {
+  .project-grid--editorial .project-card--small .project-info h3 {
     font-size: clamp(30px, 3vw, 58px);
   }
   .project-grid--editorial .project-card--large .project-frame,
-  .project-grid--editorial .project-card--wide .project-frame,
-  .project-grid--editorial .project-card--standard .project-frame {
-    aspect-ratio: 16 / 10;
+  .project-grid--editorial .project-card--small .project-frame {
+    aspect-ratio: 16 / 9;
   }
   .project-card__award-tag {
     top: 14px;

@@ -1478,17 +1478,15 @@
     return awardTag.trim().replace(/\s+/g, " ").toUpperCase();
   };
 
-  const getProjectLayoutClass = (index) => {
-    const pattern = [
-      "project-card--large",
-      "project-card--wide",
-      "project-card--standard",
-      "project-card--wide",
-      "project-card--standard",
-      "project-card--standard"
-    ];
-    return pattern[index % pattern.length];
+  const normalizeProjectCardSize = (cardSize) => {
+    const normalized = typeof cardSize === "string" ? cardSize.trim().toLowerCase() : "";
+    return normalized === "large" ? "large" : "small";
   };
+
+  const getProjectLayoutClass = (project) =>
+    normalizeProjectCardSize(project?.cardSize) === "large"
+      ? "project-card--large"
+      : "project-card--small";
 
   const projectTemplate = (project, index) => {
     const article = document.createElement("article");
@@ -1498,7 +1496,7 @@
     const awardBadgeLabel = formatAwardBadgeLabel(awardTag);
     const awardLine = awardTag ? getProjectAwardLine(project) : "";
     const awardLevel = awardTag ? getProjectAwardLevel(project) : "";
-    article.className = `project-card ghost-card ${getProjectLayoutClass(index)}${previewVideo ? " project-card--has-preview" : ""}${awardTag ? " project-card--awarded" : ""}${awardLevel ? ` project-card--award-${awardLevel}` : ""} reveal ghost-reveal`;
+    article.className = `project-card ghost-card ${getProjectLayoutClass(project)}${previewVideo ? " project-card--has-preview" : ""}${awardTag ? " project-card--awarded" : ""}${awardLevel ? ` project-card--award-${awardLevel}` : ""} reveal ghost-reveal`;
     article.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
     article.innerHTML = `
       <a href="${getProjectDetailUrl(project)}" aria-label="View ${project.title}">
