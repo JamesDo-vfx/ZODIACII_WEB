@@ -52,7 +52,7 @@ const projects = [
                    ],
         "awardTag":  "",
         "thumbnail":  "/project/be/thumbnail/thumb.jpg",
-        "previewVideo":  "/project/be/previewVideo/BE_video1.webm",
+        "previewVideo":  "/project/be/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/hMBxytyaEOs",
         "gallery":  [
                         "/project/be/gallery/BE_video1.jpg"
@@ -375,7 +375,7 @@ const projects = [
                    ],
         "awardTag":  "",
         "thumbnail":  "/project/be-trap/thumbnail/thumb.webp",
-        "previewVideo":  "/project/be-trap/previewVideo/BeTrap_video4.webm",
+        "previewVideo":  "/project/be-trap/previewVideo/preview.webm",
         "embedUrl":  "https://www.youtube.com/embed/2GE373cUiPs",
         "gallery":  [
                         "/project/be-trap/gallery/BeTrap_video4.jpg"
@@ -401,9 +401,9 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/thai-chieu-tai/thumbnail/ThaiChieuTai_video2.jpg",
-        "previewVideo":  "/project/thai-chieu-tai/previewVideo/ThaiChieuTai_video2.webm",
-        "embedUrl":  "",
+        "thumbnail":  "/project/thai-chieu-tai/thumbnail/thumb.webp",
+        "previewVideo":  "/project/thai-chieu-tai/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/iUTKQwwuUys?si",
         "gallery":  [
                         "/project/thai-chieu-tai/gallery/ThaiChieuTai_video2.jpg"
                     ],
@@ -1133,6 +1133,35 @@ const projects = [
         "order":  42
     },
     {
+        "title":  "Hoa Xuân Ca 2026",
+        "slug":  "hoa-xuan-ca2026",
+        "category":  "tvshow",
+        "categoryLabel":  "TV Show",
+        "client":  "VTV",
+        "scope":  "Cleanup, Beauty, Compositing",
+        "description":  "",
+        "credits":  [
+                        "Client - VTV",
+                        "Studio - Zodiac II Media"
+                    ],
+        "awards":  [
+                       "Awards not publicly listed."
+                   ],
+        "awardTag":  "",
+        "thumbnail":  "/project/hoa-xuan-ca2026/thumbnail/thumb.webp",
+        "previewVideo":  "/project/hoa-xuan-ca2026/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/FJsbj1zvN0o?si=TF1JGzQNnmpPSpsr",
+        "gallery":  [
+                        "/project/hoa-xuan-ca2026/gallery/image1.png",
+                        "/project/hoa-xuan-ca2026/gallery/image2.png",
+                        "/project/hoa-xuan-ca2026/gallery/image3.png",
+                        "/project/hoa-xuan-ca2026/gallery/image4.png"
+                    ],
+        "year":  "2025",
+        "featured":  true,
+        "order":  13
+    },
+    {
         "title":  "Văn Lang 30 Năm",
         "slug":  "van-lang-30",
         "category":  "commercial",
@@ -1202,8 +1231,8 @@ const projects = [
                        "Awards not publicly listed."
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/mot-niem-tu-hao/thumbnail/SH02_Preview_00103.jpg",
-        "previewVideo":  "/project/mot-niem-tu-hao/previewVideo/preview1.webm",
+        "thumbnail":  "/project/mot-niem-tu-hao/thumbnail/thumb.webp",
+        "previewVideo":  "/project/mot-niem-tu-hao/previewVideo/preview.webm",
         "embedUrl":  "https://www.tiktok.com/@halinhofficial/video/7544361272075193607",
         "gallery":  [
                         "/project/mot-niem-tu-hao/gallery/SH01_Preview_00094.jpg",
@@ -1382,8 +1411,8 @@ const projects = [
         "slug":  "em-va-trinh",
         "category":  "film",
         "categoryLabel":  "Film",
-        "client":  "",
-        "scope":  "",
+        "client":  "Phan Gia Nhật Linh",
+        "scope":  "VFX, Environment, Compositing",
         "description":  "",
         "credits":  [
 
@@ -1392,13 +1421,13 @@ const projects = [
 
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
+        "thumbnail":  "/project/em-va-trinh/thumbnail/thumb.webp",
+        "previewVideo":  "/project/em-va-trinh/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/IosqnBOkk2I?si",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/em-va-trinh/thumbnail/thumb.webp"
                     ],
-        "year":  "",
+        "year":  "2025",
         "featured":  true,
         "order":  52
     },
@@ -1407,23 +1436,24 @@ const projects = [
         "slug":  "mask-girl",
         "category":  "film",
         "categoryLabel":  "Film",
-        "client":  "",
-        "scope":  "",
+        "client":  "Netflix",
+        "scope":  "VFX, Environment, Compositing",
         "description":  "",
         "credits":  [
-
+                        "Client - Netflix",
+                        "Studio - Zodiac II Media"
                     ],
         "awards":  [
 
                    ],
         "awardTag":  "",
-        "thumbnail":  "/project/placehole_image.jpg",
-        "previewVideo":  "/project/placehole_video.webm",
-        "embedUrl":  "",
+        "thumbnail":  "/project/mask-girl/thumbnail/thumb.webp",
+        "previewVideo":  "/project/mask-girl/previewVideo/preview.webm",
+        "embedUrl":  "https://www.youtube.com/embed/Gebl7um3jUg?si=8LjjA_sV88sTzXhV",
         "gallery":  [
-                        "/project/placehole_image.jpg"
+                        "/project/mask-girl/thumbnail/thumb.webp"
                     ],
-        "year":  "",
+        "year":  "2025",
         "featured":  true,
         "order":  53
     }

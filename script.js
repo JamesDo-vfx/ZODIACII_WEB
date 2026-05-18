@@ -10,8 +10,62 @@
   const teamImageExtensions = ["jpg", "png", "webp"];
   const teamMembers = Array.isArray(window.teamMembers) ? window.teamMembers : [];
   const brandLogoPath = "/assets/icons/header_logo.svg";
+  const INTRO_ALLOWED_ROUTES = new Set([
+    "/",
+    "/index.html",
+    "/about/",
+    "/about/index.html",
+    "/about.html",
+    "/work/",
+    "/work/index.html",
+    "/work.html",
+    "/contact/",
+    "/contact/index.html",
+    "/contact.html"
+  ]);
+  const INTRO_ALLOWED_PAGE_TYPES = new Set(["home", "work", "about", "contact"]);
+
+  const normalizePathname = (pathname) => {
+    const path = String(pathname || "/").replace(/\/{2,}/g, "/");
+    if (path === "/") return "/";
+    return path.startsWith("/") ? path : `/${path}`;
+  };
+
+  const getIntroRouteCandidates = (pathname) => {
+    const normalized = normalizePathname(pathname);
+    const withoutTrailing = normalized !== "/" ? normalized.replace(/\/+$/, "") : "/";
+    const withTrailing = withoutTrailing === "/" ? "/" : `${withoutTrailing}/`;
+    const withIndex = withTrailing === "/" ? "/index.html" : `${withTrailing}index.html`;
+    return [normalized, withoutTrailing, withTrailing, withIndex];
+  };
+
+  const shouldShowIntro = () => {
+    const pageType = String(body?.dataset?.page || "").trim().toLowerCase();
+    if (pageType && !INTRO_ALLOWED_PAGE_TYPES.has(pageType)) return false;
+
+    const candidates = getIntroRouteCandidates(window.location.pathname);
+    if (candidates.some((path) => INTRO_ALLOWED_ROUTES.has(path))) return true;
+
+    const suffixCandidates = candidates.filter((path) => path !== "/" && !path.endsWith("/index.html"));
+    const allowedSuffixes = Array.from(INTRO_ALLOWED_ROUTES).filter(
+      (path) => path !== "/" && !path.endsWith("/index.html")
+    );
+    return suffixCandidates.some((path) => allowedSuffixes.some((allowed) => path.endsWith(allowed)));
+  };
+
+  const removeIntroIfExists = () => {
+    document.querySelectorAll("[data-loader]").forEach((node) => node.remove());
+    loader = null;
+    body.classList.remove("is-loading");
+  };
 
   const ensureIntroLoader = () => {
+    const existingLoaders = Array.from(document.querySelectorAll("[data-loader]"));
+    if (existingLoaders.length > 1) {
+      existingLoaders.slice(1).forEach((node) => node.remove());
+    }
+    loader = existingLoaders[0] || loader;
+
     const loaderText = "ZODIAC II";
     const buildLoaderChars = (loaderNode) => {
       const wordNode =
@@ -902,6 +956,7 @@
     overlay.setAttribute("aria-hidden", "true");
     overlay.innerHTML = `
       <p class="work-overlay__label">Work Index</p>
+      <button class="work-overlay__dismiss-zone" type="button" data-work-close aria-label="Back"></button>
       <button class="work-overlay__back" type="button" data-work-close>Back</button>
       <nav class="work-overlay__links" aria-label="Work category navigation">
         <a style="--i:0" href="/work/">All Work</a>
@@ -1193,7 +1248,8 @@
   };
 
   const workOverlay = createOverlay();
-  const closeButton = workOverlay.querySelector("[data-work-close]");
+  const closeButton = workOverlay.querySelector(".work-overlay__back");
+  const workOverlayCloseTargets = workOverlay.querySelectorAll("[data-work-close]");
   const mobileNavOverlay = createMobileNavOverlay();
   const mobileNavClose = mobileNavOverlay.querySelector("[data-mobile-nav-close]");
   const mobileWorkTrigger = mobileNavOverlay.querySelector("[data-mobile-work-trigger]");
@@ -1307,7 +1363,9 @@
     closeMobileNav({ returnFocus: false });
     openWorkOverlay();
   });
-  closeButton.addEventListener("click", closeWorkOverlay);
+  workOverlayCloseTargets.forEach((target) => {
+    target.addEventListener("click", closeWorkOverlay);
+  });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && workOverlay.classList.contains("is-open")) {
       closeWorkOverlay();
@@ -1348,8 +1406,15 @@
   });
   syncMobileNavState();
 
-  loader = ensureIntroLoader();
-  if (loader) {
+  const introAllowedOnCurrentRoute = shouldShowIntro();
+  if (introAllowedOnCurrentRoute) {
+    removeIntroIfExists();
+    loader = ensureIntroLoader();
+  } else {
+    removeIntroIfExists();
+  }
+
+  if (loader && introAllowedOnCurrentRoute) {
     body.classList.add("is-loading");
     const hideLoader = () => {
       loader.classList.add("is-hiding");
@@ -1433,7 +1498,7 @@
     const awardBadgeLabel = formatAwardBadgeLabel(awardTag);
     const awardLine = awardTag ? getProjectAwardLine(project) : "";
     const awardLevel = awardTag ? getProjectAwardLevel(project) : "";
-    article.className = `project-card ${getProjectLayoutClass(index)}${previewVideo ? " project-card--has-preview" : ""}${awardTag ? " project-card--awarded" : ""}${awardLevel ? ` project-card--award-${awardLevel}` : ""} reveal`;
+    article.className = `project-card ghost-card ${getProjectLayoutClass(index)}${previewVideo ? " project-card--has-preview" : ""}${awardTag ? " project-card--awarded" : ""}${awardLevel ? ` project-card--award-${awardLevel}` : ""} reveal ghost-reveal`;
     article.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
     article.innerHTML = `
       <a href="${getProjectDetailUrl(project)}" aria-label="View ${project.title}">
@@ -1443,9 +1508,9 @@
               <span class="project-card__award-copy" aria-label="${awardTag}">${awardBadgeLabel}</span>
             </span>
           ` : ""}
-          <img src="${thumbnail}" alt="${project.title} project still" loading="${index < 2 ? "eager" : "lazy"}">
+          <img class="ghost-media" src="${thumbnail}" alt="${project.title} project still" loading="${index < 2 ? "eager" : "lazy"}">
           ${previewVideo ? `
-            <video muted loop playsinline preload="metadata" poster="${thumbnail}">
+            <video class="ghost-media" muted loop playsinline preload="metadata" poster="${thumbnail}">
               <source src="${previewVideo}" type="${getVideoType(previewVideo)}">
             </video>
           ` : ""}
@@ -1641,6 +1706,7 @@
     const player = video?.closest(".project-detail__player");
     const gallery = page.querySelector("[data-project-gallery]");
     const back = page.querySelector(".project-detail__back");
+    let projectEmbedPointerController = null;
 
     if (!project) {
       page.innerHTML = '<p class="project-detail__empty reveal">Project data is not available.</p>';
@@ -1702,7 +1768,28 @@
         iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         iframe.allowFullscreen = true;
         player.replaceChildren(iframe);
+        player.classList.add("project-detail__player--embed");
+
+        projectEmbedPointerController?.();
+        const activateEmbedInteraction = () => {
+          player.classList.add("is-embed-interactive");
+        };
+        const deactivateEmbedInteraction = () => {
+          player.classList.remove("is-embed-interactive");
+        };
+
+        player.addEventListener("pointerdown", activateEmbedInteraction);
+        player.addEventListener("mouseleave", deactivateEmbedInteraction);
+        window.addEventListener("scroll", deactivateEmbedInteraction, { passive: true });
+        projectEmbedPointerController = () => {
+          player.removeEventListener("pointerdown", activateEmbedInteraction);
+          player.removeEventListener("mouseleave", deactivateEmbedInteraction);
+          window.removeEventListener("scroll", deactivateEmbedInteraction);
+        };
       } else if (mediaUrl) {
+        player.classList.remove("project-detail__player--embed", "is-embed-interactive");
+        projectEmbedPointerController?.();
+        projectEmbedPointerController = null;
         const localVideo = document.createElement("video");
         localVideo.controls = true;
         localVideo.playsInline = true;
@@ -1711,6 +1798,9 @@
         localVideo.innerHTML = `<source src="${mediaUrl}" type="${getVideoType(mediaUrl)}">`;
         player.replaceChildren(localVideo);
       } else if (poster) {
+        player.classList.remove("project-detail__player--embed", "is-embed-interactive");
+        projectEmbedPointerController?.();
+        projectEmbedPointerController = null;
         const fallbackImage = document.createElement("img");
         fallbackImage.className = "project-detail__poster";
         fallbackImage.src = poster;
@@ -1819,15 +1909,15 @@
 
   const reelTemplate = (reel, index) => {
     const link = document.createElement("a");
-    link.className = `reel-card reel-card--${reel.layout} reveal`;
+    link.className = `reel-card ghost-card reel-card--${reel.layout} reveal ghost-reveal`;
     link.href = getCleanCategoryUrl("work", reel.category);
     link.setAttribute("aria-label", `View ${reel.title} work`);
     link.dataset.reelType = reel.category;
     link.style.setProperty("--delay", `${Math.min(index, 5) * 70}ms`);
     link.innerHTML = `
       <span class="reel-card__media">
-        <img class="reel-card__poster" src="${reel.poster}" alt="${reel.title} poster image" loading="${index < 2 ? "eager" : "lazy"}">
-        <video class="reel-card__video" muted loop playsinline preload="metadata" poster="${reel.poster}" aria-hidden="true">
+        <img class="reel-card__poster ghost-media" src="${reel.poster}" alt="${reel.title} poster image" loading="${index < 2 ? "eager" : "lazy"}">
+        <video class="reel-card__video ghost-media" muted loop playsinline preload="metadata" poster="${reel.poster}" aria-hidden="true">
           <source src="${reel.previewVideo}" type="${getVideoType(reel.previewVideo)}">
         </video>
       </span>
@@ -1953,6 +2043,10 @@
         heroProjectClient.textContent = clientText;
         heroProjectClient.hidden = !clientText;
       }
+      if (heroReelLink) {
+        heroReelLink.setAttribute("href", getProjectDetailUrl(project));
+        heroReelLink.setAttribute("aria-label", `View ${project.title} project detail`);
+      }
       if (heroMedia) {
         const previousMediaItems = Array.from(heroMedia.children);
         const media = createHeroMediaElement(project);
@@ -1983,8 +2077,6 @@
     document.querySelector("[data-category-subtitle]").textContent = categoryData.subtitle;
     document.title = `${categoryData.title} | Zodiac II Media`;
     if (heroReelLink) {
-      const reelCategory = category === "all" ? "music-video" : category;
-      heroReelLink.setAttribute("href", getCleanCategoryUrl("work", reelCategory));
       heroReelLink.onclick = null;
     }
 
@@ -2457,6 +2549,58 @@
     });
   };
 
+  const initGhostRevealSystem = () => {
+    if (String(body?.dataset?.page || "").toLowerCase() === "home") return;
+    const ghostTargets = Array.from(document.querySelectorAll(`
+      main section:not(.page-hero),
+      .site-footer,
+      .project-card,
+      .reel-card,
+      .project-detail__info,
+      .project-detail__player,
+      .project-detail__gallery,
+      .project-detail__frame,
+      .work-category-hero__copy,
+      .contact-card__block,
+      .contact-directory__title,
+      .contact-directory__content,
+      .contact-brand-wall__mark
+    `));
+    ghostTargets.forEach((item) => item.classList.add("ghost-reveal"));
+
+    const ghostMediaNodes = Array.from(document.querySelectorAll(`
+      .project-frame img,
+      .project-frame video,
+      .reel-card__poster,
+      .reel-card__video,
+      .project-detail__player img,
+      .project-detail__player video,
+      .project-detail__gallery img,
+      .work-category-hero__media img,
+      .work-category-hero__media video
+    `));
+
+    ghostMediaNodes.forEach((media) => {
+      media.classList.add("ghost-media");
+      const markLoaded = () => media.classList.add("is-loaded");
+
+      if (media.tagName === "IMG") {
+        if (media.complete && media.naturalWidth > 0) markLoaded();
+        else {
+          media.addEventListener("load", markLoaded, { once: true });
+          media.addEventListener("error", markLoaded, { once: true });
+        }
+        return;
+      }
+
+      if (media.readyState >= 2) markLoaded();
+      else {
+        media.addEventListener("loadeddata", markLoaded, { once: true });
+        media.addEventListener("error", markLoaded, { once: true });
+      }
+    });
+  };
+
   renderWorkPage();
   renderProjectGrid();
   initBrandLogo();
@@ -2470,8 +2614,9 @@
   renderTeamProfilePage();
   initCapabilitiesKinetic();
   initHorizontalTimeline();
+  initGhostRevealSystem();
 
-  const revealItems = Array.from(document.querySelectorAll(".reveal"));
+  const revealItems = Array.from(document.querySelectorAll(".reveal, .ghost-reveal"));
   revealItems.forEach((item, index) => {
     if (!item.style.getPropertyValue("--delay")) {
       item.style.setProperty("--delay", `${Math.min(index % 8, 7) * 55}ms`);
@@ -2493,6 +2638,24 @@
     revealItems.forEach((item) => observer.observe(item));
   } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+
+  const currentPage = String(body?.dataset?.page || "").toLowerCase();
+  if (currentPage === "work") {
+    const forceClearGhostState = () => {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      document.querySelectorAll(".ghost-media").forEach((media) => media.classList.add("is-loaded"));
+    };
+
+    window.addEventListener("load", () => {
+      window.setTimeout(forceClearGhostState, 420);
+    }, { once: true });
+
+    window.setTimeout(() => {
+      const pendingReveal = revealItems.some((item) => !item.classList.contains("is-visible"));
+      if (!pendingReveal) return;
+      forceClearGhostState();
+    }, 2400);
   }
 
   const navTimeline = document.querySelector(".nav-timeline");

@@ -184,6 +184,7 @@ function Invoke-DownloadFile {
 
 function Convert-ImageToWebp {
   param(
+    [object]$FfmpegRunner,
     [string]$InputPath,
     [string]$OutputPath
   )
@@ -195,7 +196,7 @@ function Convert-ImageToWebp {
     '-q:v', '80',
     $OutputPath
   )
-  & ffmpeg @args | Out-Null
+  & $FfmpegRunner.Command @($FfmpegRunner.BaseArgs + $args) | Out-Null
   if ($LASTEXITCODE -ne 0) {
     return $false
   }
@@ -222,10 +223,13 @@ function Convert-ToEmbedUrl {
 }
 
 function Get-ThumbnailUrlFromYtDlp {
-  param([string]$SourceUrl)
+  param(
+    [object]$YtRunner,
+    [string]$SourceUrl
+  )
 
   try {
-    $thumbUrl = & yt-dlp --skip-download --no-warnings --print thumbnail $SourceUrl 2>$null
+    $thumbUrl = & $YtRunner.Command @($YtRunner.BaseArgs + @('--skip-download', '--no-warnings', '--print', 'thumbnail', $SourceUrl)) 2>$null
     if ($LASTEXITCODE -ne 0) {
       return ''
     }
@@ -302,6 +306,82 @@ function Resolve-ToolCommand {
   return Get-Command $Name -ErrorAction SilentlyContinue
 }
 
+function Resolve-YtDlpRunner {
+  $cmd = Resolve-ToolCommand -Name 'yt-dlp'
+  if ($cmd) {
+    return @{
+      Kind = 'command'
+      Label = $cmd.Source
+      Command = $cmd.Source
+      BaseArgs = @()
+    }
+  }
+
+  $py = Resolve-ToolCommand -Name 'py'
+  if ($py) {
+    & $py.Source -m yt_dlp --version 2>$null | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+      return @{
+        Kind = 'py-module'
+        Label = "$($py.Source) -m yt_dlp"
+        Command = $py.Source
+        BaseArgs = @('-m', 'yt_dlp')
+      }
+    }
+  }
+
+  $python = Resolve-ToolCommand -Name 'python'
+  if ($python) {
+    & $python.Source -m yt_dlp --version 2>$null | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+      return @{
+        Kind = 'python-module'
+        Label = "$($python.Source) -m yt_dlp"
+        Command = $python.Source
+        BaseArgs = @('-m', 'yt_dlp')
+      }
+    }
+  }
+
+  return $null
+}
+
+function Resolve-FfmpegRunner {
+  $cmd = Resolve-ToolCommand -Name 'ffmpeg'
+  if ($cmd) {
+    return @{
+      Label = $cmd.Source
+      Command = $cmd.Source
+      BaseArgs = @()
+    }
+  }
+
+  $searchPatterns = @(
+    (Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_*\\**\\bin\\ffmpeg.exe'),
+    (Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Links\ffmpeg.exe'),
+    (Join-Path $env:ProgramFiles 'ffmpeg\bin\ffmpeg.exe'),
+    (Join-Path ${env:ProgramFiles(x86)} 'ffmpeg\bin\ffmpeg.exe')
+  ) | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+
+  foreach ($pattern in $searchPatterns) {
+    try {
+      $matches = Get-ChildItem -Path $pattern -File -ErrorAction SilentlyContinue
+      $best = $matches | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+      if ($best) {
+        return @{
+          Label = $best.FullName
+          Command = $best.FullName
+          BaseArgs = @()
+        }
+      }
+    } catch {
+      # continue searching
+    }
+  }
+
+  return $null
+}
+
 function Install-YtDlp {
   $winget = Resolve-ToolCommand -Name 'winget'
   if ($winget) {
@@ -366,6 +446,48 @@ function Ensure-Tool {
   return $cmd
 }
 
+function Ensure-YtDlp {
+  $runner = Resolve-YtDlpRunner
+  if ($runner) {
+    return $runner
+  }
+
+  Write-Host "[WARN] yt-dlp not found in PATH"
+  Write-Host "Install hint: winget install yt-dlp.yt-dlp"
+  $confirm = Read-Host "Install yt-dlp now? (Y/N)"
+  if ($confirm.Trim().ToLowerInvariant() -notin @('y', 'yes')) {
+    return $null
+  }
+
+  $ok = Install-YtDlp
+  if (-not $ok) {
+    return $null
+  }
+
+  return (Resolve-YtDlpRunner)
+}
+
+function Ensure-Ffmpeg {
+  $runner = Resolve-FfmpegRunner
+  if ($runner) {
+    return $runner
+  }
+
+  Write-Host "[WARN] ffmpeg not found in PATH"
+  Write-Host "Install hint: winget install Gyan.FFmpeg"
+  $confirm = Read-Host "Install ffmpeg now? (Y/N)"
+  if ($confirm.Trim().ToLowerInvariant() -notin @('y', 'yes')) {
+    return $null
+  }
+
+  $ok = Install-Ffmpeg
+  if (-not $ok) {
+    return $null
+  }
+
+  return (Resolve-FfmpegRunner)
+}
+
 function Read-PreviewDurationSeconds {
   param([int]$DefaultSeconds = 2)
 
@@ -415,13 +537,13 @@ if (-not (Test-Path -LiteralPath $projectRoot)) {
   throw "Cannot find project root: $projectRoot"
 }
 
-$yt = Ensure-Tool -ToolName 'yt-dlp' -InstallScript ${function:Install-YtDlp} -InstallHint 'winget install yt-dlp.yt-dlp'
+$yt = Ensure-YtDlp
 if (-not $yt) {
   Write-Host "[ERROR] yt-dlp is required but not available."
   exit 1
 }
 
-$ffmpeg = Ensure-Tool -ToolName 'ffmpeg' -InstallScript ${function:Install-Ffmpeg} -InstallHint 'winget install Gyan.FFmpeg'
+$ffmpeg = Ensure-Ffmpeg
 if (-not $ffmpeg) {
   Write-Host "[ERROR] ffmpeg is required but not available."
   exit 1
@@ -523,8 +645,8 @@ Write-Host "Estimated skipped rows     : $estimatedSkip"
 Write-Host "Projects with existing media: $rowsExistingMedia"
 Write-Host "Existing media mode        : $existingMediaMode"
 Write-Host "Preview duration (seconds) : $previewDurationArg"
-Write-Host "Using yt-dlp               : $($yt.Source)"
-Write-Host "Using ffmpeg               : $($ffmpeg.Source)"
+Write-Host "Using yt-dlp               : $($yt.Label)"
+Write-Host "Using ffmpeg               : $($ffmpeg.Label)"
 Write-Host ""
 if ($skipMissingSlugItems.Count -gt 0) {
   Write-Host "Skip detail - missing slug:"
@@ -675,7 +797,7 @@ foreach ($row in $rows) {
         $thumbnailSaved = $false
       }
     } elseif ($provider -eq 'tiktok') {
-      $thumbUrl = Get-ThumbnailUrlFromYtDlp -SourceUrl $embedUrl
+      $thumbUrl = Get-ThumbnailUrlFromYtDlp -YtRunner $yt -SourceUrl $embedUrl
       if (-not [string]::IsNullOrWhiteSpace($thumbUrl)) {
         $thumbnailSaved = Invoke-DownloadFile -Url $thumbUrl -OutputPath $tempThumbInputPath
       }
@@ -684,10 +806,10 @@ foreach ($row in $rows) {
     if ($provider -eq 'youtube' -and $thumbnailSaved) {
       $tempDownloadedJpg = Join-Path $tempRoot ($slug + '_thumb_src.jpg')
       Move-Item -LiteralPath $thumbPath -Destination $tempDownloadedJpg -Force
-      $thumbnailSaved = Convert-ImageToWebp -InputPath $tempDownloadedJpg -OutputPath $thumbPath
+      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempDownloadedJpg -OutputPath $thumbPath
       Remove-Item -LiteralPath $tempDownloadedJpg -Force -ErrorAction SilentlyContinue
     } elseif (($provider -eq 'vimeo' -or $provider -eq 'tiktok') -and $thumbnailSaved) {
-      $thumbnailSaved = Convert-ImageToWebp -InputPath $tempThumbInputPath -OutputPath $thumbPath
+      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempThumbInputPath -OutputPath $thumbPath
       Remove-Item -LiteralPath $tempThumbInputPath -Force -ErrorAction SilentlyContinue
     }
 
@@ -702,15 +824,16 @@ foreach ($row in $rows) {
     $sourceUrl = Convert-ToEmbedUrl -Provider $provider -VideoId $videoId -OriginalUrl $embedUrl
     $tmpOutTemplate = Join-Path $tempRoot ($slug + '.%(ext)s')
 
+    $ytFormat = 'bestvideo*[height>=1080]+bestaudio/best[height>=1080]/bestvideo*+bestaudio/best'
     $ytArgs = @(
       '--no-warnings',
       '--no-progress',
       '--restrict-filenames',
-      '-f', 'mp4/best',
+      '-f', $ytFormat,
       '-o', $tmpOutTemplate,
       $sourceUrl
     )
-    & yt-dlp @ytArgs | Out-Null
+    & $yt.Command @($yt.BaseArgs + $ytArgs) | Out-Null
     if ($LASTEXITCODE -ne 0) {
       Write-Host "[ERROR] $slug -> yt-dlp failed"
       $errorCount += 1
@@ -736,13 +859,13 @@ foreach ($row in $rows) {
       '-i', $downloaded.FullName,
       '-t', $previewDurationArg,
       '-an',
-      '-vf', 'scale=960:-2,fps=24',
+      '-vf', 'scale=1920:-2,fps=24',
       '-c:v', 'libvpx-vp9',
       '-b:v', '0',
       '-crf', '34',
       $previewPath
     )
-    & ffmpeg @ffArgs | Out-Null
+    & $ffmpeg.Command @($ffmpeg.BaseArgs + $ffArgs) | Out-Null
     if ($LASTEXITCODE -ne 0) {
       Write-Host "[ERROR] $slug -> ffmpeg failed"
       $errorCount += 1
@@ -810,14 +933,17 @@ if ($skipExistingProjects.Count -gt 0) {
   Write-Host "Skipped (existing media): $(($skipExistingProjects | Select-Object -Unique) -join ', ')"
 }
 
-if ($generatedPaths.Count -gt 0 -and (Test-Path -LiteralPath $projectsJsPath)) {
-  Write-Host ""
-  $updateConfirm = Read-Host 'Update thumbnail and previewVideo paths in data/projects.js? (Y/N)'
-  if ($updateConfirm.Trim().ToLowerInvariant() -in @('y', 'yes')) {
-    Update-ProjectsJsPaths -ProjectsPath $projectsJsPath -GeneratedPathBySlug $generatedPaths | Out-Null
+Write-Host ""
+$nextBatPath = Join-Path $scriptDir '2__SyncProjectImagesToProjects.bat'
+if (Test-Path -LiteralPath $nextBatPath) {
+  $runNext = Read-Host 'Run 2__SyncProjectImagesToProjects.bat now? (Y/N)'
+  if ($runNext.Trim().ToLowerInvariant() -in @('y', 'yes')) {
+    & $nextBatPath
   } else {
-    Write-Host "Skip updating data/projects.js"
+    Write-Host 'Skip running 2__SyncProjectImagesToProjects.bat'
   }
+} else {
+  Write-Host "[WARN] Cannot find: $nextBatPath"
 }
 
 exit 0

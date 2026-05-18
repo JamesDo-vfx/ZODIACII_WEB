@@ -1325,9 +1325,9 @@ body[data-page="work"] .page-shell {
 
 /* Pre-lit project cards stay present before reveal, then light up in view. */
 .project-card.reveal {
-  opacity: 0.68;
-  filter: none;
-  transform: translateY(24px) scale(0.994);
+  opacity: 0.36;
+  filter: blur(5px) saturate(0.76) contrast(0.92) brightness(0.76);
+  transform: translateY(16px) scale(0.995);
   transition:
     opacity var(--duration-slow) var(--ease-cinematic),
     transform var(--duration-slow) var(--ease-cinematic),
@@ -1336,7 +1336,7 @@ body[data-page="work"] .page-shell {
 
 .project-card.reveal .project-frame img,
 .project-card.reveal .project-frame video {
-  filter: contrast(1.02) saturate(0.52) brightness(0.44);
+  filter: blur(6px) contrast(0.9) saturate(0.58) brightness(0.46);
   transform: scale(1.018);
   transition:
     transform var(--duration-slow) var(--ease-cinematic),
@@ -1349,7 +1349,7 @@ body[data-page="work"] .page-shell {
 }
 
 .project-card.reveal .project-info {
-  opacity: 0;
+  opacity: 0.44;
   transform: translateY(8px);
   transition:
     opacity var(--duration-slow) var(--ease-cinematic),
@@ -1377,7 +1377,7 @@ body[data-page="work"] .page-shell {
 }
 
 .project-card.reveal.is-visible .project-info {
-  opacity: 0;
+  opacity: 0.78;
   transform: translateY(0);
 }
 
@@ -1744,9 +1744,9 @@ body[data-page="work"] .page-shell {
 
 /* Pre-lit reel cards: visible in layout before the reveal turns them on. */
 .reel-card.reveal {
-  opacity: 0.7;
-  filter: none;
-  transform: translateY(24px) scale(0.994);
+  opacity: 0.34;
+  filter: blur(5px) saturate(0.76) contrast(0.92) brightness(0.76);
+  transform: translateY(16px) scale(0.995);
   transition:
     opacity var(--duration-slow) var(--ease-cinematic),
     transform var(--duration-slow) var(--ease-cinematic),
@@ -1755,7 +1755,7 @@ body[data-page="work"] .page-shell {
 
 .reel-card.reveal .reel-card__poster,
 .reel-card.reveal .reel-card__video {
-  filter: contrast(1.03) saturate(0.56) brightness(0.46);
+  filter: blur(6px) contrast(0.9) saturate(0.58) brightness(0.46);
   transform: scale(1.018);
   transition:
     opacity var(--duration-normal) var(--ease-cinematic),
@@ -2308,6 +2308,14 @@ body[data-page="project"] .page-shell {
 
 .project-detail__player iframe {
   border: 0;
+}
+
+.project-detail__player--embed iframe {
+  pointer-events: none;
+}
+
+.project-detail__player--embed.is-embed-interactive iframe {
+  pointer-events: auto;
 }
 
 .project-detail__gallery {
@@ -3666,6 +3674,13 @@ body[data-page="project"] .page-shell {
 }
 
 @media (max-width: 1440px) {
+  .reveal,
+  .ghost-reveal {
+    filter: none;
+    transition-property: opacity, transform;
+  }
+
+  .ghost-media,
   .project-frame img,
   .project-frame video,
   .reel-card__poster,
@@ -3674,6 +3689,7 @@ body[data-page="project"] .page-shell {
   .project-card.reveal .project-frame video,
   .reel-card.reveal .reel-card__poster,
   .reel-card.reveal .reel-card__video {
+    filter: none;
     transition-property: transform, opacity;
   }
 
@@ -4488,6 +4504,7 @@ body[data-page="contact"] .contact-directory .section-kicker {
   position: absolute;
   top: 18px;
   right: var(--page-pad);
+  z-index: 2;
   color: var(--color-text-muted);
   font-family: var(--font-body);
   font-size: var(--text-micro);
@@ -4495,7 +4512,18 @@ body[data-page="contact"] .contact-directory .section-kicker {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+.work-overlay__dismiss-zone {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100%;
+  z-index: 1;
+  background: transparent;
+}
 .work-overlay__links {
+  position: relative;
+  z-index: 2;
   display: grid;
   gap: 0;
   width: min(1200px, 100%);
@@ -4545,16 +4573,101 @@ body[data-page="contact"] .contact-directory .section-kicker {
   justify-items: center;
 }
 
-.reveal {
-  opacity: 0;
-  filter: blur(14px);
-  transform: translateY(24px);
-  transition: opacity var(--duration-slow) var(--ease-cinematic),
+.reveal,
+.ghost-reveal {
+  --ghost-opacity: 0.28;
+  --ghost-blur: 6px;
+  --ghost-y: 16px;
+  --ghost-scale: 0.997;
+  --ghost-saturate: 0.72;
+  --ghost-contrast: 0.9;
+  --ghost-brightness: 0.8;
+  opacity: var(--ghost-opacity);
+  filter: blur(var(--ghost-blur)) saturate(var(--ghost-saturate)) contrast(var(--ghost-contrast)) brightness(var(--ghost-brightness));
+  transform: translateY(var(--ghost-y)) scale(var(--ghost-scale));
+  transition:
+    opacity var(--duration-slow) var(--ease-cinematic),
     filter var(--duration-slow) var(--ease-cinematic),
     transform var(--duration-slow) var(--ease-cinematic);
   transition-delay: var(--delay, 0ms);
 }
-.reveal.is-visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+.reveal.is-visible,
+.ghost-reveal.is-visible {
+  opacity: 1;
+  filter: blur(0) saturate(1) contrast(1) brightness(1);
+  transform: translateY(0) scale(1);
+}
+
+.ghost-media {
+  opacity: 0.3;
+  filter: blur(8px) saturate(0.64) contrast(0.88) brightness(0.7);
+  transform: scale(1.02);
+  transition:
+    opacity 800ms var(--ease-cinematic),
+    filter 800ms var(--ease-cinematic),
+    transform 800ms var(--ease-cinematic);
+}
+
+.ghost-media.is-loaded {
+  opacity: 1;
+  filter: blur(0) saturate(1) contrast(1) brightness(1);
+  transform: scale(1);
+}
+
+/* Keep project thumbnails visible by default; reveal preview video only on interaction. */
+.project-card--has-preview .project-frame video.ghost-media,
+.project-card--has-preview .project-frame video.ghost-media.is-loaded {
+  opacity: 0;
+}
+
+.project-card--has-preview:hover .project-frame video.ghost-media,
+.project-card--has-preview:focus-within .project-frame video.ghost-media,
+.project-card--has-preview.is-playing .project-frame video.ghost-media,
+.project-card--has-preview:hover .project-frame video.ghost-media.is-loaded,
+.project-card--has-preview:focus-within .project-frame video.ghost-media.is-loaded,
+.project-card--has-preview.is-playing .project-frame video.ghost-media.is-loaded {
+  opacity: 0.95;
+}
+
+.ghost-card {
+  --ghost-opacity: 0.35;
+}
+
+.page-hero.ghost-reveal,
+.page-hero.ghost-reveal.is-visible {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.page-hero__media .ghost-media,
+.page-hero__media .ghost-media.is-loaded {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+body[data-page="home"] .reveal,
+body[data-page="home"] .ghost-reveal {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(24px) scale(1);
+}
+
+body[data-page="home"] .reveal.is-visible,
+body[data-page="home"] .ghost-reveal.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+}
+
+body[data-page="home"] .ghost-media,
+body[data-page="home"] .ghost-media.is-loaded {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
 
 .team-card.reveal,
 .team-card.reveal.is-visible {
@@ -5586,9 +5699,20 @@ body[data-page="contact"] .contact-directory .section-kicker {
     animation: none;
   }
   .reveal,
+  .ghost-reveal,
   .work-overlay__links a,
   .reel-modal__panel {
+    opacity: 0.46;
+    filter: none;
+    transform: translateY(0);
+  }
+  .reveal.is-visible,
+  .ghost-reveal.is-visible,
+  .ghost-media.is-loaded {
     opacity: 1;
+  }
+  .ghost-media {
+    opacity: 0.42;
     filter: none;
     transform: none;
   }
