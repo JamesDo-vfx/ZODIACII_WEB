@@ -801,7 +801,7 @@ foreach ($row in $rows) {
       )
 
       foreach ($tUrl in $thumbCandidates) {
-        if (Invoke-DownloadFile -Url $tUrl -OutputPath $thumbPath) {
+        if (Invoke-DownloadFile -Url $tUrl -OutputPath $tempThumbInputPath) {
           $thumbnailSaved = $true
           break
         }
@@ -824,13 +824,7 @@ foreach ($row in $rows) {
       }
     }
 
-    if ($provider -eq 'youtube' -and $thumbnailSaved) {
-      $tempDownloadedJpg = Join-Path $tempRoot ($slug + '_thumb_src.jpg')
-      Move-Item -LiteralPath $thumbPath -Destination $tempDownloadedJpg -Force
-      $thumbErr = @()
-      $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempDownloadedJpg -OutputPath $thumbPath -ErrorLines ([ref]$thumbErr)
-      Remove-Item -LiteralPath $tempDownloadedJpg -Force -ErrorAction SilentlyContinue
-    } elseif (($provider -eq 'vimeo' -or $provider -eq 'tiktok') -and $thumbnailSaved) {
+    if (($provider -eq 'youtube' -or $provider -eq 'vimeo' -or $provider -eq 'tiktok') -and $thumbnailSaved) {
       $thumbErr = @()
       $thumbnailSaved = Convert-ImageToWebp -FfmpegRunner $ffmpeg -InputPath $tempThumbInputPath -OutputPath $thumbPath -ErrorLines ([ref]$thumbErr)
       Remove-Item -LiteralPath $tempThumbInputPath -Force -ErrorAction SilentlyContinue
